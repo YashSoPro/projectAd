@@ -16,6 +16,7 @@ $(document).ready(function() {
         },
     })
     .then(response => {
+        console.log(response.data); // Debugging line
         const featuredMovies = response.data.results.slice(0, 6);
         displayMovies(featuredMovies, '#featuredMovies');
     })
@@ -50,6 +51,8 @@ $(document).ready(function() {
         // Reattach Plyr event listeners after updating DOM
         $('.plyr-trigger').on('click', function() {
             const videoSrc = $(this).attr('data-src');
+            console.log('Video source:', videoSrc); // Debugging line
+
             player.source = {
                 type: 'video',
                 sources: [
@@ -59,6 +62,7 @@ $(document).ready(function() {
                     },
                 ],
             };
+
             player.play(); // Ensure Plyr's play method is called here
         });
     }
@@ -66,6 +70,7 @@ $(document).ready(function() {
     // Function to get movie trailer URL
     function getMovieTrailerUrl(movieId) {
         // Replace with your logic to fetch movie trailer URL
+        console.log('Fetching trailer for movie ID:', movieId); // Debugging line
         return `https://www.youtube.com/watch?v=${movieId}`;
     }
 });
