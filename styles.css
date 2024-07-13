@@ -38,21 +38,9 @@ nav {
 nav ul {
     list-style: none;
     padding: 0;
-    display: flex;
     margin: 0;
-    justify-content: flex-end; /* Align items to the end for mobile */
-    flex-direction: column; /* Adjusted to column for mobile dropdown */
-    align-items: flex-end; /* Align items to the right for mobile */
-    background-color: #333; /* Background color for dropdown */
-    position: absolute; /* Position dropdown absolutely */
-    top: 100%; /* Align dropdown below nav */
-    left: 0;
-    width: 100%; /* Full width dropdown */
-    display: none; /* Hide dropdown by default */
-}
-
-nav ul.open {
-    display: flex; /* Display dropdown when menu is open */
+    display: flex;
+    flex-direction: row; /* Adjusted to row for PC */
 }
 
 nav ul li {
@@ -64,12 +52,8 @@ nav ul li a {
     text-decoration: none;
     font-weight: bold;
     padding: 10px; /* Adjust padding as needed */
-    display: block; /* Display as block for full-width */
-    border-bottom: 1px solid #555; /* Add border between menu items */
-}
-
-nav ul li:last-child a {
-    border-bottom: none; /* Remove border from last item */
+    display: inline-block; /* Display as block for PC */
+    border-bottom: 1px solid transparent; /* Add transparent border */
 }
 
 nav ul li a:hover {
@@ -218,11 +202,6 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 767px) {
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
     nav ul {
         display: none; /* Hide menu items by default on mobile */
         width: 100%; /* Full width dropdown */
