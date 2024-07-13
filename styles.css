@@ -184,7 +184,7 @@ nav ul li a {
     border-radius: 8px;
 }
 
-.close-player {
+.close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -197,12 +197,12 @@ nav ul li a {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.close-player span {
+.close span {
     font-size: 24px;
     line-height: 1;
 }
 
-.close-player:hover {
+.close:hover {
     background-color: #cc0000; /* Darker red on hover */
 }
 
