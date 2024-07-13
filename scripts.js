@@ -47,8 +47,9 @@ $(document).ready(function() {
             container.append(movieElement);
         });
 
-        // Reattach Plyr event listeners after updating DOM
-        $('.plyr-trigger').on('click', function() {
+        // Attach Plyr event listener to each play button
+        $('.plyr-trigger').on('click', function(event) {
+            event.stopPropagation(); // Prevent event from bubbling up
             const videoSrc = $(this).attr('data-src');
             player.source = {
                 type: 'video',
@@ -80,6 +81,4 @@ $(document).ready(function() {
         // Replace with your logic to fetch movie trailer URL
         return `https://www.youtube.com/watch?v=${movieId}`;
     }
-
-
 });
