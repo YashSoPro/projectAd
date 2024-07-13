@@ -191,17 +191,22 @@ nav ul li a {
     background-color: #ff4d4d; /* Red color */
     color: #fff;
     border: none;
-    padding: 8px 12px;
-    border-radius: 50%; /* Circular shape */
+    padding: 12px;
     cursor: pointer;
     z-index: 1100; /* Ensure close button is above video */
-    font-size: 20px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.close-player span {
+    font-size: 24px;
     line-height: 1;
 }
 
 .close-player:hover {
     background-color: #cc0000; /* Darker red on hover */
 }
+
 
 
 
