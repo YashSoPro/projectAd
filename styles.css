@@ -15,6 +15,9 @@ header {
     padding: 10px 20px;
     position: relative; /* Ensure header stays above other content */
     z-index: 10; /* Ensure header is above other content */
+    display: flex;
+    justify-content: space-between; /* Align items to space between */
+    align-items: center; /* Center items vertically */
 }
 
 header h1 {
@@ -25,7 +28,7 @@ header h1 {
 nav {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align items to the left */
+    justify-content: center; /* Align items to the center */
     flex-wrap: wrap;
     position: relative; /* Ensure proper stacking context */
     z-index: 10; /* Ensure nav bar is above other content */
@@ -174,12 +177,6 @@ footer {
 }
 
 /* Responsive Design */
-@media (min-width: 768px) {
-    nav {
-        justify-content: flex-start; /* Align items to the left */
-    }
-}
-
 @media (max-width: 767px) {
     nav {
         flex-direction: column;
