@@ -65,11 +65,12 @@ $(document).ready(function() {
         });
 
         // Close player overlay when clicking outside the player
-        $('#player-overlay').on('click', function(event) {
-            if ($(event.target).is('#player-overlay')) {
-                $('#player-overlay').fadeOut(); // Hide the player overlay
-                $('body').css('overflow', ''); // Re-enable scrolling on the body
+        $(document).on('click', function(event) {
+            const playerOverlay = $('#player-overlay');
+            if (!playerOverlay.is(event.target) && playerOverlay.has(event.target).length === 0) {
                 player.stop(); // Stop Plyr's playback
+                playerOverlay.fadeOut(); // Hide the player overlay
+                $('body').css('overflow', ''); // Re-enable scrolling on the body
             }
         });
     }
