@@ -55,35 +55,16 @@ body {
 .nav .search-box {
   display: flex; /* Ensure icon and input are in the same line */
   align-items: center; /* Center items vertically */
-  position: absolute;
-  right: 250px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 45px;
-  max-width: 555px;
-  width: 100%;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.2s linear;
 }
 
-.nav.openSearch .search-box {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.search-box .search-icon {
-  color: #4a98f7;
-}
-
-.search-box input {
+.nav .search-box input {
   height: 100%;
-  width: calc(100% - 40px); /* Adjusted width for search input */
+  width: 150px; /* Adjusted width for search input */
   border: none;
   outline: none;
   border-radius: 6px;
   background-color: #fff;
-  padding: 0 15px;
+  padding: 8px 15px;
 }
 
 .nav .navOpenBtn,
@@ -96,18 +77,11 @@ body {
   .nav {
     padding: 15px 100px;
   }
-  .nav .search-box {
-    right: 150px;
-  }
 }
 
 @media screen and (max-width: 950px) {
   .nav {
     padding: 15px 50px;
-  }
-  .nav .search-box {
-    right: 100px;
-    max-width: 400px;
   }
 }
 
