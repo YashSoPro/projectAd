@@ -157,7 +157,7 @@ body {
 
 .section-container {
     margin-top: 100px; /* Adjust top margin between sections */
-    margin-bottom: 20px; /* Adjust bottom margin between sections */
+    margin-bottom: 10px; /* Adjust bottom margin between sections */
   }
   
   .section {
@@ -166,7 +166,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
-    margin: 0 auto 20px; /* Adjust margin between sections */
+    margin: 0 auto 10px; /* Adjust margin between sections */
     position: relative; /* Ensure proper stacking context */
     z-index: 0; /* Ensure sections are below header and above footer */
   }
@@ -177,8 +177,6 @@ body {
     gap: 20px;
     justify-content: center;
   }
-  
-  /* Additional styles as previously provided */
   
   
 
