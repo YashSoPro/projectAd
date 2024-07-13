@@ -193,7 +193,6 @@ nav ul li a {
     border: none;
     padding: 12px;
     cursor: pointer;
-    z-index: 1100; /* Ensure close button is above video */
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
