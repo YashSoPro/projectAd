@@ -90,10 +90,18 @@ $(document).ready(function() {
                     <div class="details">
                         <h3>${title}</h3>
                         <p>${overview}</p>
-                        <button onclick="playMedia(${movie.id}, '${mediaType}')">Play</button>
+                        <button class="play-button" data-movie-id="${movie.id}" data-media-type="${mediaType}">Play</button>
                     </div>
                 </div>
             `);
+
+            // Bind click event for play button
+            movieElement.find('.play-button').click(function() {
+                const movieId = $(this).data('movie-id');
+                const mediaType = $(this).data('media-type');
+                playMedia(movieId, mediaType);
+            });
+
             container.append(movieElement);
         });
     }
