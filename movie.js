@@ -22,6 +22,7 @@ $(document).ready(function() {
         const title = movie.title;
         const overview = movie.overview ? movie.overview : 'No overview available';
         const releaseDate = movie.release_date ? new Date(movie.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown';
+        const rating = movie.vote_average;
 
         const movieContainer = $('#movieContainer');
         const movieHtml = `
@@ -30,6 +31,7 @@ $(document).ready(function() {
                 <div class="movie-info">
                     <h2>${title}</h2>
                     <p><strong>Release Date:</strong> ${releaseDate}</p>
+                    <p><strong>Rating:</strong> ${rating}</p>
                     <p><strong>Overview:</strong> ${overview}</p>
                 </div>
             </div>
