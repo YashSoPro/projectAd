@@ -155,13 +155,17 @@ body {
   }
 }
 
-.section {
+.section-container {
+    margin-top: 100px; /* Adjust as needed */
+  }
+  
+  .section {
     padding: 20px;
     background-color: #fff;
-    margin: 100px auto 20px; /* Increase top margin to move sections down */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
+    margin: 0 auto 20px; /* Adjust as needed */
     position: relative; /* Ensure proper stacking context */
     z-index: 0; /* Ensure sections are below header and above footer */
   }
@@ -174,6 +178,7 @@ body {
   }
   
   /* Additional styles as previously provided */
+  
   
 
 .movie {
