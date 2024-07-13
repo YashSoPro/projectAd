@@ -50,7 +50,6 @@ $(document).ready(function() {
         // Reattach Plyr event listeners after updating DOM
         $('.plyr-trigger').on('click', function() {
             const videoSrc = $(this).attr('data-src');
-
             player.source = {
                 type: 'video',
                 sources: [
@@ -60,9 +59,14 @@ $(document).ready(function() {
                     },
                 ],
             };
-
-            $('#player-container').slideDown(); // Show the player container
+            $('#player-overlay').fadeIn(); // Show the player overlay
             player.play(); // Ensure Plyr's play method is called here
+        });
+
+        // Close player overlay when close button is clicked
+        $('#close-player').on('click', function() {
+            $('#player-overlay').fadeOut(); // Hide the player overlay
+            player.stop(); // Stop Plyr's playback
         });
     }
 
