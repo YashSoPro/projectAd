@@ -14,7 +14,7 @@ header {
     color: #fff;
     padding: 10px 20px;
     position: relative; /* Ensure header stays above other content */
-    z-index: 1; /* Ensure header is above other content */
+    z-index: 10; /* Ensure header is above other content */
 }
 
 header h1 {
@@ -27,6 +27,8 @@ nav {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative; /* Ensure proper stacking context */
+    z-index: 10; /* Ensure nav bar is above other content */
 }
 
 nav ul {
@@ -44,11 +46,15 @@ nav ul li a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    padding: 10px; /* Adjust padding as needed */
+    display: inline-block; /* Ensure links are not hidden */
 }
 
 .search-form {
     display: flex;
     margin-top: 10px;
+    position: relative; /* Ensure search form is in normal flow */
+    z-index: 10; /* Ensure search form is above other content */
 }
 
 .search-form input[type="text"] {
@@ -161,10 +167,10 @@ footer {
     padding: 10px;
     background-color: #333;
     color: #fff;
-    position: absolute; /* Ensure footer stays at the bottom */
+    position: fixed; /* Ensure footer stays at the bottom */
     bottom: 0;
     width: 100%;
-    z-index: 1; /* Ensure footer is above other content */
+    z-index: 10; /* Ensure footer is above other content */
 }
 
 /* Responsive Design */
