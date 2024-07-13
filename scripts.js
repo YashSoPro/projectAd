@@ -90,18 +90,10 @@ $(document).ready(function() {
                     <div class="details">
                         <h3>${title}</h3>
                         <p>${overview}</p>
-                        <button class="play-button" data-movie-id="${movie.id}" data-media-type="${mediaType}">Play</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#plyrModal" data-media-type="${mediaType}" data-media-id="${movie.id}">Play</button>
                     </div>
                 </div>
             `);
-
-            // Bind click event for play button
-            movieElement.find('.play-button').click(function() {
-                const movieId = $(this).data('movie-id');
-                const mediaType = $(this).data('media-type');
-                playMedia(movieId, mediaType);
-            });
-
             container.append(movieElement);
         });
     }
@@ -111,7 +103,7 @@ $(document).ready(function() {
         const genreList = $('#genreList');
         genres.forEach(genre => {
             const genreElement = $(`
-                <li onclick="filterByGenre(${genre.id})">${genre.name}</li>
+                <li class="list-group-item" data-genre-id="${genre.id}">${genre.name}</li>
             `);
             genreList.append(genreElement);
         });
@@ -132,28 +124,33 @@ $(document).ready(function() {
         .catch(error => {
             console.error('Error searching movies:', error);
         });
-    }
+    });
 
-    // Function to filter movies by genre
-    function filterByGenre(genreId) {
-        axios.get(`${apiUrl}/discover/movie?api_key=${apiKey}&with_genres=${genreId}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            const genreMovies = response.data.results;
-            displayMovies(genreMovies, '#popularMovies');
-        })
-        .catch(error => {
-            console.error(`Error fetching movies for genre ${genreId}:`, error);
-        });
-    }
+    // Function to handle Plyr playback
+    $('#plyrModal').on('show.bs.modal', function(event) {
+        const button = $(event.relatedTarget);
+        const mediaId = button.data('media-id');
+        const mediaType = button.data('media-type');
+        playMedia(mediaId, mediaType);
+    });
 
-    // Function to play media (replace with actual functionality)
     function playMedia(mediaId, mediaType) {
-        console.log(`Playing ${mediaType} with ID ${mediaId}`);
-        // Implement actual playback functionality here
+        const videoUrl = `https://example.com/videos/${mediaId}.mp4`; // Replace with actual video URL
+        const player = new Plyr('#plyrPlayer', {
+            controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
+        });
+        
+        const source = {
+            type: 'video',
+            sources: [
+                {
+                    src: videoUrl,
+                    type: 'video/mp4',
+                },
+            ],
+        };
+
+        player.source = source;
+        player.play();
     }
 });
