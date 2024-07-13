@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Streaming Site</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.x.x/plyr.css">
 </head>
 <body>
     <header>
@@ -67,9 +67,14 @@
         <p>&copy; 2024 Movie Streaming Site. All rights reserved.</p>
     </footer>
 
+    <video id="player" controls>
+        <source src="" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+    <script src="https://cdn.plyr.io/3.x.x/plyr.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
