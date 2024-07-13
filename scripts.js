@@ -40,72 +40,24 @@ $(document).ready(function() {
                     <div class="details">
                         <h3>${title}</h3>
                         <p>${overview}</p>
-                        <button data-src="${getMovieTrailerUrl(movie.id)}" class="plyr-trigger">Play</button>
+                        <button data-id="${movie.id}" class="plyr-trigger">Play</button>
                     </div>
                 </div>
             `);
             container.append(movieElement);
         });
 
-        // Attach Plyr event listener to each play button
-        $('.plyr-trigger').on('click', function(event) {
-            event.stopPropagation(); // Prevent event from bubbling up
-            const videoSrc = $(this).attr('data-src');
-            player.source = {
-                type: 'video',
-                sources: [
-                    {
-                        src: videoSrc,
-                        type: 'video/mp4',
-                    },
-                ],
-            };
-            showPlayerOverlay(); // Show the player overlay
-            player.play(); // Ensure Plyr's play method is called here
+        // Attach event listener to each play button
+        $('.plyr-trigger').on('click', function() {
+            const movieId = $(this).attr('data-id');
+            redirectToMoviePage(movieId);
         });
     }
 
-    // Function to show player overlay
-    function showPlayerOverlay() {
-        const playerOverlay = $('#player-overlay');
-        const body = $('body');
-        playerOverlay.fadeIn(); // Show the player overlay
-        body.css('overflow', 'hidden'); // Disable scrolling on the body
-
-        // Close player overlay when clicking outside the overlay or on close button
-        $(document).on('click.playeroverlay', function(event) {
-            if (!playerOverlay.is(event.target) && playerOverlay.has(event.target).length === 0) {
-                hidePlayerOverlay(); // Clicked outside the overlay, hide it
-            }
-        });
-
-        // Close player overlay when clicking on close button
-        $('#close-overlay').on('click.playeroverlay', function() {
-            hidePlayerOverlay(); // Hide the player overlay when close button is clicked
-        });
+    // Function to redirect to movie page
+    function redirectToMoviePage(movieId) {
+        // Replace with your logic to construct the URL for movie.html
+        const movieUrl = `movie.html?id=${movieId}`;
+        window.location.href = movieUrl;
     }
-
-    // Function to hide player overlay
-    function hidePlayerOverlay() {
-        const playerOverlay = $('#player-overlay');
-        const body = $('body');
-        player.stop(); // Stop Plyr's playback
-        playerOverlay.fadeOut(); // Hide the player overlay
-        body.css('overflow', ''); // Re-enable scrolling on the body
-
-        // Remove event listeners to prevent memory leaks
-        $(document).off('.playeroverlay');
-        $('#close-overlay').off('.playeroverlay');
-    }
-
-    // Function to get movie trailer URL
-    function getMovieTrailerUrl(movieId) {
-        // Replace with your logic to fetch movie trailer URL
-        return `https://www.youtube.com/watch?v=${movieId}`;
-    }
-
-    // Toggle navigation menu for mobile
-    $('#toggleNav').on('click', function() {
-        $('nav').toggleClass('active');
-    });
 });
