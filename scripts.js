@@ -23,8 +23,6 @@ $(document).ready(function() {
         console.error('Error fetching featured movies:', error);
     });
 
-    // Fetch popular movies (similar for TV shows, genres, search)
-
     // Function to display movies
     function displayMovies(movies, containerSelector) {
         const container = $(containerSelector);
@@ -61,7 +59,7 @@ $(document).ready(function() {
                     },
                 ],
             };
-            player.play();
+            player.play(); // Ensure Plyr's play method is called here
         });
     }
 
