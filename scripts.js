@@ -82,36 +82,26 @@ $(document).ready(function() {
     }
 
     // Navigation bar toggle for mobile
-    $('.navOpenBtn').on('click', function() {
-        $('.nav').addClass('openNav');
-    });
+    const nav = document.querySelector(".nav"),
+  searchIcon = document.querySelector("#searchIcon"),
+  navOpenBtn = document.querySelector(".navOpenBtn"),
+  navCloseBtn = document.querySelector(".navCloseBtn");
 
-    $('.navCloseBtn').on('click', function() {
-        $('.nav').removeClass('openNav');
-    });
+searchIcon.addEventListener("click", () => {
+  nav.classList.toggle("openSearch");
+  nav.classList.remove("openNav");
+  if (nav.classList.contains("openSearch")) {
+    return searchIcon.classList.replace("uil-search", "uil-times");
+  }
+  searchIcon.classList.replace("uil-times", "uil-search");
+});
 
-    // Search box toggle
-    $('#searchIcon').on('click', function() {
-        $('.nav').toggleClass('openSearch');
-    });
-
-    // Dropdown menu toggle for mobile
-    $('.dropdown-toggle').click(function(e) {
-        e.preventDefault();
-        $(this).next('.dropdown-menu').toggleClass('open');
-    });
-
-    // Close dropdown menu when clicking outside
-    $(document).click(function(e) {
-        if (!$(e.target).closest('.dropdown').length) {
-            $('.dropdown-menu').removeClass('open');
-        }
-    });
-
-    // Close dropdown menu on window resize for desktop view
-    $(window).resize(function() {
-        if ($(window).width() > 990) {
-            $('.dropdown-menu').removeClass('open');
-        }
-    });
+navOpenBtn.addEventListener("click", () => {
+  nav.classList.add("openNav");
+  nav.classList.remove("openSearch");
+  searchIcon.classList.replace("uil-times", "uil-search");
+});
+navCloseBtn.addEventListener("click", () => {
+  nav.classList.remove("openNav");
+});
 });
