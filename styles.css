@@ -61,6 +61,8 @@ nav ul li a {
     position: relative; /* Ensure search form is in normal flow */
     z-index: 10; /* Ensure search form is above other content */
     align-self: flex-end; /* Align to the end of the flex container */
+    border-color: black;
+    border-width: 2px;
 }
 
 .search-form input[type="text"] {
@@ -74,12 +76,11 @@ nav ul li a {
 .search-form button {
     padding: 8px;
     border-radius: 0 4px 4px 0;
-    
+    border: none;
     background-color: #ff6f61;
     color: #fff;
     cursor: pointer;
-    border-color: black;
-        border-width: 2px;
+
 }
 
 .search-form button:hover {
