@@ -1,142 +1,225 @@
-/* General styles */
-
+/* General styling */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Arial', sans-serif;
+    color: #333;
     margin: 0;
     padding: 0;
+    background-color: #f9f9f9;
+    min-height: 100vh; /* Ensure body takes full height of viewport */
+    position: relative; /* Needed for proper footer positioning */
+    margin-bottom: 100px; /* Add margin at the bottom */
 }
 
 header {
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
+    position: relative; /* Ensure header stays above other content */
+    z-index: 10; /* Ensure header is above other content */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Align items to space between */
+    align-items: center; /* Center items vertically */
 }
 
-h1 {
+header h1 {
     margin: 0;
-    font-size: 1.5rem;
+    display: inline-block;
 }
 
 nav {
     display: flex;
     align-items: center;
+    justify-content: center; /* Align items to the center */
+    flex-wrap: wrap;
+    position: relative; /* Ensure proper stacking context */
+    z-index: 10; /* Ensure nav bar is above other content */
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
+nav ul {
+    list-style: none;
     padding: 0;
     display: flex;
+    margin: 0;
+    justify-content: center; /* Center items horizontally */
 }
 
-ul li {
+nav ul li {
     margin: 0 10px;
 }
 
-ul li a {
+nav ul li a {
     color: #fff;
     text-decoration: none;
+    font-weight: bold;
+    padding: 10px; /* Adjust padding as needed */
+    display: inline-block; /* Ensure links are not hidden */
+}
+
+.search-form {
+    display: flex;
+    margin-top: 10px;
+    position: relative; /* Ensure search form is in normal flow */
+    z-index: 10; /* Ensure search form is above other content */
+    align-self: flex-end; /* Align to the end of the flex container */
+}
+
+.search-form input[type="text"] {
+    padding: 8px;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    outline: none;
+    width: 200px;
+}
+
+.search-form button {
+    padding: 8px;
+    border-radius: 0 4px 4px 0;
+    border: none;
+    background-color: #ff6f61;
+    color: #fff;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #e65c54;
+}
+
+.section {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    position: relative; /* Ensure proper stacking context */
+    z-index: 0; /* Ensure sections are below header and above footer */
+}
+
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.movie {
+    width: 200px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.movie:hover {
+    transform: translateY(-10px);
+}
+
+.movie img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #ff6f61;
+}
+
+.movie .details {
     padding: 10px;
 }
 
-/* Mobile menu toggle and menu */
+.movie h3 {
+    font-size: 1.2rem;
+    margin: 0 0 10px 0;
+    color: #ff6f61;
+}
 
-#menu-icon {
-    display: none;
+.movie p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.movie button {
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 1.5rem;
+    width: 100%;
 }
 
-#menu-toggle {
+.movie button:hover {
+    background-color: #e65c54;
+}
+
+/* Video player overlay */
+
+.player-overlay {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    z-index: 1000; /* Ensure it's above other content */
+    justify-content: center;
+    align-items: center;
 }
 
-#menu-toggle:checked ~ nav ul#desktop-menu {
-    display: none;
+.player-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90%;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-#menu-toggle:checked ~ nav #menu-icon:after {
-    content: "\2715";
+#player {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
 }
 
-@media (max-width: 768px) {
-    header {
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    position: fixed; /* Ensure footer stays at the bottom */
+    bottom: 0;
+    width: 100%;
+    z-index: 10; /* Ensure footer is above other content */
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    nav {
         flex-direction: column;
         align-items: flex-start;
-        position: relative;
-    }
-
-    h1 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-    }
-
-    #menu-toggle {
-        display: block;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        z-index: 2;
-    }
-
-    nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 70%;
-        height: 100%;
-        background-color: #333;
-        transition: transform 0.3s ease-in-out;
-        z-index: 1;
-        padding: 40px 0;
-        transform: translateX(100%);
-    }
-
-    nav.active {
-        transform: translateX(0);
     }
 
     nav ul {
-        flex-direction: column;
-        align-items: center;
+        justify-content: flex-start; /* Align items to the start */
+    }
+
+    .search-form {
         width: 100%;
-        margin: 0;
-        padding: 0;
+        margin-top: 10px;
+        position: relative;
+        top: 0;
+        right: 0;
+        align-self: stretch; /* Stretch to fit container width */
     }
 
-    nav ul li {
-        margin: 10px 0;
+    .search-form input[type="text"] {
+        width: calc(100% - 90px);
     }
 
-    nav ul li a {
-        padding: 10px 20px;
-        display: block;
-        text-align: center;
-    }
-
-    #menu-icon {
-        display: block;
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        z-index: 2;
-    }
-
-    #desktop-menu {
-        display: none;
-    }
-
-    #searchForm {
-        position: absolute;
-        top: 60px; /* Adjust as needed */
-        right: 20px;
-        z-index: 2;
+    .search-form button {
+        width: 90px;
     }
 }
