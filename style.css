@@ -189,7 +189,7 @@ footer {
 }
 
 .text {
-  margin-top: auto;
+  margin-top: 9px;
   text-align: justify;
   padding: 40px 80px;
   box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
