@@ -64,11 +64,13 @@ $(document).ready(function() {
             player.play(); // Ensure Plyr's play method is called here
         });
 
-        // Close player overlay when close button is clicked
-        $('#close').on('click', function() {
-            $('#player-overlay').fadeOut(); // Hide the player overlay
-            $('body').css('overflow', ''); // Re-enable scrolling on the body
-            player.stop(); // Stop Plyr's playback
+        // Close player overlay when clicking outside the player
+        $('#player-overlay').on('click', function(event) {
+            if ($(event.target).is('#player-overlay')) {
+                $('#player-overlay').fadeOut(); // Hide the player overlay
+                $('body').css('overflow', ''); // Re-enable scrolling on the body
+                player.stop(); // Stop Plyr's playback
+            }
         });
     }
 
