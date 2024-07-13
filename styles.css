@@ -67,7 +67,6 @@ nav ul li a {
 .search-form input[type="text"] {
     padding: 8px;
     border-radius: 4px 0 0 4px;
-    
     outline: none;
     width: 200px;
     border-color: black;
@@ -77,13 +76,11 @@ nav ul li a {
 .search-form button {
     padding: 8px;
     border-radius: 0 4px 4px 0;
-    
     background-color: #ff6f61;
     color: #fff;
     cursor: pointer;
     border-color: black;
     border-width: 2px;
-
 }
 
 .search-form button:hover {
@@ -212,22 +209,22 @@ footer {
         justify-content: flex-start; /* Align items to the start */
     }
 
+    nav ul li {
+        margin: 10px 0; /* Adjust margin for vertical spacing */
+    }
+
     .search-form {
         width: 100%;
         margin-top: 10px;
-        position: relative;
-        top: 0;
-        right: 0;
         align-self: stretch; /* Stretch to fit container width */
-        border-color: black;
-        border-width: 2px;
     }
 
     .search-form input[type="text"] {
-        width: calc(100% - 90px);
+        width: 100%; /* Occupy full width of the container */
     }
 
     .search-form button {
-        width: 90px;
+        width: 100%; /* Occupy full width of the container */
+        margin-top: 10px; /* Add some space between input and button */
     }
 }
