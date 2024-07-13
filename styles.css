@@ -74,7 +74,7 @@ nav ul li a {
 .search-form button {
     padding: 8px;
     border-radius: 0 4px 4px 0;
-    border: none;
+    
     background-color: #ff6f61;
     color: #fff;
     cursor: pointer;
