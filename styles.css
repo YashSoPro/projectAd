@@ -39,6 +39,7 @@ nav ul {
     padding: 0;
     display: flex;
     margin: 0;
+    justify-content: center; /* Center items horizontally */
 }
 
 nav ul li {
@@ -58,6 +59,7 @@ nav ul li a {
     margin-top: 10px;
     position: relative; /* Ensure search form is in normal flow */
     z-index: 10; /* Ensure search form is above other content */
+    align-self: flex-end; /* Align to the end of the flex container */
 }
 
 .search-form input[type="text"] {
@@ -183,12 +185,17 @@ footer {
         align-items: flex-start;
     }
 
+    nav ul {
+        justify-content: flex-start; /* Align items to the start */
+    }
+
     .search-form {
         width: 100%;
         margin-top: 10px;
         position: relative;
         top: 0;
         right: 0;
+        align-self: stretch; /* Stretch to fit container width */
     }
 
     .search-form input[type="text"] {
