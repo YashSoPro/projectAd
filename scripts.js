@@ -65,7 +65,7 @@ $(document).ready(function() {
         });
 
         // Close player overlay when close button is clicked
-        $(document).on('click', '#close', function() {
+        $('#close').on('click', function() {
             $('#player-overlay').fadeOut(); // Hide the player overlay
             $('body').css('overflow', ''); // Re-enable scrolling on the body
             player.stop(); // Stop Plyr's playback

@@ -153,6 +153,7 @@ nav ul li a {
 }
 
 /* Video player overlay */
+
 .player-overlay {
     display: none;
     position: fixed;
@@ -164,13 +165,12 @@ nav ul li a {
     z-index: 1000; /* Ensure it's above other content */
     justify-content: center;
     align-items: center;
-    overflow-y: auto; /* Enable vertical scrolling within the overlay */
 }
 
 .player-container {
     position: relative;
-    max-width: 800px;
     width: 90%;
+    max-width: 800px;
     max-height: 90%;
     overflow: hidden;
     background-color: #fff;
@@ -190,18 +190,17 @@ nav ul li a {
     right: 10px;
     background-color: #ff4d4d; /* Red color */
     color: #fff;
-    border: none;
-    padding: 12px 20px; /* Adjust padding for better click area */
+    padding: 10px 20px; /* Adjust padding for better click area */
     cursor: pointer;
     border-radius: 8px; /* Make it rounded */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 1001; /* Ensure it's above the overlay */
 }
 
 .close:hover {
     background-color: #cc0000; /* Darker red on hover */
 }
 
+/* Responsive styles (previously defined) */
 
 
 
