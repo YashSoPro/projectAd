@@ -191,20 +191,17 @@ nav ul li a {
     background-color: #ff4d4d; /* Red color */
     color: #fff;
     border: none;
-    padding: 12px;
+    padding: 12px 20px; /* Adjust padding for better click area */
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 8px; /* Make it rounded */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.close span {
-    font-size: 24px;
-    line-height: 1;
+    z-index: 1001; /* Ensure it's above the overlay */
 }
 
 .close:hover {
     background-color: #cc0000; /* Darker red on hover */
 }
+
 
 
 
