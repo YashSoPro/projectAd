@@ -188,19 +188,21 @@ nav ul li a {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #fff;
-    color: #333;
+    background-color: #ff4d4d; /* Red color */
+    color: #fff;
     border: none;
     padding: 8px 12px;
-    border-radius: 4px;
+    border-radius: 50%; /* Circular shape */
     cursor: pointer;
     z-index: 1100; /* Ensure close button is above video */
-    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
 }
 
 .close-player:hover {
-    background-color: #f0f0f0;
+    background-color: #cc0000; /* Darker red on hover */
 }
+
 
 
 
