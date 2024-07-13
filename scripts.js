@@ -8,7 +8,7 @@ $(document).ready(function() {
         controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
     });
 
-    // Fetch featured movies
+    // Fetch featured movies and display on the homepage or wherever applicable
     axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -23,7 +23,7 @@ $(document).ready(function() {
         console.error('Error fetching featured movies:', error);
     });
 
-    // Function to display movies
+    // Function to display movies on the homepage or wherever applicable
     function displayMovies(movies, containerSelector) {
         const container = $(containerSelector);
         container.empty();
@@ -47,17 +47,10 @@ $(document).ready(function() {
             container.append(movieElement);
         });
 
-        // Attach event listener to each play button
-        $('.plyr-trigger').on('click', function() {
-            const movieId = $(this).attr('data-id');
-            redirectToMoviePage(movieId);
+        // Attach click event listener to each play button
+        $('.plyr-trigger').on('click', function(event) {
+            const movieId = $(this).data('id');
+            window.location.href = `movie.html?id=${movieId}`;
         });
-    }
-
-    // Function to redirect to movie page
-    function redirectToMoviePage(movieId) {
-        // Replace with your logic to construct the URL for movie.html
-        const movieUrl = `movie.html?id=${movieId}`;
-        window.location.href = movieUrl;
     }
 });
