@@ -199,7 +199,7 @@ footer {
     z-index: 10; /* Ensure footer is above other content */
 }
 
-/* Responsive Design */
+/* Smooth dropdown animation for mobile */
 @media (max-width: 767px) {
     header {
         flex-direction: column;
@@ -228,6 +228,16 @@ footer {
         align-items: stretch;
         background-color: #333;
         padding: 10px 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease; /* Smooth animation */
+    }
+
+    nav.active {
+        transform: translateY(0);
     }
 
     nav ul {
@@ -248,31 +258,5 @@ footer {
         font-weight: bold;
         padding: 10px;
         display: block;
-    }
-
-    nav.active {
-        display: flex;
-    }
-
-    .search-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .search-form input[type="text"] {
-        width: 100%; /* Occupy full width of the container */
-        max-width: none; /* Remove max-width */
-        border-radius: 4px; /* Adjust border-radius for full width */
-        margin-bottom: 10px; /* Add spacing between input and button */
-    }
-
-    .search-form button {
-        width: 100%; /* Occupy full width of the container */
-        max-width: none; /* Remove max-width */
-        border-radius: 4px; /* Adjust border-radius for full width */
-    }
-
-    .section {
-        margin: 10px;
     }
 }
