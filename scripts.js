@@ -81,6 +81,20 @@ $(document).ready(function() {
         return `https://www.youtube.com/watch?v=${movieId}`;
     }
 
+    // Navigation bar toggle for mobile
+    $('.navOpenBtn').on('click', function() {
+        $('.nav').addClass('openNav');
+    });
+
+    $('.navCloseBtn').on('click', function() {
+        $('.nav').removeClass('openNav');
+    });
+
+    // Search box toggle
+    $('#searchIcon').on('click', function() {
+        $('.nav').toggleClass('openSearch');
+    });
+
     // Dropdown menu toggle for mobile
     $('.dropdown-toggle').click(function(e) {
         e.preventDefault();
