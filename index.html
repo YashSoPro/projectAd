@@ -4,70 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Streaming Site</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css">
+    <!-- Custom CSS -->
+    <style>
+        .movie {
+            margin-bottom: 20px;
+        }
+        .movie img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>Movie Streaming Site</h1>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#movies">Movies</a></li>
-                <li><a href="#tv-shows">TV Shows</a></li>
-                <li><a href="#genres">Genres</a></li>
-                <li><a href="#search">Search</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section id="home" class="section">
-            <h2>Featured Movies</h2>
-            <div id="featuredMovies" class="movies-container">
-                <!-- Movies will be dynamically added here -->
+
+<div class="container mt-5">
+    <div id="featuredMovies">
+        <!-- Featured Movies will be displayed here -->
+    </div>
+    <div id="popularMovies">
+        <!-- Popular Movies will be displayed here -->
+    </div>
+    <div id="popularTvShows">
+        <!-- Popular TV Shows will be displayed here -->
+    </div>
+    <div id="searchResults">
+        <!-- Search Results will be displayed here -->
+    </div>
+    <ul id="genreList">
+        <!-- Genre List will be displayed here -->
+    </ul>
+
+    <!-- Bootstrap Modal for Plyr Player -->
+    <div class="modal fade" id="plyrModal" tabindex="-1" role="dialog" aria-labelledby="plyrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="plyrModalLabel">Movie Player</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <video id="plyrPlayer" controls>
+                        <!-- Plyr will append source tag here -->
+                    </video>
+                </div>
             </div>
-        </section>
+        </div>
+    </div>
+</div>
 
-        <section id="movies" class="section">
-            <h2>Popular Movies</h2>
-            <div id="popularMovies" class="movies-container">
-                <!-- Movies will be dynamically added here -->
-            </div>
-        </section>
-
-        <section id="tv-shows" class="section">
-            <h2>Popular TV Shows</h2>
-            <div id="popularTvShows" class="movies-container">
-                <!-- TV Shows will be dynamically added here -->
-            </div>
-        </section>
-
-        <section id="genres" class="section">
-            <h2>Genres</h2>
-            <ul id="genreList" class="genre-list">
-                <!-- Genres will be dynamically added here -->
-            </ul>
-        </section>
-
-        <section id="search" class="section">
-            <h2>Search Movies</h2>
-            <form id="searchForm" class="search-form">
-                <input type="text" id="searchInput" placeholder="Search movies...">
-                <button type="submit">Search</button>
-            </form>
-            <div id="searchResults" class="movies-container">
-                <!-- Search results will be dynamically added here -->
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Movie Streaming Site. All rights reserved.</p>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="scripts.js"></script>
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Plyr JS -->
+<script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+<!-- Your custom script -->
+<script src="scripts.js"></script>
 </body>
 </html>
