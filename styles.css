@@ -194,14 +194,12 @@ nav ul li a {
     cursor: pointer;
     border-radius: 8px; /* Make it rounded */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1100; /* Ensure it's above the player */
 }
 
 .close:hover {
     background-color: #cc0000; /* Darker red on hover */
 }
-
-/* Responsive styles (previously defined) */
-
 
 
 footer {
