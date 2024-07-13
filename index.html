@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Streaming Site</title>
+    <!-- Include Bootstrap CSS (or your custom CSS) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include Video.js CSS -->
     <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
-
-    <!-- Bootstrap CSS (or your custom CSS) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom CSS -->
     <link href="styles.css" rel="stylesheet">
 </head>
@@ -24,7 +22,7 @@
         <!-- Video Player Section -->
         <div class="row mt-3">
             <div class="col-md-8">
-                <video id="video1" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="auto">
+                <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="auto">
                     <source src="video.mp4" type="video/mp4">
                     <!-- Include HLS or DASH streams here -->
                 </video>
@@ -32,9 +30,11 @@
         </div>
     </div>
 
+    <!-- Include Bootstrap JS (or your custom JS) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Include Video.js library -->
     <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
-
-    <!-- Initialize Video.js -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function
+    <!-- Custom JavaScript -->
+    <script src="scripts.js"></script>
+</body>
+</html>
