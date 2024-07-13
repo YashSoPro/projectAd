@@ -48,5 +48,10 @@ $(document).ready(function() {
         fetchMovieDetails(movieId);
     } else {
         console.error('No movie ID found in URL parameter');
-    }
+    };
+
+    // Toggle navigation menu for mobile
+$('#toggleNav').on('click', function() {
+    $('nav').toggleClass('active');
+});
 });

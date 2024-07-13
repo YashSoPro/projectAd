@@ -52,5 +52,10 @@ $(document).ready(function() {
             const movieId = $(this).data('id');
             window.location.href = `movie.html?id=${movieId}`;
         });
-    }
+    };
+
+    // Toggle navigation menu for mobile
+$('#toggleNav').on('click', function() {
+    $('nav').toggleClass('active');
+});
 });
