@@ -49,9 +49,12 @@ body {
   color: #fff;
   font-size: 20px;
   cursor: pointer;
+  margin-right: 10px; /* Added margin to separate icon from input */
 }
 
 .nav .search-box {
+  display: flex; /* Ensure icon and input are in the same line */
+  align-items: center; /* Center items vertically */
   position: absolute;
   right: 250px;
   top: 50%;
@@ -70,16 +73,12 @@ body {
 }
 
 .search-box .search-icon {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
   color: #4a98f7;
 }
 
 .search-box input {
   height: 100%;
-  width: calc(100% - 60px); /* Adjusted width for search input */
+  width: calc(100% - 40px); /* Adjusted width for search input */
   border: none;
   outline: none;
   border-radius: 6px;
