@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Streaming Website</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Movie Streaming Site</title>
+    <!-- Include Video.js CSS -->
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS (or your custom CSS) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Movie Streaming Website</h1>
-    </header>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Movie Streaming Site</a>
+            <!-- Add navigation links here -->
+        </nav>
 
-    <main>
-        <section id="movies">
-            <!-- Movie cards will be dynamically added here -->
-        </section>
-    </main>
+        <!-- Video Player Section -->
+        <div class="row mt-3">
+            <div class="col-md-8">
+                <video id="video1" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="auto">
+                    <source src="video.mp4" type="video/mp4">
+                    <!-- Include HLS or DASH streams here -->
+                </video>
+            </div>
+        </div>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 Your Movie Streaming Website</p>
-    </footer>
-</body>
-</html>
+    <!-- Include Video.js library -->
+    <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
+
+    <!-- Initialize Video.js -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function
