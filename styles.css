@@ -61,16 +61,15 @@ nav ul li a {
     position: relative; /* Ensure search form is in normal flow */
     z-index: 10; /* Ensure search form is above other content */
     align-self: flex-end; /* Align to the end of the flex container */
-    
 }
 
 .search-form input[type="text"] {
     padding: 8px;
     border-radius: 4px 0 0 4px;
     outline: none;
-    width: 200px;
-    border-color: black;
-    border-width: 2px;
+    width: 100%; /* Occupy full width of the container */
+    max-width: 300px; /* Limit maximum width */
+    border: 2px solid black; /* Add border */
 }
 
 .search-form button {
@@ -79,8 +78,10 @@ nav ul li a {
     background-color: #ff6f61;
     color: #fff;
     cursor: pointer;
-    border-color: black;
-    border-width: 2px;
+    border: 2px solid black; /* Add border */
+    width: 100%; /* Occupy full width of the container */
+    max-width: 100px; /* Limit maximum width */
+    margin-left: -2px; /* Adjust for border */
 }
 
 .search-form button:hover {
@@ -221,10 +222,12 @@ footer {
 
     .search-form input[type="text"] {
         width: 100%; /* Occupy full width of the container */
+        max-width: none; /* Remove max-width */
     }
 
     .search-form button {
         width: 100%; /* Occupy full width of the container */
+        max-width: none; /* Remove max-width */
         margin-top: 10px; /* Add some space between input and button */
     }
 }
