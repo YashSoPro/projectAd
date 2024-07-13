@@ -1,8 +1,39 @@
 /* Custom styles */
-.container {
-    max-width: 960px;
-    margin: 0 auto;
+body {
+    background-color: #121212; /* Dark background color */
+    color: #ffffff; /* Light text color */
+}
+
+.container-fluid {
     padding: 20px;
 }
 
-/* Additional custom styles as needed */
+.navbar {
+    background-color: #343a40; /* Dark navbar background color */
+}
+
+.sidebar {
+    background-color: #1a1a1a; /* Dark sidebar background color */
+    color: #ffffff; /* Light text color for sidebar */
+    padding: 20px;
+}
+
+.video-player {
+    margin-top: 20px;
+}
+
+.navbar-toggler-icon {
+    background-color: #ffffff; /* White color for navbar toggler icon */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff; /* Light text color for navbar links */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff; /* Light text color for navbar links on hover */
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: #ffffff; /* White border color for navbar toggler */
+}
