@@ -80,4 +80,24 @@ $(document).ready(function() {
         // Replace with your logic to fetch movie trailer URL
         return `https://www.youtube.com/watch?v=${movieId}`;
     }
+
+    // Dropdown menu toggle for mobile
+    $('.dropdown-toggle').click(function(e) {
+        e.preventDefault();
+        $(this).next('.dropdown-menu').toggleClass('open');
+    });
+
+    // Close dropdown menu when clicking outside
+    $(document).click(function(e) {
+        if (!$(e.target).closest('.dropdown').length) {
+            $('.dropdown-menu').removeClass('open');
+        }
+    });
+
+    // Close dropdown menu on window resize for desktop view
+    $(window).resize(function() {
+        if ($(window).width() > 990) {
+            $('.dropdown-menu').removeClass('open');
+        }
+    });
 });
