@@ -2,10 +2,7 @@ $(document).ready(function() {
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
 
-    // Toggle navigation menu for mobile
-    $('#toggleNav').on('click', function() {
-        $('nav').toggleClass('active');
-    });
+
 
     // Fetch featured movies
     axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`)
