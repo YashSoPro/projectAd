@@ -29,7 +29,7 @@ header h1 {
 nav {
     display: flex;
     align-items: center;
-    justify-content: center; /* Align items to the center */
+    justify-content: space-between; /* Adjusted to space between for mobile */
     flex-wrap: wrap;
     position: relative; /* Ensure proper stacking context */
     z-index: 10; /* Ensure nav bar is above other content */
@@ -40,11 +40,23 @@ nav ul {
     padding: 0;
     display: flex;
     margin: 0;
-    justify-content: center; /* Center items horizontally */
+    justify-content: flex-end; /* Align items to the end for mobile */
+    flex-direction: column; /* Adjusted to column for mobile dropdown */
+    align-items: flex-end; /* Align items to the right for mobile */
+    background-color: #333; /* Background color for dropdown */
+    position: absolute; /* Position dropdown absolutely */
+    top: 100%; /* Align dropdown below nav */
+    left: 0;
+    width: 100%; /* Full width dropdown */
+    display: none; /* Hide dropdown by default */
+}
+
+nav ul.open {
+    display: flex; /* Display dropdown when menu is open */
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin: 0;
 }
 
 nav ul li a {
@@ -52,7 +64,16 @@ nav ul li a {
     text-decoration: none;
     font-weight: bold;
     padding: 10px; /* Adjust padding as needed */
-    display: inline-block; /* Ensure links are not hidden */
+    display: block; /* Display as block for full-width */
+    border-bottom: 1px solid #555; /* Add border between menu items */
+}
+
+nav ul li:last-child a {
+    border-bottom: none; /* Remove border from last item */
+}
+
+nav ul li a:hover {
+    background-color: #555; /* Hover background color */
 }
 
 .search-form {
@@ -203,7 +224,46 @@ footer {
     }
 
     nav ul {
-        justify-content: flex-start; /* Align items to the start */
+        display: none; /* Hide menu items by default on mobile */
+        width: 100%; /* Full width dropdown */
+        position: absolute; /* Position dropdown absolutely */
+        top: 100%; /* Align dropdown below nav */
+        left: 0;
+        background-color: #333; /* Background color for dropdown */
+        z-index: 10; /* Ensure dropdown is above other content */
+    }
+
+    nav ul.open {
+        display: flex; /* Display dropdown when menu is open */
+        flex-direction: column; /* Adjusted to column for mobile dropdown */
+        align-items: flex-end; /* Align items to the right for mobile */
+        width: 100%; /* Full width dropdown */
+        position: absolute; /* Position dropdown absolutely */
+        top: 100%; /* Align dropdown below nav */
+        left: 0;
+        background-color: #333; /* Background color for dropdown */
+        z-index: 10; /* Ensure dropdown is above other content */
+    }
+
+    nav ul li {
+        margin: 0;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px; /* Adjust padding as needed */
+        display: block; /* Display as block for full-width */
+        border-bottom: 1px solid #555; /* Add border between menu items */
+    }
+
+    nav ul li:last-child a {
+        border-bottom: none; /* Remove border from last item */
+    }
+
+    nav ul li a:hover {
+        background-color: #555; /* Hover background color */
     }
 
     .search-form {
