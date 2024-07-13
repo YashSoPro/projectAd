@@ -60,12 +60,14 @@ $(document).ready(function() {
                 ],
             };
             $('#player-overlay').fadeIn(); // Show the player overlay
+            $('body').css('overflow', 'hidden'); // Disable scrolling on the body
             player.play(); // Ensure Plyr's play method is called here
         });
 
         // Close player overlay when close button is clicked
         $('#close-player').on('click', function() {
             $('#player-overlay').fadeOut(); // Hide the player overlay
+            $('body').css('overflow', ''); // Re-enable scrolling on the body
             player.stop(); // Stop Plyr's playback
         });
     }

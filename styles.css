@@ -164,6 +164,7 @@ nav ul li a {
     z-index: 1000; /* Ensure it's above other content */
     justify-content: center;
     align-items: center;
+    overflow-y: auto; /* Enable vertical scrolling within the overlay */
 }
 
 .player-container {
