@@ -200,3 +200,43 @@ nav ul li a {
 .close-player:hover {
     background-color: #f0f0f0;
 }
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    position: fixed; /* Ensure footer stays at the bottom */
+    bottom: 0;
+    width: 100%;
+    z-index: 10; /* Ensure footer is above other content */
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        justify-content: flex-start; /* Align items to the start */
+    }
+
+    .search-form {
+        width: 100%;
+        margin-top: 10px;
+        position: relative;
+        top: 0;
+        right: 0;
+        align-self: stretch; /* Stretch to fit container width */
+    }
+
+    .search-form input[type="text"] {
+        width: calc(100% - 90px);
+    }
+
+    .search-form button {
+        width: 90px;
+    }
+}
