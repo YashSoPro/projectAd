@@ -5,12 +5,16 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
+    min-height: 100vh; /* Ensure body takes full height of viewport */
+    position: relative; /* Needed for proper footer positioning */
 }
 
 header {
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
+    position: relative; /* Ensure header stays above other content */
+    z-index: 1; /* Ensure header is above other content */
 }
 
 header h1 {
@@ -75,6 +79,8 @@ nav ul li a {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
+    position: relative; /* Ensure proper stacking context */
+    z-index: 0; /* Ensure sections are below header and above footer */
 }
 
 .movies-container {
@@ -138,6 +144,8 @@ nav ul li a {
     display: none; /* Hide the player initially */
     margin: 20px auto;
     max-width: 800px;
+    position: relative; /* Ensure proper stacking context */
+    z-index: 10; /* Ensure player is above other content when shown */
 }
 
 #player {
@@ -153,9 +161,10 @@ footer {
     padding: 10px;
     background-color: #333;
     color: #fff;
-    position: fixed;
+    position: absolute; /* Ensure footer stays at the bottom */
     bottom: 0;
     width: 100%;
+    z-index: 1; /* Ensure footer is above other content */
 }
 
 /* Responsive Design */
@@ -163,6 +172,9 @@ footer {
     .search-form {
         margin-top: 0;
         order: 2;
+        position: absolute;
+        top: 20px;
+        right: 20px;
     }
 
     nav {
@@ -179,6 +191,9 @@ footer {
     .search-form {
         width: 100%;
         margin-top: 10px;
+        position: relative;
+        top: 0;
+        right: 0;
     }
 
     .search-form input[type="text"] {
