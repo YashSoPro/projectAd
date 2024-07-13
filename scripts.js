@@ -7,20 +7,33 @@ $(document).ready(function() {
         $('nav ul').toggleClass('active');
     });
 
-    // Fetch featured movies
-    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`)
+    // Fetch more movies (adjust parameters as needed)
+    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&page=1`) // Example: Fetching page 1
         .then(response => {
-            const featuredMovies = response.data.results.slice(0, 6);
-            displayMovies(featuredMovies, '#featuredMovies');
+            const totalResults = response.data.total_results;
+            const totalPages = response.data.total_pages;
+            const movies = response.data.results;
+            displayMovies(movies, '#featuredMovies');
+
+            // Fetch additional pages if needed
+            for (let page = 2; page <= totalPages; page++) {
+                axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&page=${page}`)
+                    .then(response => {
+                        const moreMovies = response.data.results;
+                        displayMovies(moreMovies, '#featuredMovies');
+                    })
+                    .catch(error => {
+                        console.error(`Error fetching page ${page} movies:`, error);
+                    });
+            }
         })
         .catch(error => {
-            console.error('Error fetching featured movies:', error);
+            console.error('Error fetching movies:', error);
         });
 
     // Function to display movies
     function displayMovies(movies, containerSelector) {
         const container = $(containerSelector);
-        container.empty();
         movies.forEach(movie => {
             const imageUrl = movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
