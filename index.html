@@ -1,71 +1,74 @@
-$(document).ready(function() {
-    const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
-    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYzhjOWI3ZTAzMWJlMjE4M2NlNjhiMjU0YjM5ZGRmZCIsIm5iZiI6MTcyMDg2MDAzNi45NzIxMzQsInN1YiI6IjY2OTIzYzIyNGVlNGFiYzcyNzVlODg0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fohroZiX7Enow_34GHF6jGkYvR5zRFULCc-6Oh9_tXQ';
-    const apiUrl = 'https://api.themoviedb.org/3';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Streaming Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Movie Streaming Site</h1>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#movies">Movies</a></li>
+                <li><a href="#tv-shows">TV Shows</a></li>
+                <li><a href="#genres">Genres</a></li>
+                <li><a href="#search">Search</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="home" class="section">
+            <h2>Featured Movies</h2>
+            <div id="featuredMovies" class="movies-container">
+                <!-- Movies will be dynamically added here -->
+            </div>
+        </section>
 
-    // Initialize Plyr for video playback
-    const player = new Plyr('#player', {
-        controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-    });
+        <section id="movies" class="section">
+            <h2>Popular Movies</h2>
+            <div id="popularMovies" class="movies-container">
+                <!-- Movies will be dynamically added here -->
+            </div>
+        </section>
 
-    // Fetch featured movies
-    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
-        const featuredMovies = response.data.results.slice(0, 6);
-        displayMovies(featuredMovies, '#featuredMovies');
-    })
-    .catch(error => {
-        console.error('Error fetching featured movies:', error);
-    });
+        <section id="tv-shows" class="section">
+            <h2>Popular TV Shows</h2>
+            <div id="popularTvShows" class="movies-container">
+                <!-- TV Shows will be dynamically added here -->
+            </div>
+        </section>
 
-    // Function to display movies
-    function displayMovies(movies, containerSelector) {
-        const container = $(containerSelector);
-        container.empty();
-        movies.forEach(movie => {
-            const imageUrl = movie.poster_path
-                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                : 'https://via.placeholder.com/200x300';
-            const title = movie.title;
-            const overview = movie.overview ? movie.overview.substring(0, 150) + '...' : 'No overview available';
-            
-            const movieElement = $(`
-                <div class="movie">
-                    <img src="${imageUrl}" alt="${title}">
-                    <div class="details">
-                        <h3>${title}</h3>
-                        <p>${overview}</p>
-                        <button data-src="${getMovieTrailerUrl(movie.id)}" class="plyr-trigger">Play</button>
-                    </div>
-                </div>
-            `);
-            container.append(movieElement);
-        });
+        <section id="genres" class="section">
+            <h2>Genres</h2>
+            <ul id="genreList" class="genre-list">
+                <!-- Genres will be dynamically added here -->
+            </ul>
+        </section>
 
-        // Reattach Plyr event listeners after updating DOM
-        $('.plyr-trigger').on('click', function() {
-            const videoSrc = $(this).attr('data-src');
-            player.source = {
-                type: 'video',
-                sources: [
-                    {
-                        src: videoSrc,
-                        type: 'video/mp4',
-                    },
-                ],
-            };
-            player.play();
-        });
-    }
+        <section id="search" class="section">
+            <h2>Search Movies</h2>
+            <form id="searchForm" class="search-form">
+                <input type="text" id="searchInput" placeholder="Search movies...">
+                <button type="submit">Search</button>
+            </form>
+            <div id="searchResults" class="movies-container">
+                <!-- Search results will be dynamically added here -->
+            </div>
+        </section>
+    </main>
 
-    // Function to get movie trailer URL
-    function getMovieTrailerUrl(movieId) {
-        // Replace with your logic to fetch movie trailer URL
-        return `https://www.youtube.com/watch?v=${movieId}`;
-    }
-});
+    <footer>
+        <p>&copy; 2024 Movie Streaming Site. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
