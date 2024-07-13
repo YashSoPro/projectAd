@@ -61,22 +61,113 @@ nav.sticky .logo a{
  nav.sticky .nav-links li a:hover{
   color: #0E2431;
 }
-.home{
-  height: 100vh;
-  width: 100%;
-  background: url("images/background.png") no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  font-family: 'Ubuntu', sans-serif;
+.section {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    position: relative; /* Ensure proper stacking context */
+    z-index: 0; /* Ensure sections are below header and above footer */
 }
-h2{
-  font-size: 30px;
-  margin-bottom: 6px;
-  color: #4070f4;
+
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
-.text{
-  text-align: justify;
-  padding: 40px 80px;
-  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+
+.movie {
+    width: 200px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.movie:hover {
+    transform: translateY(-10px);
+}
+
+.movie img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #ff6f61;
+}
+
+.movie .details {
+    padding: 10px;
+}
+
+.movie h3 {
+    font-size: 1.2rem;
+    margin: 0 0 10px 0;
+    color: #ff6f61;
+}
+
+.movie p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.movie button {
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.movie button:hover {
+    background-color: #e65c54;
+}
+
+/* Video player overlay */
+
+.player-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    z-index: 1000; /* Ensure it's above other content */
+    justify-content: center;
+    align-items: center;
+}
+
+.player-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90%;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#player {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    position: fixed; /* Ensure footer stays at the bottom */
+    bottom: 0;
+    width: 100%;
+    z-index: 10; /* Ensure footer is above other content */
 }
