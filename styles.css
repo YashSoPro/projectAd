@@ -201,7 +201,7 @@ footer {
 }
 
 /* Responsive Design */
-@media (max-width: 767px) {
+@media (max-width: 990px) {
     nav ul {
         display: none; /* Hide menu items by default on mobile */
         width: 100%; /* Full width dropdown */
