@@ -171,12 +171,9 @@ footer {
     width: 100%;
     z-index: 10; /* Ensure footer is above other content */
 }
-h2{
-    font-size: 30px;
-    margin-bottom: 6px;
-    color: #4070f4;
-  }
+
   .text{
+    margin-top: auto;
     text-align: justify;
     padding: 40px 80px;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
