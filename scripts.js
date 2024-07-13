@@ -107,6 +107,7 @@ $(document).ready(function() {
     // Toggle navigation menu on mobile
     $('#toggleNav').on('click', function() {
         $('nav').toggleClass('active');
+        $('nav ul').toggleClass('active'); // Optional: toggle class for nested ul animation
     });
 
 });

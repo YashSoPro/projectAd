@@ -1,4 +1,4 @@
-/* Reset and General styling */
+/* General styling */
 body {
     font-family: 'Arial', sans-serif;
     color: #333;
@@ -26,25 +26,32 @@ header h1 {
     display: inline-block;
 }
 
-#toggleNav {
-    display: none; /* Hide toggle button by default */
+nav {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: #333;
+    padding: 10px 0;
+    transition: transform 0.3s ease-in-out; /* Smooth animation */
+    transform: translateY(-100%);
 }
 
-nav {
+nav.active {
     display: flex;
-    align-items: center;
-    justify-content: center; /* Align items to the center */
-    flex-wrap: wrap;
-    position: relative; /* Ensure proper stacking context */
-    z-index: 10; /* Ensure nav bar is above other content */
+    transform: translateY(0);
 }
 
 nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     margin: 0;
-    justify-content: center; /* Center items horizontally */
+    padding: 0;
+    transition: opacity 0.3s ease-in-out; /* Smooth animation */
+    opacity: 0;
+}
+
+nav.active ul {
+    opacity: 1;
 }
 
 nav ul li {
@@ -62,26 +69,28 @@ nav ul li a {
 .search-form {
     display: flex;
     margin-top: 10px;
-    margin-bottom: 20px;
-    align-items: center;
-    justify-content: center;
+    position: relative; /* Ensure search form is in normal flow */
+    z-index: 10; /* Ensure search form is above other content */
+    align-self: flex-end; /* Align to the end of the flex container */
 }
 
 .search-form input[type="text"] {
     padding: 8px;
     border-radius: 4px 0 0 4px;
     outline: none;
-    width: 200px; /* Fixed width for desktop */
-    border: 2px solid black;
+    width: 200px;
+    border-color: black;
+    border-width: 2px;
 }
 
 .search-form button {
-    padding: 8px 16px;
+    padding: 8px;
     border-radius: 0 4px 4px 0;
     background-color: #ff6f61;
     color: #fff;
     cursor: pointer;
-    border: 2px solid black;
+    border-color: black;
+    border-width: 2px;
 }
 
 .search-form button:hover {
@@ -201,78 +210,31 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 767px) {
-    header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    header h1 {
-        margin-bottom: 10px;
-    }
-
-    #toggleNav {
-        display: block;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        margin-bottom: 10px;
-        width: 100%;
-        text-align: left;
-    }
-
     nav {
-        display: none;
         flex-direction: column;
-        align-items: stretch;
-        background-color: #333;
-        padding: 10px 0;
+        align-items: flex-start;
     }
 
     nav ul {
-        flex-direction: column;
-        align-items: stretch;
-        margin: 0;
-        padding: 0;
-    }
-
-    nav ul li {
-        margin: 10px 0;
-        text-align: center;
-    }
-
-    nav ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 10px;
-        display: block;
-    }
-
-    nav.active {
-        display: flex;
+        justify-content: flex-start; /* Align items to the start */
     }
 
     .search-form {
-        flex-direction: column;
-        align-items: stretch;
+        width: 100%;
+        margin-top: 10px;
+        position: relative;
+        top: 0;
+        right: 0;
+        align-self: stretch; /* Stretch to fit container width */
+        border-color: black;
+        border-width: 2px;
     }
 
     .search-form input[type="text"] {
-        width: 100%; /* Occupy full width of the container */
-        max-width: none; /* Remove max-width */
-        border-radius: 4px; /* Adjust border-radius for full width */
-        margin-bottom: 10px; /* Add spacing between input and button */
+        width: calc(100% - 90px);
     }
 
     .search-form button {
-        width: 100%; /* Occupy full width of the container */
-        max-width: none; /* Remove max-width */
-        border-radius: 4px; /* Adjust border-radius for full width */
-    }
-
-    .section {
-        margin: 10px;
+        width: 90px;
     }
 }
