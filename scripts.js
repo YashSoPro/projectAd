@@ -103,4 +103,10 @@ $(document).ready(function() {
         // Replace with your logic to fetch movie trailer URL
         return `https://www.youtube.com/watch?v=${movieId}`;
     }
+
+    // Toggle navigation menu on mobile
+    $('#toggleNav').on('click', function() {
+        $('nav').toggleClass('active');
+    });
+
 });
