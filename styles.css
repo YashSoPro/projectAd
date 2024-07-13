@@ -25,7 +25,7 @@ header h1 {
 nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start; /* Align items to the left */
     flex-wrap: wrap;
     position: relative; /* Ensure proper stacking context */
     z-index: 10; /* Ensure nav bar is above other content */
@@ -175,16 +175,8 @@ footer {
 
 /* Responsive Design */
 @media (min-width: 768px) {
-    .search-form {
-        margin-top: 0;
-        order: 2;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-
     nav {
-        justify-content: space-between;
+        justify-content: flex-start; /* Align items to the left */
     }
 }
 
