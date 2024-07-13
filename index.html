@@ -10,14 +10,21 @@
 <body>
     <header>
         <h1>Movie Streaming Site</h1>
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" id="menu-icon">&#9776;</label> <!-- Mobile menu toggle -->
         <nav>
-            <ul id="desktop-menu">
+            <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#movies">Movies</a></li>
                 <li><a href="#tv-shows">TV Shows</a></li>
                 <li><a href="#genres">Genres</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#">Menu</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#movies">Movies</a></li>
+                        <li><a href="#tv-shows">TV Shows</a></li>
+                        <li><a href="#genres">Genres</a></li>
+                    </ul>
+                </li>
             </ul>
             <form id="searchForm" class="search-form">
                 <input type="text" id="searchInput" placeholder="Search movies...">
@@ -59,6 +66,7 @@
         <div id="player-overlay" class="player-overlay">
             <div id="player-container" class="player-container">
                 <div id="player"></div>
+                <button id="closeBtn" class="close-btn">Close</button>
             </div>
         </div>
     
