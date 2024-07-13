@@ -1,4 +1,4 @@
-/* General styling */
+/* Reset and General styling */
 body {
     font-family: 'Arial', sans-serif;
     color: #333;
@@ -58,30 +58,26 @@ nav ul li a {
 .search-form {
     display: flex;
     margin-top: 10px;
-    position: relative; /* Ensure search form is in normal flow */
-    z-index: 10; /* Ensure search form is above other content */
-    align-self: flex-end; /* Align to the end of the flex container */
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-form input[type="text"] {
     padding: 8px;
     border-radius: 4px 0 0 4px;
     outline: none;
-    width: 100%; /* Occupy full width of the container */
-    max-width: 300px; /* Limit maximum width */
-    border: 2px solid black; /* Add border */
+    width: 200px; /* Fixed width for desktop */
+    border: 2px solid black;
 }
 
 .search-form button {
-    padding: 8px;
+    padding: 8px 16px;
     border-radius: 0 4px 4px 0;
     background-color: #ff6f61;
     color: #fff;
     cursor: pointer;
-    border: 2px solid black; /* Add border */
-    width: 100%; /* Occupy full width of the container */
-    max-width: 100px; /* Limit maximum width */
-    margin-left: -2px; /* Adjust for border */
+    border: 2px solid black;
 }
 
 .search-form button:hover {
@@ -215,19 +211,20 @@ footer {
     }
 
     .search-form {
-        width: 100%;
-        margin-top: 10px;
-        align-self: stretch; /* Stretch to fit container width */
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .search-form input[type="text"] {
         width: 100%; /* Occupy full width of the container */
         max-width: none; /* Remove max-width */
+        border-radius: 4px; /* Adjust border-radius for full width */
+        margin-bottom: 10px; /* Add spacing between input and button */
     }
 
     .search-form button {
         width: 100%; /* Occupy full width of the container */
         max-width: none; /* Remove max-width */
-        margin-top: 10px; /* Add some space between input and button */
+        border-radius: 4px; /* Adjust border-radius for full width */
     }
 }
