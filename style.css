@@ -156,7 +156,8 @@ body {
 }
 
 .section-container {
-    margin-top: 100px; /* Adjust as needed */
+    margin-top: 100px; /* Adjust top margin between sections */
+    margin-bottom: 20px; /* Adjust bottom margin between sections */
   }
   
   .section {
@@ -165,7 +166,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
-    margin: 0 auto 20px; /* Adjust as needed */
+    margin: 0 auto 20px; /* Adjust margin between sections */
     position: relative; /* Ensure proper stacking context */
     z-index: 0; /* Ensure sections are below header and above footer */
   }
@@ -262,12 +263,10 @@ body {
 }
 
 footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #333;
-  color: #fff;
-  position: fixed; /* Ensure footer stays at the bottom */
-  bottom: 0;
-  width: 100%;
-  z-index: 10; /* Ensure footer is above other content */
-}
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    position: relative; /* Ensure footer stays at the bottom */
+    margin-top: 20px; /* Adjust top margin to create space */
+  }
