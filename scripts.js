@@ -104,10 +104,8 @@ $(document).ready(function() {
         return `https://www.youtube.com/watch?v=${movieId}`;
     }
 
-    // Toggle navigation menu on mobile
+    // Toggle navigation menu for mobile
     $('#toggleNav').on('click', function() {
         $('nav').toggleClass('active');
-        $('nav ul').toggleClass('active'); // Optional: toggle class for nested ul animation
     });
-
 });
