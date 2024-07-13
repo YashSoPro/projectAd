@@ -71,15 +71,19 @@ $(document).ready(function() {
         const body = $('body');
         playerOverlay.fadeIn(); // Show the player overlay
         body.css('overflow', 'hidden'); // Disable scrolling on the body
-    }
 
-    // Close player overlay when clicking outside the overlay or on close button
-    $(document).on('click', function(event) {
-        const playerOverlay = $('#player-overlay');
-        if (!playerOverlay.is(event.target) && playerOverlay.has(event.target).length === 0) {
-            hidePlayerOverlay(); // Clicked outside the overlay, hide it
-        }
-    });
+        // Close player overlay when clicking outside the overlay or on close button
+        $(document).on('click.playeroverlay', function(event) {
+            if (!playerOverlay.is(event.target) && playerOverlay.has(event.target).length === 0) {
+                hidePlayerOverlay(); // Clicked outside the overlay, hide it
+            }
+        });
+
+        // Close player overlay when clicking on close button
+        $('#close-overlay').on('click.playeroverlay', function() {
+            hidePlayerOverlay(); // Hide the player overlay when close button is clicked
+        });
+    }
 
     // Function to hide player overlay
     function hidePlayerOverlay() {
@@ -88,12 +92,11 @@ $(document).ready(function() {
         player.stop(); // Stop Plyr's playback
         playerOverlay.fadeOut(); // Hide the player overlay
         body.css('overflow', ''); // Re-enable scrolling on the body
-    }
 
-    // Close player overlay when clicking on close button
-    $('#close-overlay').on('click', function() {
-        hidePlayerOverlay(); // Hide the player overlay when close button is clicked
-    });
+        // Remove event listeners to prevent memory leaks
+        $(document).off('.playeroverlay');
+        $('#close-overlay').off('.playeroverlay');
+    }
 
     // Function to get movie trailer URL
     function getMovieTrailerUrl(movieId) {
