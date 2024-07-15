@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - Movie Streaming Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+<div id="loading-container">
+        <div class="loading-text">
+            <span class="part-1">Movie</span><span class="part-2">Streaming</span>
+        </div>
+    </div>
+
+  <div id="content" class="hidden">
+    <header>
+        <h1>Movie Streaming Site</h1>
+        <button id="toggleNav">&#9776;</button>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#movies">Movies</a></li>
+                <li><a href="#tv-shows">TV Shows</a></li>
+                <li><a href="#genres">Genres</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="movieDetails" class="section">
+            <div id="movieContainer"></div>
+            
+        </section>
+    </main>
+  </div>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="movie.js"></script>
+    <script src="backButton.js"></script>
+    <script src="loading.js"></script>
+
+</body>
+</html>

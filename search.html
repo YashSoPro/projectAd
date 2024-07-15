@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading-container">
+        <div class="loading-text">
+            <span class="part-1">Movie</span><span class="part-2">Streaming</span>
+        </div>
+    </div>
+
+    <div id="content" class="hidden">
+        <header>
+            <h1>Movie Streaming Site</h1>
+            <button id="toggleNav">&#9776;</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#movies">Movies</a></li>
+                    <li><a href="#tv-shows">TV Shows</a></li>
+                    <li><a href="#genres">Genres</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="section">
+                <h2 id="searchQuery">Results For Movie</h2>
+                <div id="searchResultsContainer" class="movies-container">
+                    <!-- Movies will be dynamically added here -->
+                </div>
+              <button class="back-button">Back</button>
+                <button id="loadMoreBtn" class="button">Load More</button>
+              
+            </section>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="searchResults.js"></script>
+    <script src="backButton.js"></script> <!-- JavaScript file for the back button -->
+    <script src="loading.js"></script> <!-- JavaScript file to handle loading animation -->
+</body>
+</html>
