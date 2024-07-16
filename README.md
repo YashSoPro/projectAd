@@ -15,6 +15,6 @@ Welcome to **ProjectAd**, your gateway to an immersive multimedia experience. Di
 
 ## Getting Started
 
-[![Star History](https://star-history.com/#YashSoPro/projectAd&Date)](https://star-history.com/#YashSoPro/projectAd&Date)
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=Z2hwXzJhRzRlZ0lrR29ZWXEzYkZYWDVTRG5sU05ZcTlkbzBrRnhIZw==#YashSoPro/projectAd&Date" frameBorder="0"></iframe>
 ```bash
 git clone https://github.com/YashSoPro/projectAd.git
