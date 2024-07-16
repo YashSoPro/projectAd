@@ -25,4 +25,59 @@ $(document).ready(function() {
             <div class="movie-details">
                 <h2>${movie.title}</h2>
                 <div id="trailerContainer" class="trailer-container">
-                    <video controls crossori
+                    <video controls crossorigin playsinline id="player">
+                        <source src="${trailerUrl}" type="video/mp4">
+                    </video>
+                </div>
+                <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
+            </div>
+        `;
+        playerContainer.html(playerHtml);
+
+        $('#loading-container').fadeOut(500);
+        $('#playerContainer').fadeIn(500); // Show player container after loading
+
+        // Initialize Plyr
+        const player = new Plyr('#player', {
+            autoplay: true, // Ensure Plyr tries to play the video automatically
+        });
+
+        player.on('error', event => {
+            console.error('Plyr Error:', event.detail.plyr.error.message);
+        });
+
+        // Attach event listener to the "Back to Movie Details" button
+        $('#backToDetailsBtn').click(function() {
+            window.history.back(); // Go back to previous page
+        });
+
+        // Fullscreen toggle with F11 key
+        $(document).on('keydown', function(e) {
+            if (e.key === 'F11') {
+                toggleFullScreen();
+            }
+        });
+
+        function toggleFullScreen() {
+            const iframe = document.getElementById('moviePlayerFrame');
+            if (iframe.requestFullscreen) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    iframe.requestFullscreen();
+                }
+            }
+        }
+    }
+
+    // Extract movie ID from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('id');
+
+    // Fetch and display movie details
+    if (movieId) {
+        fetchMovieDetails(movieId);
+    } else {
+        console.error('No movie ID found in URL parameter');
+    }
+});
