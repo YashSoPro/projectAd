@@ -19,4 +19,4 @@ To get a sneak peek into our digital haven, clone the repository:
 
 ```bash
 git clone https://github.com/YashSoPro/projectAd.git
-
+[![Star History](https://star-history.com/#YashSoPro/projectAd&Date)](https://star-history.com/#YashSoPro/projectAd&Date)
