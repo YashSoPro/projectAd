@@ -19,3 +19,4 @@ To get a sneak peek into our digital haven, clone the repository:
 
 ```bash
 git clone https://github.com/YashSoPro/projectAd.git
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=Z2hwXzJhRzRlZ0lrR29ZWXEzYkZYWDVTRG5sU05ZcTlkbzBrRnhIZw==#YashSoPro/projectAd&Date" frameBorder="0"></iframe>
