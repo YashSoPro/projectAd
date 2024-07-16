@@ -18,6 +18,8 @@ $(document).ready(function() {
 
         const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
 
+        console.log('Trailer URL:', trailerUrl); // Debugging: Log the video URL
+
         const playerContainer = $('#playerContainer');
         const playerHtml = `
             <div class="movie-details">
@@ -36,7 +38,13 @@ $(document).ready(function() {
         $('#playerContainer').fadeIn(500); // Show player container after loading
 
         // Initialize Plyr
-        const player = new Plyr('#player');
+        const player = new Plyr('#player', {
+            autoplay: true, // Ensure Plyr tries to play the video automatically
+        });
+
+        player.on('error', event => {
+            console.error('Plyr Error:', event.detail.plyr.error.message);
+        });
 
         // Attach event listener to the "Back to Movie Details" button
         $('#backToDetailsBtn').click(function() {
