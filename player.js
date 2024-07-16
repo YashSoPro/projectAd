@@ -55,6 +55,21 @@ $(document).ready(function() {
                 }
             }
         }
+
+        // Ad blocker script
+        blockAds();
+    }
+
+    function blockAds() {
+        // List of known ad element selectors (add more as needed)
+        const adSelectors = ['.ad-banner', '.ad-container', '#ad', '[id*="ad-"]', '[class*="ad-"]'];
+
+        // Check and remove ad elements periodically
+        setInterval(() => {
+            adSelectors.forEach(selector => {
+                $(selector).remove();
+            });
+        }, 1000); // Check every second
     }
 
     // Extract movie ID from URL parameter
