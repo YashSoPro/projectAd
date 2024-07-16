@@ -10,35 +10,34 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-  
-  <div id="loading-container">
+    <div id="loading-container">
         <div class="loading-text">
             <span class="part-1">Movie</span><span class="part-2">Streaming</span>
         </div>
     </div>
 
-  <div id="content" class="hidden">
-    <header>
-        <h1>Movie Streaming Site</h1>
-        <button id="toggleNav">&#9776;</button>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#movies">Movies</a></li>
-                <li><a href="#tv-shows">TV Shows</a></li>
-                <li><a href="#genres">Genres</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="moviePlayer" class="section">
-            <div id="playerContainer"></div>
-        </section>
-    </main>
-  </div>
-  
-  <script src="loading.js"></script>
-  <script src="player.js"></script>
-  <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+    <div id="content" class="hidden">
+        <header>
+            <h1>Movie Streaming Site</h1>
+            <button id="toggleNav">&#9776;</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#movies">Movies</a></li>
+                    <li><a href="#tv-shows">TV Shows</a></li>
+                    <li><a href="#genres">Genres</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="moviePlayer" class="section">
+                <div id="playerContainer"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="loading.js"></script>
+    <script src="player.js"></script>
+    <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
 </body>
 </html>
