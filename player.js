@@ -23,7 +23,9 @@ $(document).ready(function() {
             <div class="movie-details">
                 <h2>${movie.title}</h2>
                 <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="615" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
+                    <video controls crossorigin playsinline id="player">
+                        <source src="${trailerUrl}" type="video/mp4">
+                    </video>
                 </div>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
@@ -32,6 +34,9 @@ $(document).ready(function() {
 
         $('#loading-container').fadeOut(500);
         $('#playerContainer').fadeIn(500); // Show player container after loading
+
+        // Initialize Plyr
+        const player = new Plyr('#player');
 
         // Attach event listener to the "Back to Movie Details" button
         $('#backToDetailsBtn').click(function() {
