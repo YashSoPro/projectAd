@@ -16,4 +16,5 @@ Welcome to **ProjectAd**, your gateway to an immersive multimedia experience. Di
 ## Getting Started
 
 ```bash
-git clone https://github.com/YashSoPro/projectAd.git
+npm i github:YashSoPro/projectAd
+```
