@@ -1,19 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 body {
     font-family: 'Arial', sans-serif;
     color: #333;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+    background-image: url("https://ruds.neocities.org/filmap.png");
+    background-size: cover;
     position: relative;
     margin-bottom: 100px;
   overflow-y: hidden;
 }
 
 header {
-    background-color: #333;
+    backdrop-filter: blur(200px);
+    background-color: transparent;
+    border-radius: 10px;
+    border: 3px solid rgb(194, 185, 189);
     color: #fff;
     padding: 10px 20px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,6 +26,9 @@ header {
 
 header h1 {
     margin: 0;
+    font-family: "Lato", sans-serif;;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
 }
 
 #toggleNav {
@@ -42,7 +50,7 @@ nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    margin: 0;
+    margin: -5px;
 }
 
 nav ul li {
@@ -53,16 +61,26 @@ nav ul li a {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    font-size: 20px;
     padding: 10px;
+}
+
+nav ul li a:hover{
+    transition: .1s;
+    background-color: rgb(255, 215, 0);
+    border-radius: 5px;
 }
 
 .section {
     padding: 20px;
-    background-color: #fff;
+    background-color: #790351;
     margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
+}
+.section h2{
+    color: #ffffff;
 }
 
 .movies-container {
@@ -99,17 +117,17 @@ nav ul li a {
 .movie h3 {
     font-size: 1.2rem;
     margin: 0 0 10px 0;
-    color: #ff6f61;
+    color: #000000;
 }
 
 .movie p {
     font-size: 0.9rem;
-    color: #555;
+    color: #ff5f03;
     margin-bottom: 10px;
 }
 
 .movie button, .movie a {
-    background-color: #ff6f61;
+    background-color: #ff0000;
     color: #fff;
     border: none;
     padding: 10px;
@@ -133,20 +151,25 @@ nav ul li a {
     border-radius: 4px 0 0 4px;
     outline: none;
     width: 200px; /* Fixed width for desktop */
-    border: 2px solid black;
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.search-form input[type="text"]:focus {
+    border: 2px solid rgb(34, 34, 34);
 }
 
 .search-form button {
     padding: 8px 16px;
     border-radius: 0 4px 4px 0;
-    background-color: #ff6f61;
+    background-color: #61edff;
     color: #fff;
     cursor: pointer;
-    border: 2px solid black;
+    border: 2px solid #61edff;
 }
 
 .search-form button:hover {
-    background-color: #e65c54;
+    transition: .8s;
+    background-color: #0a37ff;
 }
 
 footer {
@@ -157,6 +180,10 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+.movie-info{
+    color: rgb(255, 255, 255);
 }
 
 /* Mobile Styles */
@@ -243,14 +270,18 @@ footer {
     }
 
     .search-form input[type="text"] {
-        width: 100%; /* Occupy full width of the container */
+        position: relative;
+        left: -40px;
+        width: 300px; /* Occupy full width of the container */
         max-width: none; /* Remove max-width */
         border-radius: 4px; /* Adjust border-radius for full width */
         margin-bottom: 10px; /* Add spacing between input and button */
     }
 
     .search-form button {
-        width: 100%; /* Occupy full width of the container */
+        position: relative;
+        left: 70px;
+        width: 100px; /* Occupy full width of the container */
         max-width: none; /* Remove max-width */
         border-radius: 4px; /* Adjust border-radius for full width */
     }
@@ -298,7 +329,7 @@ footer {
 }
 
 .loading-text .part-2 {
-    color: #800080;
+    color: #013bfc;
 }
 
 @keyframes wipeEffect {
@@ -328,24 +359,23 @@ footer {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Background color of the scrollbar track */
-    border-radius: 10px;
+    background-color: #000000; /* Background color of the scrollbar track */
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #800080; /* Color of the scrollbar thumb */
+    background-color: #029aff; /* Color of the scrollbar thumb */
     border-radius: 10px; /* Roundness of the scrollbar thumb */
     border: 3px solid #f1f1f1; /* Padding around thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #800080; /* Color of the scrollbar thumb on hover */
+    background-color: #0669ac; /* Color of the scrollbar thumb on hover */
 }
 
 .back-button {
-    background-color: transparent;
-    color: #3498db; /* Color for the button text */
-    border: 2px solid #3498db; /* Border color */
+    background-color: white;
+    color: #f89706; /* Color for the button text */
+    border: 2px solid #ffffff; /* Border color */
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
@@ -353,9 +383,9 @@ footer {
 }
 
 .back-button:hover {
-    background-color: #3498db; /* Background color on hover */
+    background-color: #607888; /* Background color on hover */
     color: white; /* Text color on hover */
-    border-color: #3498db; /* Border color on hover */
+    border-color: #607888; /* Border color on hover */
 }
 
 .button {
@@ -372,3 +402,8 @@ footer {
     background-color: #77ab36; /* Darker color on hover */
 }
 
+
+::selection{
+    background-color: #000000;
+    color: white;
+}
