@@ -18,4 +18,4 @@ Welcome to **ProjectAd**, your gateway to an immersive multimedia experience. Di
 ```bash
 npm i github:YashSoPro/projectAd
 ```
-#DONT MAKE US FAMOUS OR IT WILL BE LOSS FOR ALL OF US :(
+# DONT MAKE US FAMOUS OR IT WILL BE LOSS FOR ALL OF US :(
