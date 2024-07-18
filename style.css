@@ -31,7 +31,7 @@ header {
 
 header h1 {
     margin: 0;
-    font-family: "Lato", sans-serif;;
+    font-family: "Lato", sans-serif;
     color: rgb(255, 255, 255);
     font-size: 30px;
 }
@@ -70,7 +70,7 @@ nav ul li a {
     padding: 10px;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     transition: .1s;
     background-color: rgb(255, 215, 0);
     border-radius: 5px;
@@ -307,3 +307,47 @@ footer {
     background-color: #000000;
     color: white;
 }
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+    header {
+        padding: 10px; /* Adjust padding for smaller header */
+    }
+
+    nav {
+        top: 50px; /* Adjust top position to fit below header */
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 20px; /* Adjust margin for spacing */
+    }
+
+    .search-form input[type="text"] {
+        width: calc(100% - 20px); /* Adjust width to fit container */
+        margin-left: 0;
+    }
+
+    .search-form button {
+        width: 100%; /* Button occupies full width */
+        margin-left: 0;
+    }
+
+    .section {
+        padding: 10px; /* Adjust padding for sections */
+    }
+
+    .movies-container {
+        gap: 10px; /* Adjust gap between movies */
+    }
+        }
