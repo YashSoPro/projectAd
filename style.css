@@ -185,13 +185,13 @@ nav ul li a:hover {
 
 /* Footer Styles */
 footer {
-    position: fixed;
+    position: absolute;
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 10px 20px;
     bottom: 0;
-    width: 90%;
+    width: 95%;
 }
 
 /* Loading Screen Animation */
