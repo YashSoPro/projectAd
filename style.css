@@ -349,4 +349,7 @@ footer {
     .movies-container {
         gap: 10px; /* Adjust gap between movies */
     }
+
+    .footer{
+        width: 100%;
         }
