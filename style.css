@@ -185,6 +185,7 @@ nav ul li a:hover {
 
 /* Footer Styles */
 footer {
+    position: fixed;
     background-color: #333;
     color: #fff;
     text-align: center;
