@@ -10,16 +10,16 @@
 <body>
   
 <div id="loading-container">
-        <div class="loading-text">
-            <span class="part-1">Zeus</span><span class="part-2">Streaming</span>
-        </div>
+    <div class="loading-text">
+        <span class="part-1">Zeus</span><span class="part-2">Streaming</span>
     </div>
+</div>
 
-  <div id="content" class="hidden">
+<div id="content" class="hidden">
     <header>
         <a href="https://economestreams.glitch.me/">
-        <h1>Zeus Streaming</h1>
-    </a>
+            <h1>Zeus Streaming</h1>
+        </a>
         <button id="toggleNav">&#9776;</button>
         <nav>
             <ul>
@@ -41,8 +41,12 @@
 
         <section id="movies" class="section">
             <h2>Popular Movies</h2>
-            <div id="popularMovies" class="movies-container">
+            <div id="popularMovies" class="movies-grid">
                 <!-- Movies will be dynamically added here -->
+            </div>
+            <div id="pagination" class="pagination">
+                <button id="prevPage" class="button">Previous Page</button>
+                <button id="nextPage" class="button">Next Page</button>
             </div>
         </section>
 
@@ -70,22 +74,24 @@
             </ul>
         </section>
     </main>
-  </div>
+</div>
 
+<footer>
+    <p>&copy; 2024 Zeus Streaming. All rights reserved.</p>
+</footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#toggleNav').on('click', function() {
-                $('nav').toggleClass('active');
-            });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="script.js"></script>
+<script src="loading.js"></script>
+<script src="search.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#toggleNav').on('click', function() {
+            $('nav').toggleClass('active');
         });
-    </script>
-  <script src="loading.js"></script>
-  <script src="search.js"></script>
+    });
+</script>
 </body>
-  
 </html>
