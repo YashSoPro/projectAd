@@ -6,9 +6,9 @@ body {
     padding: 0;
     background-image: url("https://ruds.neocities.org/filmap.png");
     background-size: cover;
-    position: relative;
-    margin-bottom: 100px;
-    overflow-y: auto; /* Changed from hidden to auto */
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 header {
@@ -22,6 +22,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; /* Ensure proper positioning */
 }
 
 header h1 {
@@ -44,6 +45,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative; /* Ensure proper positioning */
 }
 
 nav ul {
@@ -75,6 +77,7 @@ nav ul li a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: auto; /* Push search form to the right side */
 }
 
 .search-form input[type="text"] {
