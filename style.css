@@ -102,6 +102,7 @@ nav ul {
 .pagination {
     display: flex;
     justify-content: space-between;
+    margin-top: 1rem;
 }
 
 .pagination .button {
