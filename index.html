@@ -8,6 +8,54 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional CSS to adjust design */
+        .movies-grid, .movies-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .movie {
+            width: 100%;
+            max-width: 200px;
+            margin: auto;
+            text-align: center;
+        }
+        .movie img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .details {
+            padding: 10px;
+        }
+        .search-form input, .search-form button {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    </style>
 </head>
 <body>
     <div id="loading-container">
@@ -40,24 +88,8 @@
                     <input type="text" id="searchInput" placeholder="Search for a movie...">
                     <button onclick="searchMovies()">Search</button>
                 </div>
-                <div class="movies-grid">
-                    <div class="movie">
-                        <img src="movie1.jpg" alt="Movie 1">
-                        <div class="details">
-                            <h3>Movie Title 1</h3>
-                            <p>Movie description goes here...</p>
-                            <a href="#" class="button">Watch Now</a>
-                        </div>
-                    </div>
-                    <div class="movie">
-                        <img src="movie2.jpg" alt="Movie 2">
-                        <div class="details">
-                            <h3>Movie Title 2</h3>
-                            <p>Movie description goes here...</p>
-                            <a href="#" class="button">Watch Now</a>
-                        </div>
-                    </div>
-                    <!-- Add more movie divs as needed -->
+                <div id="featuredMovies" class="movies-grid">
+                    <!-- Movies will be dynamically added here by player.js -->
                 </div>
                 <div class="pagination">
                     <button class="back-button" onclick="prevPage()">Previous</button>
@@ -68,31 +100,32 @@
             <section id="movies" class="section">
                 <h2>Popular Movies</h2>
                 <div id="popularMovies" class="movies-container">
-                    <!-- Movies will be dynamically added here -->
+                    <!-- Movies will be dynamically added here by player.js -->
                 </div>
             </section>
 
             <section id="tv-shows" class="section">
                 <h2>Popular TV Shows</h2>
                 <div id="popularTvShows" class="movies-container">
-                    <!-- TV Shows will be dynamically added here -->
+                    <!-- TV Shows will be dynamically added here by player.js -->
                 </div>
             </section>
 
             <section id="genres" class="section">
                 <h2>Genres</h2>
                 <ul id="genreList" class="genre-list">
-                    <!-- Genres will be dynamically added here -->
+                    <!-- Genres will be dynamically added here by player.js -->
                 </ul>
             </section>
 
             <section id="search" class="section">
                 <h2>Search</h2>
                 <ul id="searchList" class="search-list">
-                    <form id="searchForm" class="search-form">
+                    <form id="searchForm" class="search-form" onsubmit="searchMovies(); return false;">
                         <input type="text" id="searchInput" placeholder="Search movies...">
                         <button type="submit">Search</button>
                     </form>
+                    <!-- Search results will be dynamically added here by player.js -->
                 </ul>
             </section>
         </main>
@@ -105,7 +138,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
+    <script src="player.js"></script> <!-- Assuming this handles API calls and dynamic content -->
     <script src="loading.js"></script>
     <script src="search.js"></script>
     <script src="backButton.js"></script>
