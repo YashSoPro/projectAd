@@ -44,6 +44,8 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-grow: 1;
+    margin-left: 20px;
 }
 
 nav ul {
@@ -69,6 +71,41 @@ nav ul li a:hover {
     transition: .1s;
     background-color: rgb(255, 215, 0);
     border-radius: 5px;
+}
+
+.search-form {
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.search-form input[type="text"] {
+    padding: 8px;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    width: 100%;
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.search-form input[type="text"]:focus {
+    border: 2px solid rgb(34, 34, 34);
+}
+
+.search-form button {
+    padding: 8px 16px;
+    border-radius: 0 4px 4px 0;
+    background-color: #61edff;
+    color: #fff;
+    cursor: pointer;
+    border: 2px solid #61edff;
+}
+
+.search-form button:hover {
+    transition: .8s;
+    background-color: #0a37ff;
 }
 
 .section {
@@ -138,40 +175,6 @@ nav ul li a:hover {
     display: block;
 }
 
-.search-form {
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-form input[type="text"] {
-    padding: 8px;
-    border-radius: 4px 0 0 4px;
-    outline: none;
-    width: 200px; /* Fixed width for desktop */
-    border: 2px solid rgb(255, 255, 255);
-}
-
-.search-form input[type="text"]:focus {
-    border: 2px solid rgb(34, 34, 34);
-}
-
-.search-form button {
-    padding: 8px 16px;
-    border-radius: 0 4px 4px 0;
-    background-color: #61edff;
-    color: #fff;
-    cursor: pointer;
-    border: 2px solid #61edff;
-}
-
-.search-form button:hover {
-    transition: .8s;
-    background-color: #0a37ff;
-}
-
 footer {
     position: absolute;
     background-color: #333;
@@ -224,25 +227,18 @@ footer {
     }
 
     .search-form input[type="text"] {
-        position: relative;
-        left: -40px;
-        width: 300px;
-        max-width: none;
-        border-radius: 4px;
+        width: calc(100% - 100px);
         margin-bottom: 10px;
+        border-radius: 4px;
     }
 
     .search-form button {
-        position: relative;
-        left: 70px;
         width: 100px;
-        max-width: none;
         border-radius: 4px;
     }
 
     .section {
         margin: 10px;
-        size: cover;
     }
 }
 
