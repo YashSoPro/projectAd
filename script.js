@@ -23,7 +23,7 @@ function displayMovies(movies) {
                 <div class="details">
                     <h3>${movie.title}</h3>
                     <p>${movie.overview}</p>
-                    <a href="player.html?id=${movie.id}" class="button">Watch Now</a>
+                    <a href="play.html?id=${movie.id}" class="button">Watch Now</a>
                 </div>
             </div>
         `;
