@@ -337,3 +337,7 @@ nav ul li a:hover {
     background-color: #000000;
     color: white;
 }
+
+/* Import theme styles */
+@import url('https://cdn.jsdelivr.net/npm/jekyll-theme-minimal@1.0.0/assets/css/main.css'); /* Update URL as needed */
+    
