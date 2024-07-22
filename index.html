@@ -62,6 +62,9 @@
                 <!-- Search results will be dynamically added here -->
             </ul>
         </section>
+        <section id="playerContainer" class="section" style="display:none;">
+            <!-- Player will be dynamically added here -->
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 Zeus Streaming. All rights reserved.</p>
@@ -72,11 +75,35 @@
     <script src="script.js"></script>
     <script src="loading.js"></script>
     <script src="search.js"></script>
+    <script src="player.js"></script>
     <script>
         $(document).ready(function() {
             $('#toggleNav').on('click', function() {
                 $('nav').toggleClass('active');
             });
+
+            let currentPage = 1;
+
+            function loadMovies(page) {
+                // Fetch and display movies for the given page
+                // This function needs to be implemented in script.js
+                fetchMovies(page);
+            }
+
+            $('#prevPage').on('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadMovies(currentPage);
+                }
+            });
+
+            $('#nextPage').on('click', function() {
+                currentPage++;
+                loadMovies(currentPage);
+            });
+
+            // Initial load
+            loadMovies(currentPage);
         });
     </script>
 </body>
