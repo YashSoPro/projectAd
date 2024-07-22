@@ -3,56 +3,63 @@ $(document).ready(function() {
     const apiUrl = 'https://api.themoviedb.org/3';
 
     function fetchMovieDetails(movieId) {
-        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}&append_to_response=videos`)
+        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
             .then(response => {
                 const movie = response.data;
-                displayMovieDetails(movie);
+                displayMovie(movie, movieId);
             })
             .catch(error => {
                 console.error('Error fetching movie details:', error);
             });
     }
 
-    function displayMovieDetails(movie) {
+    function displayMovie(movie, movieId) {
         document.title = movie.title; // Set page title to movie title
 
-        const trailerKey = movie.videos.results.length > 0 ? movie.videos.results[0].key : null;
-        const trailerUrl = trailerKey ? `https://www.youtube.com/embed/${trailerKey}` : '';
+        const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
 
         const movieContainer = $('#movieContainer');
         const movieHtml = `
             <div class="movie-details">
                 <h2>${movie.title}</h2>
-                <div class="trailer-container">
-                    <iframe width="100%" height="615" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
-                </div>
+                <p>${movie.overview}</p>
                 <div class="movie-info">
-                    <p><strong>Release Date:</strong> ${movie.release_date}</p>
-                    <p><strong>Rating:</strong> ${movie.vote_average}</p>
-                    <p><strong>Overview:</strong> ${movie.overview}</p>
+                    <span>Release Date: ${movie.release_date}</span>
+                    <span>Rating: ${movie.vote_average}</span>
                 </div>
-                <button class="back-button">Back</button>
-                <button id="watchNowBtn" class="button">Watch Now!</button>
+                <div id="trailerContainer" class="trailer-container">
+                    <iframe id="moviePlayerFrame" width="100%" height="615" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
         `;
         movieContainer.html(movieHtml);
 
-        hideLoadingScreen();
+        $('#loading-container').fadeOut(500);
+        $('#content').fadeIn(500); // Show content container after loading
 
-        // Add click event to the "Watch Now" button
-        $('#watchNowBtn').click(function() {
-            window.location.href = `play.html?id=${movie.id}`;
-        });
-
-        // Add click event to the "Back" button
-        $('.back-button').click(function() {
+        // Attach event listener to the "Back to Movie Details" button
+        $('#backToDetailsBtn').click(function() {
             window.history.back(); // Go back to previous page
         });
-    }
 
-    function hideLoadingScreen() {
-        $('#loading-container').fadeOut(500);
-        $('#movieDetails').fadeIn(500);
+        // Fullscreen toggle with F11 key
+        $(document).on('keydown', function(e) {
+            if (e.key === 'F11') {
+                toggleFullScreen();
+            }
+        });
+
+        function toggleFullScreen() {
+            const iframe = document.getElementById('moviePlayerFrame');
+            if (iframe.requestFullscreen) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    iframe.requestFullscreen();
+                }
+            }
+        }
     }
 
     // Extract movie ID from URL parameter
