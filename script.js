@@ -2,6 +2,7 @@ const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
 const apiUrl = 'https://api.themoviedb.org/3';
 
 function fetchMovies(page = 1) {
+    $('#loading-container').fadeIn(); // Show loading screen
     axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&page=${page}`)
         .then(response => {
             const movies = response.data.results;
@@ -9,6 +10,10 @@ function fetchMovies(page = 1) {
         })
         .catch(error => {
             console.error('Error fetching movies:', error);
+            $('#movies-container').html('<p class="error-message">Failed to load movies. Please try again later.</p>');
+        })
+        .finally(() => {
+            $('#loading-container').fadeOut(); // Hide loading screen
         });
 }
 
@@ -33,4 +38,16 @@ function displayMovies(movies) {
 
 $(document).ready(function() {
     fetchMovies();
+
+    $('#prevPage').on('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchMovies(currentPage);
+        }
+    });
+
+    $('#nextPage').on('click', function() {
+        currentPage++;
+        fetchMovies(currentPage);
+    });
 });
