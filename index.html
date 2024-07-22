@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Zeus Streaming</title>
 </head>
 <body>
@@ -11,17 +12,17 @@
         <a href="https://yashsopro.github.io/projectAd/">
             <h1>Zeus Streaming</h1>
         </a>
-        <button id="toggleNav">&#9776;</button>
-        <nav>
+        <button id="toggleNav" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+        <nav id="mainNav">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#movies">Movies</a></li>
-                <li><a href="#tv-shows">TV Shows</a></li>
-                <li><a href="#genres">Genres</a></li>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#movies"><i class="fas fa-film"></i> Movies</a></li>
+                <li><a href="#tv-shows"><i class="fas fa-tv"></i> TV Shows</a></li>
+                <li><a href="#genres"><i class="fas fa-tags"></i> Genres</a></li>
                 <li>
                     <form id="searchForm" class="search-form">
                         <input type="text" id="searchInput" placeholder="Search movies...">
-                        <button type="submit">Search</button>
+                        <button type="submit"><i class="fas fa-search"></i> Search</button>
                     </form>
                 </li>
             </ul>
@@ -40,8 +41,8 @@
                 <!-- Movies will be dynamically added here -->
             </div>
             <div id="pagination" class="pagination">
-                <button id="prevPage" class="button">Previous Page</button>
-                <button id="nextPage" class="button">Next Page</button>
+                <button id="prevPage" class="button"><i class="fas fa-chevron-left"></i> Previous Page</button>
+                <button id="nextPage" class="button">Next Page <i class="fas fa-chevron-right"></i></button>
             </div>
         </section>
         <section id="tv-shows" class="section">
@@ -79,14 +80,12 @@
     <script>
         $(document).ready(function() {
             $('#toggleNav').on('click', function() {
-                $('nav').toggleClass('active');
+                $('#mainNav').toggleClass('active');
             });
 
             let currentPage = 1;
 
             function loadMovies(page) {
-                // Fetch and display movies for the given page
-                // This function needs to be implemented in script.js
                 fetchMovies(page);
             }
 
@@ -102,7 +101,6 @@
                 loadMovies(currentPage);
             });
 
-            // Initial load
             loadMovies(currentPage);
         });
     </script>
