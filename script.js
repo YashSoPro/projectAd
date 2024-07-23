@@ -1,24 +1,21 @@
 const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
 const apiUrl = 'https://api.themoviedb.org/3';
+let currentPage = 1;
 
 function fetchMovies(page = 1) {
-    $('#loading-container').fadeIn(); // Show loading screen
     axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&page=${page}`)
         .then(response => {
             const movies = response.data.results;
             displayMovies(movies);
+            currentPage = page;
         })
         .catch(error => {
             console.error('Error fetching movies:', error);
-            $('#movies-container').html('<p class="error-message">Failed to load movies. Please try again later.</p>');
-        })
-        .finally(() => {
-            $('#loading-container').fadeOut(); // Hide loading screen
         });
 }
 
 function displayMovies(movies) {
-    const moviesContainer = $('#popularMovies');
+    const moviesContainer = $('#movies-container');
     moviesContainer.empty();
 
     movies.forEach(movie => {
@@ -26,28 +23,45 @@ function displayMovies(movies) {
             <div class="movie">
                 <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
                 <div class="details">
-                    <h3>${movie.title}</h3>
+                    <h2>${movie.title}</h2>
                     <p>${movie.overview}</p>
-                    <a href="play.html?id=${movie.id}" class="button">Watch Now</a>
+                    <button class="watch-now" data-id="${movie.id}">Watch Now</button>
                 </div>
             </div>
         `;
         moviesContainer.append(movieHtml);
     });
+
+    // Attach event listener to "Watch Now" buttons
+    $('.watch-now').click(function() {
+        const movieId = $(this).data('id');
+        window.location.href = `play.html?id=${movieId}`;
+    });
 }
 
-$(document).ready(function() {
-    fetchMovies();
+function displayPagination() {
+    const paginationHtml = `
+        <button id="prevPage" class="button">Previous Page</button>
+        <button id="nextPage" class="button">Next Page</button>
+    `;
+    $('#pagination').html(paginationHtml);
 
-    $('#prevPage').on('click', function() {
+    $('#prevPage').click(function() {
         if (currentPage > 1) {
-            currentPage--;
-            fetchMovies(currentPage);
+            fetchMovies(currentPage - 1);
         }
     });
 
-    $('#nextPage').on('click', function() {
-        currentPage++;
-        fetchMovies(currentPage);
+    $('#nextPage').click(function() {
+        fetchMovies(currentPage + 1);
     });
+}
+
+$(document).ready(function() {
+    $('.hamburger').click(function() {
+        $('.menu').toggleClass('active');
+    });
+
+    fetchMovies();
+    displayPagination();
 });
