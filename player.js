@@ -33,6 +33,7 @@ $(document).ready(function() {
             </div>
         `;
         playerContainer.html(playerHtml).fadeIn(500); // Show player container
+        $('#content').removeClass('hidden'); // Show content
 
         $('#backToDetailsBtn').click(function() {
             window.history.back(); // Go back to previous page
