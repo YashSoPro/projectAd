@@ -3,10 +3,12 @@ $(document).ready(function() {
     const apiUrl = 'https://api.themoviedb.org/3';
 
     function fetchMovieDetails(movieId) {
+        console.log(`Fetching details for movie ID: ${movieId}`);
         $('#loading-container').fadeIn(); // Show loading screen
         axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
             .then(response => {
                 const movie = response.data;
+                console.log('Movie details fetched:', movie);
                 displayMovie(movie, movieId);
             })
             .catch(error => {
@@ -32,6 +34,7 @@ $(document).ready(function() {
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
         `;
+        console.log('Displaying movie:', movie.title);
         playerContainer.html(playerHtml).fadeIn(500); // Show player container
         $('#content').removeClass('hidden'); // Show content
 
