@@ -3,6 +3,7 @@ $(document).ready(function() {
     const apiUrl = 'https://api.themoviedb.org/3';
 
     function fetchMovieDetails(movieId) {
+        $('#loading-container').fadeIn(); // Show loading screen
         axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
             .then(response => {
                 const movie = response.data;
@@ -10,14 +11,17 @@ $(document).ready(function() {
             })
             .catch(error => {
                 console.error('Error fetching movie details:', error);
+                $('#playerContainer').html('<p class="error-message">Failed to load movie details. Please try again later.</p>');
+            })
+            .finally(() => {
+                $('#loading-container').fadeOut(); // Hide loading screen
             });
     }
 
     function displayMovie(movie, movieId) {
-        document.title = movie.title; // Set page title to movie title
+        document.title = movie.title; // Set page title
 
         const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
-
         const playerContainer = $('#playerContainer');
         const playerHtml = `
             <div class="movie-details">
@@ -28,17 +32,12 @@ $(document).ready(function() {
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
         `;
-        playerContainer.html(playerHtml);
+        playerContainer.html(playerHtml).fadeIn(500); // Show player container
 
-        $('#loading-container').fadeOut(500);
-        $('#playerContainer').fadeIn(500); // Show player container after loading
-
-        // Attach event listener to the "Back to Movie Details" button
         $('#backToDetailsBtn').click(function() {
             window.history.back(); // Go back to previous page
         });
 
-        // Fullscreen toggle with F11 key
         $(document).on('keydown', function(e) {
             if (e.key === 'F11') {
                 toggleFullScreen();
@@ -57,11 +56,9 @@ $(document).ready(function() {
         }
     }
 
-    // Extract movie ID from URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
 
-    // Fetch and display movie details
     if (movieId) {
         fetchMovieDetails(movieId);
     } else {
