@@ -2,8 +2,12 @@ const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
 const apiUrl = 'https://api.themoviedb.org/3';
 let currentPage = 1;
 
-function fetchMovies(page = 1) {
-    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&page=${page}`)
+function fetchMovies(page = 1, query = '') {
+    const url = query
+        ? `${apiUrl}/search/movie?api_key=${apiKey}&query=${query}&page=${page}`
+        : `${apiUrl}/movie/popular?api_key=${apiKey}&page=${page}`;
+
+    axios.get(url)
         .then(response => {
             const movies = response.data.results;
             displayMovies(movies);
@@ -60,6 +64,12 @@ function displayPagination() {
 $(document).ready(function() {
     $('.hamburger').click(function() {
         $('.menu').toggleClass('active');
+    });
+
+    $('#searchForm').submit(function(e) {
+        e.preventDefault();
+        const query = $('#searchInput').val();
+        fetchMovies(1, query);
     });
 
     fetchMovies();
