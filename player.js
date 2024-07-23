@@ -1,14 +1,13 @@
 $(document).ready(function() {
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
+    const dailymotionApiUrl = 'https://api.dailymotion.com/video/';
 
     function fetchMovieDetails(movieId) {
-        console.log(`Fetching details for movie ID: ${movieId}`);
         $('#loading-container').fadeIn(); // Show loading screen
         axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
             .then(response => {
                 const movie = response.data;
-                console.log('Movie details fetched:', movie);
                 displayMovie(movie, movieId);
             })
             .catch(error => {
@@ -23,20 +22,27 @@ $(document).ready(function() {
     function displayMovie(movie, movieId) {
         document.title = movie.title; // Set page title
 
-        const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
+        // Use a default Dailymotion video ID for demonstration purposes
+        const dailymotionVideoId = 'x7zw3o2'; // Replace with the appropriate video ID
+
         const playerContainer = $('#playerContainer');
         const playerHtml = `
             <div class="movie-details">
                 <h2>${movie.title}</h2>
                 <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="615" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
+                    <iframe
+                        frameborder="0"
+                        width="100%"
+                        height="615"
+                        src="https://www.dailymotion.com/embed/video/${dailymotionVideoId}"
+                        allowfullscreen
+                        allow="autoplay">
+                    </iframe>
                 </div>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
         `;
-        console.log('Displaying movie:', movie.title);
         playerContainer.html(playerHtml).fadeIn(500); // Show player container
-        $('#content').removeClass('hidden'); // Show content
 
         $('#backToDetailsBtn').click(function() {
             window.history.back(); // Go back to previous page
