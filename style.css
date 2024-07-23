@@ -168,12 +168,12 @@ nav ul li a:hover {
 .movie h3 {
     font-size: 1.2rem;
     margin: 0 0 10px 0;
-    color: #ebc8b2;
+    color: #000000;
 }
 
 .movie p {
     font-size: 0.9rem;
-    color: #ebc8b2;
+    color: #ff7f00;
     margin-bottom: 10px;
 }
 
