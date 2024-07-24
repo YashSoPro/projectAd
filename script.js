@@ -1,5 +1,6 @@
 const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
 const apiUrl = 'https://api.themoviedb.org/3';
+let currentPage = 1;
 
 function fetchMovies(page = 1) {
     $('#loading-container').fadeIn(); // Show loading screen
@@ -10,7 +11,7 @@ function fetchMovies(page = 1) {
         })
         .catch(error => {
             console.error('Error fetching movies:', error);
-            $('#movies-container').html('<p class="error-message">Failed to load movies. Please try again later.</p>');
+            $('#popularMovies').html('<p class="error-message">Failed to load movies. Please try again later.</p>');
         })
         .finally(() => {
             $('#loading-container').fadeOut(); // Hide loading screen
