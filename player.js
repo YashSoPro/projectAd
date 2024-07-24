@@ -26,7 +26,7 @@ $(document).ready(function() {
             <div class="movie-details">
                 <h2>${movie.title}</h2>
                 <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="615" src="https://vidsrc.to/embed/movie/${movieId}" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="moviePlayerFrame" width="100%" height="615" src="https://www.dailymotion.com/embed/video/${movieId}" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
