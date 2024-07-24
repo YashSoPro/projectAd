@@ -6,17 +6,29 @@ $(document).ready(function() {
         axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
             .then(response => {
                 const movie = response.data;
-                displayMovie(movie, movieId);
+                fetchMovieTrailer(movie, movieId);
             })
             .catch(error => {
                 console.error('Error fetching movie details:', error);
             });
     }
 
-    function displayMovie(movie, movieId) {
+    function fetchMovieTrailer(movie, movieId) {
+        axios.get(`${apiUrl}/movie/${movieId}/videos?api_key=${apiKey}`)
+            .then(response => {
+                const trailers = response.data.results;
+                const trailer = trailers.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+                displayMovie(movie, trailer);
+            })
+            .catch(error => {
+                console.error('Error fetching movie trailers:', error);
+            });
+    }
+
+    function displayMovie(movie, trailer) {
         document.title = movie.title; // Set page title to movie title
 
-        const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
+        const trailerUrl = trailer ? `https://www.youtube.com/embed/${trailer.key}` : '';
 
         const movieContainer = $('#movieContainer');
         const movieHtml = `
@@ -28,7 +40,7 @@ $(document).ready(function() {
                     <span>Rating: ${movie.vote_average}</span>
                 </div>
                 <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="400" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
+                    ${trailerUrl ? `<iframe id="moviePlayerFrame" width="100%" height="400" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>` : '<p>No trailer available</p>'}
                 </div>
                 <button id="watchMovieBtn" class="button">Watch Movie</button>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
@@ -41,7 +53,7 @@ $(document).ready(function() {
 
         // Attach event listener to the "Watch Movie" button
         $('#watchMovieBtn').click(function() {
-            window.location.href = `play.html?id=${movieId}`;
+            window.location.href = `play.html?id=${movie.id}`;
         });
 
         // Attach event listener to the "Back to Movie Details" button
