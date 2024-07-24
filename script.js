@@ -1,12 +1,17 @@
 $(document).ready(function() {
+    console.log('Document is ready');
+    
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
     const moviesContainer = $('#movies');
 
     function fetchMovies() {
+        console.log('Fetching movies...');
         axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`)
             .then(response => {
+                console.log('Movies fetched successfully');
                 const movies = response.data.results;
+                console.log('Movies:', movies);
                 displayMovies(movies);
             })
             .catch(error => {
@@ -15,6 +20,7 @@ $(document).ready(function() {
     }
 
     function displayMovies(movies) {
+        console.log('Displaying movies...');
         const moviesHtml = movies.map(movie => `
             <div class="movie-card">
                 <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
@@ -27,6 +33,7 @@ $(document).ready(function() {
             </div>
         `).join('');
         moviesContainer.html(moviesHtml);
+        console.log('Movies displayed');
     }
 
     function getStarRating(rating) {
