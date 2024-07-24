@@ -1,77 +1,16 @@
 $(document).ready(function() {
-    const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
-    const apiUrl = 'https://api.themoviedb.org/3';
-    const dailymotionApiUrl = 'https://api.dailymotion.com/video/';
-
-    function fetchMovieDetails(movieId) {
-        $('#loading-container').fadeIn(); // Show loading screen
-        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
-            .then(response => {
-                const movie = response.data;
-                displayMovie(movie, movieId);
-            })
-            .catch(error => {
-                console.error('Error fetching movie details:', error);
-                $('#playerContainer').html('<p class="error-message">Failed to load movie details. Please try again later.</p>');
-            })
-            .finally(() => {
-                $('#loading-container').fadeOut(); // Hide loading screen
-            });
-    }
-
-    function displayMovie(movie, movieId) {
-        document.title = movie.title; // Set page title
-
-        // Use a default Dailymotion video ID for demonstration purposes
-        const dailymotionVideoId = 'x7zw3o2'; // Replace with the appropriate video ID
-
-        const playerContainer = $('#playerContainer');
-        const playerHtml = `
-            <div class="movie-details">
-                <h2>${movie.title}</h2>
-                <div id="trailerContainer" class="trailer-container">
-                    <iframe
-                        frameborder="0"
-                        width="100%"
-                        height="615"
-                        src="https://www.dailymotion.com/embed/video/${dailymotionVideoId}"
-                        allowfullscreen
-                        allow="autoplay">
-                    </iframe>
-                </div>
-                <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
-            </div>
-        `;
-        playerContainer.html(playerHtml).fadeIn(500); // Show player container
-
-        $('#backToDetailsBtn').click(function() {
-            window.history.back(); // Go back to previous page
-        });
-
-        $(document).on('keydown', function(e) {
-            if (e.key === 'F11') {
-                toggleFullScreen();
-            }
-        });
-
-        function toggleFullScreen() {
-            const iframe = document.getElementById('moviePlayerFrame');
-            if (iframe.requestFullscreen) {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                } else {
-                    iframe.requestFullscreen();
-                }
-            }
-        }
-    }
-
+    // Extract movie ID from URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
 
+    // Fetch and display movie player
     if (movieId) {
-        fetchMovieDetails(movieId);
+        const movieUrl = `https://vidsrc.to/embed/movie/${movieId}`;
+        $('#moviePlayerFrame').attr('src', movieUrl);
     } else {
         console.error('No movie ID found in URL parameter');
     }
+
+    $('#loading-container').fadeOut(500);
+    $('#content').fadeIn(500); // Show content container after loading
 });
