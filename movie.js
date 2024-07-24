@@ -16,8 +16,6 @@ $(document).ready(function() {
     function displayMovie(movie, movieId) {
         document.title = movie.title; // Set page title to movie title
 
-        const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
-
         const movieContainer = $('#movieContainer');
         const movieHtml = `
             <div class="movie-details">
@@ -27,8 +25,10 @@ $(document).ready(function() {
                     <span>Release Date: ${movie.release_date}</span>
                     <span>Rating: ${movie.vote_average}</span>
                 </div>
-                <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="615" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
+                <button id="watchTrailerBtn" class="button">Watch Trailer</button>
+                <button id="watchMovieBtn" class="button">Watch Movie</button>
+                <div id="trailerContainer" class="trailer-container" style="display: none;">
+                    <iframe id="moviePlayerFrame" width="100%" height="615" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
@@ -37,6 +37,19 @@ $(document).ready(function() {
 
         $('#loading-container').fadeOut(500);
         $('#content').fadeIn(500); // Show content container after loading
+
+        // Attach event listener to the "Watch Trailer" button
+        $('#watchTrailerBtn').click(function() {
+            const trailerUrl = `https://vidsrc.to/embed/movie/${movieId}`;
+            $('#moviePlayerFrame').attr('src', trailerUrl);
+            $('#trailerContainer').show();
+            $(this).hide(); // Hide the "Watch Trailer" button
+        });
+
+        // Attach event listener to the "Watch Movie" button
+        $('#watchMovieBtn').click(function() {
+            window.location.href = `play.html?id=${movieId}`;
+        });
 
         // Attach event listener to the "Back to Movie Details" button
         $('#backToDetailsBtn').click(function() {
