@@ -3,44 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeus Streaming</title>
+    <title>Online Movies</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="icon" href="main/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="main/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="main/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="main/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="main/favicon-16x16.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Online Movies</h1>
+        <nav>
+            <!-- Your navigation menu -->
+        </nav>
+    </header>
     <div id="loading-container">
-        <div class="loading-text">
-            <span class="part-1">Zeus</span><span class="part-2">Streaming</span>
-        </div>
+        <!-- Your loading screen content -->
     </div>
-    <div id="content" class="hidden">
-        <header>
-            <a href="index.html">
-                <h1>Zeus Streaming</h1>
-            </a>
-            <button id="toggleNav">&#9776;</button>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#movies">Movies</a></li>
-                    <li><a href="#tv-shows">TV Shows</a></li>
-                    <li><a href="#genres">Genres</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div id="search-container">
-            <input type="text" id="search-bar" placeholder="Search for movies...">
-            <ul id="suggestions"></ul>
-        </div>
-        <main>
-            <section id="movies" class="section">
-                <!-- Movies content will be dynamically added here -->
-            </section>
-        </main>
+    <div id="content">
+        <!-- Your main content including the search bar and movie grid -->
     </div>
-    <script src="loading.js"></script>
     <script src="script.js"></script>
-    <script src="search.js"></script>
 </body>
 </html>
