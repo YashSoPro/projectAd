@@ -8,63 +8,99 @@
     <title>Zeus Streaming</title>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-container">
-        <div class="loading-text">
-            <span class="part-1">Loading</span>
-            <span class="part-2">...</span>
-        </div>
-    </div>
-
-    <!-- Header -->
     <header>
-        <h1>Zeus Streaming</h1>
-        <button id="toggleNav">☰</button>
-        <nav id="navMenu">
+        <a href="index.html">
+            <h1>Zeus Streaming</h1>
+        </a>
+        <button id="toggleNav" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+        <nav id="mainNav">
             <ul>
-                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="search.html"><i class="fas fa-search"></i> Search</a></li>
-                <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#movies"><i class="fas fa-film"></i> Movies</a></li>
+                <li><a href="#tv-shows"><i class="fas fa-tv"></i> TV Shows</a></li>
+                <li><a href="#genres"><i class="fas fa-tags"></i> Genres</a></li>
+                <li>
+                    <form id="searchForm" class="search-form">
+                        <input type="text" id="searchInput" placeholder="Search movies...">
+                        <button type="submit"><i class="fas fa-search"></i> Search</button>
+                    </form>
+                </li>
             </ul>
-            <div class="search-form">
-                <input type="text" id="searchBox" placeholder="Search for movies...">
-                <button id="searchButton"><i class="fas fa-search"></i> Search</button>
-            </div>
         </nav>
     </header>
-
-    <!-- Main Content -->
     <main>
-        <section class="section">
+        <section id="home" class="section">
             <h2>Featured Movies</h2>
-            <div class="movies-container" id="moviesContainer">
-                <!-- Movie items will be dynamically inserted here -->
+            <div id="featuredMovies" class="movies-container">
+                <!-- Movies will be dynamically added here -->
             </div>
         </section>
+        <section id="movies" class="section">
+            <h2>Popular Movies</h2>
+            <div id="popularMovies" class="movies-container">
+                <!-- Movies will be dynamically added here -->
+            </div>
+            <div id="pagination" class="pagination">
+                <button id="prevPage" class="button"><i class="fas fa-chevron-left"></i> Previous Page</button>
+                <button id="nextPage" class="button">Next Page <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+        <section id="tv-shows" class="section">
+            <h2>Popular TV Shows</h2>
+            <div id="popularTvShows" class="movies-container">
+                <!-- TV Shows will be dynamically added here -->
+            </div>
+        </section>
+        <section id="genres" class="section">
+            <h2>Genres</h2>
+            <ul id="genreList" class="genre-list">
+                <!-- Genres will be dynamically added here -->
+            </ul>
+        </section>
+        <section id="search" class="section">
+            <h2>Search Results</h2>
+            <ul id="searchList" class="search-list">
+                <!-- Search results will be dynamically added here -->
+            </ul>
+        </section>
+        <section id="playerContainer" class="section" style="display:none;">
+            <!-- Player will be dynamically added here -->
+        </section>
     </main>
-
-    <!-- Footer -->
     <footer>
         <p>&copy; 2024 Zeus Streaming. All rights reserved.</p>
     </footer>
-
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
     <script src="loading.js"></script>
+    <script src="search.js"></script>
     <script src="player.js"></script>
-
-    <!-- Mobile Navigation Script -->
     <script>
-        document.getElementById('toggleNav').addEventListener('click', function() {
-            var navMenu = document.getElementById('navMenu');
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-            } else {
-                navMenu.classList.add('active');
+        $(document).ready(function() {
+            $('#toggleNav').on('click', function() {
+                $('#mainNav').toggleClass('active');
+            });
+
+            let currentPage = 1;
+
+            function loadMovies(page) {
+                fetchMovies(page);
             }
+
+            $('#prevPage').on('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadMovies(currentPage);
+                }
+            });
+
+            $('#nextPage').on('click', function() {
+                currentPage++;
+                loadMovies(currentPage);
+            });
+
+            loadMovies(currentPage);
         });
     </script>
 </body>
