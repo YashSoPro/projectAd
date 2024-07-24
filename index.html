@@ -3,106 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Zeus Streaming</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <header>
-        <a href="https://yashsopro.github.io/projectAd/">
-            <h1>Zeus Streaming</h1>
-        </a>
-        <button id="toggleNav" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
-        <nav id="mainNav">
-            <ul>
-                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#movies"><i class="fas fa-film"></i> Movies</a></li>
-                <li><a href="#tv-shows"><i class="fas fa-tv"></i> TV Shows</a></li>
-                <li><a href="#genres"><i class="fas fa-tags"></i> Genres</a></li>
-                <li>
-                    <form id="searchForm" class="search-form">
-                        <input type="text" id="searchInput" placeholder="Search movies...">
-                        <button type="submit"><i class="fas fa-search"></i> Search</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="home" class="section">
-            <h2>Featured Movies</h2>
-            <div id="featuredMovies" class="movies-container">
-                <!-- Movies will be dynamically added here -->
-            </div>
-        </section>
-        <section id="movies" class="section">
-            <h2>Popular Movies</h2>
-            <div id="popularMovies" class="movies-container">
-                <!-- Movies will be dynamically added here -->
-            </div>
-            <div id="pagination" class="pagination">
-                <button id="prevPage" class="button"><i class="fas fa-chevron-left"></i> Previous Page</button>
-                <button id="nextPage" class="button">Next Page <i class="fas fa-chevron-right"></i></button>
-            </div>
-        </section>
-        <section id="tv-shows" class="section">
-            <h2>Popular TV Shows</h2>
-            <div id="popularTvShows" class="movies-container">
-                <!-- TV Shows will be dynamically added here -->
-            </div>
-        </section>
-        <section id="genres" class="section">
-            <h2>Genres</h2>
-            <ul id="genreList" class="genre-list">
-                <!-- Genres will be dynamically added here -->
-            </ul>
-        </section>
-        <section id="search" class="section">
-            <h2>Search</h2>
-            <ul id="searchList" class="search-list">
-                <!-- Search results will be dynamically added here -->
-            </ul>
-        </section>
-        <section id="playerContainer" class="section" style="display:none;">
-            <!-- Player will be dynamically added here -->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Zeus Streaming. All rights reserved.</p>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
+    <div id="loading-container">
+        <div class="loading-text">
+            <span class="part-1">Zeus</span><span class="part-2">Streaming</span>
+        </div>
+    </div>
+    <div id="content" class="hidden">
+        <header>
+            <a href="index.html">
+                <h1>Zeus Streaming</h1>
+            </a>
+            <button id="toggleNav">&#9776;</button>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#movies">Movies</a></li>
+                    <li><a href="#tv-shows">TV Shows</a></li>
+                    <li><a href="#genres">Genres</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="search-container">
+            <input type="text" id="search-bar" placeholder="Search for movies...">
+            <ul id="suggestions"></ul>
+        </div>
+        <main>
+            <section id="movies" class="section">
+                <!-- Movies content will be dynamically added here -->
+            </section>
+        </main>
+    </div>
     <script src="loading.js"></script>
+    <script src="script.js"></script>
     <script src="search.js"></script>
-    <script src="player.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#toggleNav').on('click', function() {
-                $('#mainNav').toggleClass('active');
-            });
-
-            let currentPage = 1;
-
-            function loadMovies(page) {
-                fetchMovies(page);
-            }
-
-            $('#prevPage').on('click', function() {
-                if (currentPage > 1) {
-                    currentPage--;
-                    loadMovies(currentPage);
-                }
-            });
-
-            $('#nextPage').on('click', function() {
-                currentPage++;
-                loadMovies(currentPage);
-            });
-
-            loadMovies(currentPage);
-        });
-    </script>
 </body>
 </html>
