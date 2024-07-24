@@ -3,37 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Movie Details</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <header>
-        <a href="index.html"><h1>Zeus Streaming</h1></a>
-        <button id="toggleNav"><i class="fas fa-bars"></i></button>
-        <nav>
-            <ul>
-                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="movies.html"><i class="fas fa-film"></i> Movies</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-            </ul>
-            <form class="search-form" action="#" method="GET">
-                <input type="text" placeholder="Search...">
-                <button type="submit"><i class="fas fa-search"></i></button>
-            </form>
-        </nav>
-    </header>
+    <div id="loading-container">
+        <p>Loading...</p>
+    </div>
+    <div id="content" style="display: none;">
+        <div id="movieContainer"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
+            const apiUrl = 'https://api.themoviedb.org/3';
 
-    <main>
-        <section class="section">
-            <h2>Movie Details</h2>
-            <div id="movie-details">
-                <!-- Movie details will be dynamically added here -->
-            </div>
-        </section>
-    </main>
+            function fetchMovieDetails(movieId) {
+                axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
+                    .then(response => {
+                        const movie = response.data;
+                        fetchMovieTrailer(movie, movieId);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching movie details:', error);
+                    });
+            }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
+            function fetchMovieTrailer(movie, movieId) {
+                axios.get(`${apiUrl}/movie/${movieId}/videos?api_key=${apiKey}`)
+                    .then(response => {
+                        const trailers = response.data.results;
+                        const trailer = trailers.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+                        displayMovie(movie, trailer);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching movie trailers:', error);
+                    });
+            }
+
+            function displayMovie(movie, trailer) {
+                document.title = movie.title; // Set page title to movie title
+                const trailerUrl = trailer ? `https://www.youtube.com/embed/${trailer.key}` : '';
+                const movieContainer = $('#movieContainer');
+                const movieHtml = `
+                    <h1>${movie.title}</h1>
+                    <p>${movie.overview}</p>
+                    <p>Release Date: ${movie.release_date}</p>
+                    <p>Rating: ${movie.vote_average}</p>
+                    ${trailerUrl ? `<iframe id="moviePlayerFrame" width="560" height="315" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>` : '<p>No trailer available</p>'}
+                    <button id="watchMovieBtn">Watch Movie</button>
+                    <button id="backToDetailsBtn">Back to Movie Details</button>
+                `;
+                movieContainer.html(movieHtml);
+                $('#loading-container').fadeOut(500);
+                $('#content').fadeIn(500); // Show content container after loading
+
+                // Attach event listener to the "Watch Movie" button
+                $('#watchMovieBtn').click(function() {
+                    window.location.href = `play.html?id=${movie.id}`;
+                });
+
+                // Attach event listener to the "Back to Movie Details" button
+                $('#backToDetailsBtn').click(function() {
+                    window.history.back(); // Go back to previous page
+                });
+
+                // Fullscreen toggle with F11 key
+                $(document).on('keydown', function(e) {
+                    if (e.key === 'F11') {
+                        toggleFullScreen();
+                    }
+                });
+
+                function toggleFullScreen() {
+                    const iframe = document.getElementById('moviePlayerFrame');
+                    if (iframe.requestFullscreen) {
+                        if (document.fullscreenElement) {
+                            document.exitFullscreen();
+                        } else {
+                            iframe.requestFullscreen();
+                        }
+                    }
+                }
+            }
+
+            // Extract movie ID from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = urlParams.get('id');
+
+            // Fetch and display movie details
+            if (movieId) {
+                fetchMovieDetails(movieId);
+            } else {
+                console.error('No movie ID found in URL parameter');
+            }
+        });
+    </script>
 </body>
 </html>
