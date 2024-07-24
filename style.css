@@ -1,3 +1,5 @@
+}
+here's index.html 
 /* General Layout */
 body {
     font-family: 'Arial', sans-serif;
@@ -120,7 +122,7 @@ nav ul li a:hover {
     background-color: #0a37ff;
 }
 
-/* Other styles */
+/* Section Styles */
 .section {
     padding: 20px;
     background-color: #790351;
@@ -135,6 +137,7 @@ nav ul li a:hover {
     text-align: center;
 }
 
+/* Movies Container */
 .movies-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -355,4 +358,3 @@ nav ul li a:hover {
     background-color: #000000;
     color: white;
 }
-here's index.html 
