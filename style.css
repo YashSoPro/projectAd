@@ -14,7 +14,7 @@ body {
 /* Header */
 header {
     backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     border: 3px solid rgb(194, 185, 189);
     color: #fff;
@@ -33,7 +33,7 @@ header {
 header h1 {
     margin: 0;
     font-family: "Lato", sans-serif;
-    color: rgb(255, 255, 255);
+    color: #fff;
     font-size: 30px;
 }
 
@@ -83,6 +83,7 @@ nav ul li a:hover {
     transition: background-color 0.3s ease;
 }
 
+/* Search Form */
 .search-form {
     display: flex;
     align-items: center;
@@ -94,7 +95,8 @@ nav ul li a:hover {
     border-radius: 4px 0 0 4px;
     outline: none;
     width: 200px;
-    border: 2px solid rgb(255, 255, 255);
+    border: 2px solid #fff;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .search-form input[type="text"]:focus {
@@ -121,7 +123,7 @@ nav ul li a:hover {
     background-color: #0a37ff;
 }
 
-/* Other styles */
+/* Section Styles */
 .section {
     padding: 20px;
     background-color: #790351;
@@ -132,10 +134,11 @@ nav ul li a:hover {
 }
 
 .section h2 {
-    color: #ffffff;
+    color: #fff;
     text-align: center;
 }
 
+/* Movies Container */
 .movies-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -143,6 +146,7 @@ nav ul li a:hover {
     justify-items: center;
 }
 
+/* Movie Card */
 .movie {
     width: 100%;
     background-color: #fff;
@@ -169,7 +173,7 @@ nav ul li a:hover {
 .movie h3 {
     font-size: 1.2rem;
     margin: 0 0 10px 0;
-    color: #000000;
+    color: #000;
 }
 
 .movie p {
@@ -309,7 +313,7 @@ nav ul li a:hover {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #000000;
+    background-color: #000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -353,6 +357,6 @@ nav ul li a:hover {
 }
 
 ::selection {
-    background-color: #000000;
+    background-color: #000;
     color: white;
 }
