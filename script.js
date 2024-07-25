@@ -3,10 +3,12 @@ $(document).ready(function() {
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
     const searchInput = $('#search-bar input');
+    let currentPage = 1; // Current page for pagination
 
-    function fetchMovies() {
+    function fetchMovies(page) {
         console.log("Fetching movies...");
-        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
+        $('#loading-container').show();
+        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`)
             .then(response => {
                 console.log("Movies fetched successfully");
                 const movies = response.data.results;
@@ -70,6 +72,28 @@ $(document).ready(function() {
         });
     }
 
-    fetchMovies();
+    // Handle pagination button clicks
+    $('#prevPage').click(function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchMovies(currentPage);
+        }
+    });
+
+    $('#nextPage').click(function() {
+        currentPage++;
+        fetchMovies(currentPage);
+    });
+
+    // Handle 'Details' button clicks
+    $(document).on('click', '.details-btn', function() {
+        const movieId = $(this).data('id');
+        window.location.href = `movie.html?id=${movieId}`;
+    });
+
+    // Initial movie fetch
+    fetchMovies(currentPage);
+
+    // Attach search input handler
     searchInput.on('input', handleSearchInput);
 });
