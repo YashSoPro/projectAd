@@ -59,9 +59,9 @@ $(document).ready(function() {
     const movieId = urlParams.get('id');
 
     if (movieId) {
+        console.log(`Movie ID found: ${movieId}`);
         fetchMovieDetails(movieId);
     } else {
         console.error('No movie ID found in URL parameter');
-        $('#playerContainer').html('<p class="error-message">No movie ID found in the URL.</p>');
     }
 });
