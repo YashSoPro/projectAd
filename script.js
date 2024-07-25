@@ -1,49 +1,73 @@
 $(document).ready(function() {
-    console.log('Document is ready');
-    
+    console.log("Document is ready");
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
-    const moviesContainer = $('#movies');
-
+    const searchInput = $('#search-bar input');
+    
     function fetchMovies() {
-        console.log('Fetching movies...');
-        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`)
+        console.log("Fetching movies...");
+        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
             .then(response => {
-                console.log('Movies fetched successfully');
+                console.log("Movies fetched successfully");
                 const movies = response.data.results;
-                console.log('Movies:', movies);
+                console.log("Movies:", movies);
                 displayMovies(movies);
             })
             .catch(error => {
                 console.error('Error fetching movies:', error);
+                $('#loading-container').hide();
+                $('#content').show().html('<p>Error loading movies. Please try again later.</p>');
             });
     }
 
     function displayMovies(movies) {
-        console.log('Displaying movies...');
-        const moviesHtml = movies.map(movie => `
-            <div class="movie-card">
-                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-                <div class="rating">
-                    <span class="stars">${getStarRating(movie.vote_average)}</span>
-                    <span>${movie.vote_average.toFixed(1)}</span>
+        console.log("Displaying movies...");
+        const movieGrid = $('.movie-grid');
+        movieGrid.empty();
+        movies.forEach(movie => {
+            const movieItem = `
+                <div class="movie-item">
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                    <div>${movie.title}</div>
+                    <div>${movie.release_date}</div>
+                    <div><button class="details-btn" data-id="${movie.id}">Details</button></div>
                 </div>
-                <h3>${movie.title}</h3>
-                <a href="movie.html?id=${movie.id}" class="details-btn">Details</a>
-            </div>
-        `).join('');
-        moviesContainer.html(moviesHtml);
-        console.log('Movies displayed');
+            `;
+            movieGrid.append(movieItem);
+        });
+        console.log("Movies displayed");
+        $('#loading-container').hide();
+        $('#content').show();
     }
 
-    function getStarRating(rating) {
-        const starRating = Math.round(rating / 2);
-        let starsHtml = '';
-        for (let i = 0; i < 5; i++) {
-            starsHtml += i < starRating ? '★' : '☆';
+    function handleSearchInput() {
+        const query = searchInput.val();
+        if (query.length > 2) {
+            axios.get(`${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`)
+                .then(response => {
+                    const suggestions = response.data.results;
+                    displaySearchSuggestions(suggestions);
+                })
+                .catch(error => {
+                    console.error('Error fetching search suggestions:', error);
+                });
         }
-        return starsHtml;
+    }
+
+    function displaySearchSuggestions(suggestions) {
+        const suggestionBox = $('#suggestions');
+        suggestionBox.empty();
+        suggestions.forEach(movie => {
+            const suggestionItem = `<div class="suggestion-item" data-id="${movie.id}">${movie.title}</div>`;
+            suggestionBox.append(suggestionItem);
+        });
+
+        $('.suggestion-item').on('click', function() {
+            const movieId = $(this).data('id');
+            window.location.href = `movie.html?id=${movieId}`;
+        });
     }
 
     fetchMovies();
+    searchInput.on('input', handleSearchInput);
 });
