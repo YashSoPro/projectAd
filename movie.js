@@ -1,32 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Details</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="main/favicon.ico" type="image/x-icon">
-    <link rel="manifest" href="main/site.webmanifest">
-    <link rel="apple-touch-icon" sizes="180x180" href="main/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="main/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="main/favicon-16x16.png">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
-    <header>
-        <h1>Movie Details</h1>
-        <nav>
-            <!-- Your navigation menu -->
-        </nav>
-    </header>
-    <div id="loading-container">
-        <!-- Your loading screen content -->
-    </div>
-    <div id="content">
-        <div id="movieContainer"></div>
-    </div>
-    <script src="loading.js"></script>
-    <script src="movie.js"></script>
-</body>
-</html>
+$(document).ready(function() {
+    const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
+    const apiUrl = 'https://api.themoviedb.org/3';
+
+    function fetchMovieDetails(movieId) {
+        $('#loading-container').fadeIn(); // Show loading screen
+        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
+            .then(response => {
+                const movie = response.data;
+                displayMovie(movie, movieId);
+            })
+            .catch(error => {
+                console.error('Error fetching movie details:', error);
+                $('#playerContainer').html('<p class="error-message">Failed to load movie details. Please try again later.</p>');
+            })
+            .finally(() => {
+                $('#loading-container').fadeOut(); // Hide loading screen
+            });
+    }
+
+    function displayMovie(movie, movieId) {
+        document.title = movie.title; // Set page title
+
+        const playerContainer = $('#playerContainer');
+        const playerHtml = `
+            <div class="movie-details">
+                <h2>${movie.title}</h2>
+                <div id="trailerContainer" class="trailer-container">
+                    <iframe id="moviePlayerFrame" width="100%" height="615" src="https://www.dailymotion.com/embed/video/${movieId}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
+            </div>
+        `;
+        playerContainer.html(playerHtml).fadeIn(500); // Show player container
+
+        $('#backToDetailsBtn').click(function() {
+            window.history.back(); // Go back to previous page
+        });
+
+        $(document).on('keydown', function(e) {
+            if (e.key === 'F11') {
+                toggleFullScreen();
+            }
+        });
+
+        function toggleFullScreen() {
+            const iframe = document.getElementById('moviePlayerFrame');
+            if (iframe.requestFullscreen) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    iframe.requestFullscreen();
+                }
+            }
+        }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get('id');
+
+    if (movieId) {
+        fetchMovieDetails(movieId);
+    } else {
+        console.error('No movie ID found in URL parameter');
+        $('#playerContainer').html('<p class="error-message">No movie ID found in the URL.</p>');
+    }
+});
