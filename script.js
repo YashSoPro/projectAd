@@ -28,9 +28,11 @@ $(document).ready(function() {
             const movieItem = `
                 <div class="movie-item">
                     <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-                    <div>${movie.title}</div>
-                    <div>${movie.release_date}</div>
-                    <div><button class="details-btn" data-id="${movie.id}">Details</button></div>
+                    <div class="movie-info">
+                        <h3>${movie.title}</h3>
+                        <p>Release Date: ${movie.release_date}</p>
+                        <button class="details-btn" data-id="${movie.id}">Details</button>
+                    </div>
                 </div>
             `;
             movieGrid.append(movieItem);
