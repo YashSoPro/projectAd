@@ -17,15 +17,22 @@
     <header>
         <h1>Online Movies</h1>
         <nav>
-            <!-- Your navigation menu -->
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
         </nav>
     </header>
     <div id="loading-container">
-        <!-- Your loading screen content -->
+        <p>Loading...</p>
     </div>
-    <div id="content">
-        <!-- Your main content including the search bar and movie grid -->
+    <div id="content" style="display: none;">
+        <div id="search-bar">
+            <input type="text" placeholder="Search for movies...">
+            <div id="suggestions"></div>
+        </div>
+        <div class="movie-grid"></div>
     </div>
     <script src="script.js"></script>
+    <script src="loading.js"></script>
 </body>
 </html>
