@@ -3,37 +3,6 @@ $(document).ready(function() {
     const apiUrl = 'https://api.themoviedb.org/3';
     const searchInput = $('#search-bar input');
 
-    function fetchMovies() {
-        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
-            .then(response => {
-                const movies = response.data.results;
-                displayMovies(movies);
-            })
-            .catch(error => {
-                console.error('Error fetching movies:', error);
-                $('#loading-container').hide();
-                $('#content').show().html('<p>Error loading movies. Please try again later.</p>');
-            });
-    }
-
-    function displayMovies(movies) {
-        const movieGrid = $('.movie-grid');
-        movieGrid.empty();
-        movies.forEach(movie => {
-            const movieItem = `
-                <div class="movie-item">
-                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-                    <div>${movie.title}</div>
-                    <div>${movie.release_date}</div>
-                    <div><button class="details-btn" data-id="${movie.id}">Details</button></div>
-                </div>
-            `;
-            movieGrid.append(movieItem);
-        });
-        $('#loading-container').hide();
-        $('#content').show();
-    }
-
     function handleSearchInput() {
         const query = searchInput.val();
         if (query.length > 2) {
@@ -45,8 +14,6 @@ $(document).ready(function() {
                 .catch(error => {
                     console.error('Error fetching search suggestions:', error);
                 });
-        } else {
-            $('#suggestions').empty();
         }
     }
 
@@ -64,6 +31,5 @@ $(document).ready(function() {
         });
     }
 
-    fetchMovies();
     searchInput.on('input', handleSearchInput);
 });
