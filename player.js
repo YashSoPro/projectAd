@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
