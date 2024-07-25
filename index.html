@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Streaming</title>
+    <title>ProjectAd</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Movie Streaming</h1>
+        <h1>ProjectAd</h1>
         <nav>
             <a href="index.html">Home</a>
-            <a href="search.html">Search</a>
+            <a href="about.html">About</a>
         </nav>
     </header>
     <div id="loading-container">
@@ -25,9 +23,17 @@
             <div id="suggestions"></div>
         </div>
         <div class="movie-grid"></div>
+        <div id="pagination">
+            <button id="prevPage" class="button">Previous Page</button>
+            <button id="nextPage" class="button">Next Page</button>
+        </div>
     </div>
-    <script src="loading.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
     <script src="search.js"></script>
-    <script src="index.js"></script>
+    <script src="loading.js"></script>
+    <script src="movie.js"></script>
+    <script src="backButton.js"></script>
 </body>
 </html>
