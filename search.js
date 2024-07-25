@@ -1,34 +1,73 @@
 $(document).ready(function() {
+    console.log("Document is ready");
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
+    const searchInput = $('#search-bar input');
 
-    $('#search-bar').on('input', function() {
-        const query = $(this).val();
-        if (query.length > 2) {
-            fetchSuggestions(query);
-        } else {
-            $('#suggestions').hide();
-        }
-    });
-
-    function fetchSuggestions(query) {
-        axios.get(`${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`)
+    function fetchMovies() {
+        console.log("Fetching movies...");
+        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
             .then(response => {
-                const suggestions = response.data.results;
-                displaySuggestions(suggestions);
+                console.log("Movies fetched successfully");
+                const movies = response.data.results;
+                console.log("Movies:", movies);
+                displayMovies(movies);
             })
             .catch(error => {
-                console.error('Error fetching suggestions:', error);
+                console.error('Error fetching movies:', error);
+                $('#loading-container').hide();
+                $('#content').show().html('<p>Error loading movies. Please try again later.</p>');
             });
     }
 
-    function displaySuggestions(suggestions) {
-        const suggestionsList = suggestions.map(movie => `<li data-id="${movie.id}">${movie.title}</li>`).join('');
-        $('#suggestions').html(suggestionsList).show();
+    function displayMovies(movies) {
+        console.log("Displaying movies...");
+        const movieGrid = $('.movie-grid');
+        movieGrid.empty();
+        movies.forEach(movie => {
+            const movieItem = `
+                <div class="movie-item">
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                    <div>${movie.title}</div>
+                    <div>${movie.release_date}</div>
+                    <div><button class="details-btn" data-id="${movie.id}">Details</button></div>
+                </div>
+            `;
+            movieGrid.append(movieItem);
+        });
+        console.log("Movies displayed");
+        $('#loading-container').hide();
+        $('#content').show();
+    }
 
-        $('#suggestions li').on('click', function() {
+    function handleSearchInput() {
+        const query = searchInput.val();
+        if (query.length > 2) {
+            axios.get(`${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`)
+                .then(response => {
+                    const suggestions = response.data.results;
+                    displaySearchSuggestions(suggestions);
+                })
+                .catch(error => {
+                    console.error('Error fetching search suggestions:', error);
+                });
+        }
+    }
+
+    function displaySearchSuggestions(suggestions) {
+        const suggestionBox = $('#suggestions');
+        suggestionBox.empty();
+        suggestions.forEach(movie => {
+            const suggestionItem = `<div class="suggestion-item" data-id="${movie.id}">${movie.title}</div>`;
+            suggestionBox.append(suggestionItem);
+        });
+
+        $('.suggestion-item').on('click', function() {
             const movieId = $(this).data('id');
             window.location.href = `movie.html?id=${movieId}`;
         });
     }
+
+    fetchMovies();
+    searchInput.on('input', handleSearchInput);
 });
