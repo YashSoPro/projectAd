@@ -3,7 +3,7 @@ $(document).ready(function() {
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
     const searchInput = $('#search-bar input');
-    
+
     function fetchMovies() {
         console.log("Fetching movies...");
         axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
