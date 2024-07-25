@@ -3,39 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProjectAd</title>
+    <title>Movie Streaming</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>ProjectAd</h1>
+        <h1>Movie Streaming</h1>
         <nav>
             <a href="index.html">Home</a>
-            <a href="movie.html">Movies</a>
+            <a href="search.html">Search</a>
         </nav>
     </header>
-
     <div id="loading-container">
         <div class="spinner"></div>
     </div>
-
     <div id="content">
         <div id="search-bar">
-            <input type="text" placeholder="Search movies...">
+            <input type="text" placeholder="Search for movies...">
             <div id="suggestions"></div>
         </div>
-
-        <div id="movieContainer" class="movie-grid"></div>
+        <div class="movie-grid"></div>
     </div>
-
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Include custom scripts -->
     <script src="loading.js"></script>
-    <script src="movie.js"></script>
     <script src="search.js"></script>
-    <script src="backButton.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
