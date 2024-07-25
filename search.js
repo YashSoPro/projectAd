@@ -1,16 +1,12 @@
 $(document).ready(function() {
-    console.log("Document is ready");
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
     const searchInput = $('#search-bar input');
 
     function fetchMovies() {
-        console.log("Fetching movies...");
         axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
             .then(response => {
-                console.log("Movies fetched successfully");
                 const movies = response.data.results;
-                console.log("Movies:", movies);
                 displayMovies(movies);
             })
             .catch(error => {
@@ -21,7 +17,6 @@ $(document).ready(function() {
     }
 
     function displayMovies(movies) {
-        console.log("Displaying movies...");
         const movieGrid = $('.movie-grid');
         movieGrid.empty();
         movies.forEach(movie => {
@@ -35,7 +30,6 @@ $(document).ready(function() {
             `;
             movieGrid.append(movieItem);
         });
-        console.log("Movies displayed");
         $('#loading-container').hide();
         $('#content').show();
     }
@@ -51,6 +45,8 @@ $(document).ready(function() {
                 .catch(error => {
                     console.error('Error fetching search suggestions:', error);
                 });
+        } else {
+            $('#suggestions').empty();
         }
     }
 
