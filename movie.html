@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Details</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="movie.js"></script>
 </head>
 <body>
     <header>
@@ -17,21 +14,23 @@
             <a href="about.html">About</a>
         </nav>
     </header>
-
     <div id="loading-container">
         <div class="spinner"></div>
     </div>
-
     <div id="content" style="display: none;">
         <div id="movie-details"></div>
         <div id="trailer-container" style="display: none;">
-            <h2>Trailer</h2>
+            <h3>Trailer</h3>
             <iframe id="movie-trailer" width="560" height="315" frameborder="0" allowfullscreen></iframe>
         </div>
         <div id="stream-container" style="display: none;">
-            <h2>Watch Now</h2>
+            <h3>Stream</h3>
             <iframe id="movie-stream" width="560" height="315" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
+    <div id="debug" style="color: red;"></div> <!-- Debugging output container -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="movie.js"></script>
 </body>
 </html>
