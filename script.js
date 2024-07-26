@@ -1,4 +1,4 @@
-const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd'; // Replace with your actual TMDB API key
+const apiKey = 'b9777c51aea4a211a9c6f0e839934890'; // Replace with your actual TMDB API key
 
 async function fetchMovies() {
     try {
