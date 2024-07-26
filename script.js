@@ -1,12 +1,16 @@
 $(document).ready(function() {
+    console.log("Document is ready");
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
     const searchInput = $('#search-bar input');
 
-    function fetchMovies() {
-        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
+    function fetchMovies(page = 1) {
+        console.log("Fetching movies...");
+        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`)
             .then(response => {
+                console.log("Movies fetched successfully");
                 const movies = response.data.results;
+                console.log("Movies:", movies);
                 displayMovies(movies);
             })
             .catch(error => {
@@ -17,6 +21,7 @@ $(document).ready(function() {
     }
 
     function displayMovies(movies) {
+        console.log("Displaying movies...");
         const movieGrid = $('.movie-grid');
         movieGrid.empty();
         movies.forEach(movie => {
@@ -32,13 +37,9 @@ $(document).ready(function() {
             `;
             movieGrid.append(movieItem);
         });
+        console.log("Movies displayed");
         $('#loading-container').hide();
         $('#content').show();
-
-        $('.details-btn').on('click', function() {
-            const movieId = $(this).data('id');
-            window.location.href = `movie.html?id=${movieId}`;
-        });
     }
 
     function handleSearchInput() {
@@ -69,6 +70,25 @@ $(document).ready(function() {
         });
     }
 
+    let currentPage = 1;
+
+    $('#prevPage').on('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchMovies(currentPage);
+        }
+    });
+
+    $('#nextPage').on('click', function() {
+        currentPage++;
+        fetchMovies(currentPage);
+    });
+
     fetchMovies();
     searchInput.on('input', handleSearchInput);
+
+    $(document).on('click', '.details-btn', function() {
+        const movieId = $(this).data('id');
+        window.location.href = `movie.html?id=${movieId}`;
+    });
 });
