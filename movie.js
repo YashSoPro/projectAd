@@ -2,66 +2,65 @@ $(document).ready(function() {
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
 
+    function getMovieIdFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
+    }
+
     function fetchMovieDetails(movieId) {
-        $('#loading-container').fadeIn(); // Show loading screen
-        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
+        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`)
             .then(response => {
                 const movie = response.data;
-                displayMovie(movie, movieId);
+                displayMovieDetails(movie);
+                fetchMovieTrailer(movieId);
+                fetchMovieStream(movieId);
             })
             .catch(error => {
                 console.error('Error fetching movie details:', error);
-                $('#playerContainer').html('<p class="error-message">Failed to load movie details. Please try again later.</p>');
-            })
-            .finally(() => {
-                $('#loading-container').fadeOut(); // Hide loading screen
+                $('#loading-container').hide();
+                $('#content').show().html('<p>Error loading movie details. Please try again later.</p>');
             });
     }
 
-    function displayMovie(movie, movieId) {
-        document.title = movie.title; // Set page title
-
-        const playerContainer = $('#playerContainer');
-        const playerHtml = `
-            <div class="movie-details">
-                <h2>${movie.title}</h2>
-                <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="615" src="https://www.dailymotion.com/embed/video/${movieId}" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
-            </div>
+    function displayMovieDetails(movie) {
+        const movieDetails = `
+            <h2>${movie.title}</h2>
+            <p>${movie.overview}</p>
+            <p>Release Date: ${movie.release_date}</p>
+            <p>Rating: ${movie.vote_average}</p>
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
         `;
-        playerContainer.html(playerHtml).fadeIn(500); // Show player container
-
-        $('#backToDetailsBtn').click(function() {
-            window.history.back(); // Go back to previous page
-        });
-
-        $(document).on('keydown', function(e) {
-            if (e.key === 'F11') {
-                toggleFullScreen();
-            }
-        });
-
-        function toggleFullScreen() {
-            const iframe = document.getElementById('moviePlayerFrame');
-            if (iframe.requestFullscreen) {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                } else {
-                    iframe.requestFullscreen();
-                }
-            }
-        }
+        $('#movie-details').html(movieDetails);
+        $('#loading-container').hide();
+        $('#content').show();
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get('id');
+    function fetchMovieTrailer(movieId) {
+        axios.get(`${apiUrl}/movie/${movieId}/videos?api_key=${apiKey}&language=en-US`)
+            .then(response => {
+                const trailers = response.data.results;
+                if (trailers.length > 0) {
+                    const trailer = trailers[0];
+                    $('#movie-trailer').attr('src', `https://www.youtube.com/embed/${trailer.key}`);
+                    $('#trailer-container').show();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching movie trailer:', error);
+            });
+    }
 
+    function fetchMovieStream(movieId) {
+        const streamUrl = `https://vidsrc.to/embed/movie/${movieId}`;
+        $('#movie-stream').attr('src', streamUrl);
+        $('#stream-container').show();
+    }
+
+    const movieId = getMovieIdFromUrl();
     if (movieId) {
-        console.log(`Movie ID found: ${movieId}`);
         fetchMovieDetails(movieId);
     } else {
-        console.error('No movie ID found in URL parameter');
+        $('#loading-container').hide();
+        $('#content').show().html('<p>Movie ID not found. Please try again later.</p>');
     }
 });
