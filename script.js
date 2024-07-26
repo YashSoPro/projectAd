@@ -1,17 +1,19 @@
 $(document).ready(function() {
-    console.log("Document is ready");
     const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
     const apiUrl = 'https://api.themoviedb.org/3';
-    const searchInput = $('#search-bar input');
 
-    function fetchMovies(page = 1) {
-        console.log("Fetching movies...");
-        axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`)
+    function fetchMovies() {
+        $('#loading-container').show();
+        $('#content').hide();
+
+        axios.get(`${apiUrl}/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`)
             .then(response => {
-                console.log("Movies fetched successfully");
                 const movies = response.data.results;
-                console.log("Movies:", movies);
+                console.log('Movies fetched successfully');
+                console.log('Movies: ', movies);
                 displayMovies(movies);
+                $('#loading-container').hide();
+                $('#content').show();
             })
             .catch(error => {
                 console.error('Error fetching movies:', error);
@@ -21,74 +23,23 @@ $(document).ready(function() {
     }
 
     function displayMovies(movies) {
-        console.log("Displaying movies...");
         const movieGrid = $('.movie-grid');
         movieGrid.empty();
+
         movies.forEach(movie => {
-            const movieItem = `
-                <div class="movie-item">
+            const movieElement = `
+                <div class="movie">
                     <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-                    <div class="movie-info">
-                        <h3>${movie.title}</h3>
-                        <p>Release Date: ${movie.release_date}</p>
-                        <button class="details-btn" data-id="${movie.id}">Details</button>
-                    </div>
+                    <h3>${movie.title}</h3>
+                    <p>${movie.release_date}</p>
+                    <button onclick="window.location.href='movie.html?id=${movie.id}'">Details</button>
                 </div>
             `;
-            movieGrid.append(movieItem);
-        });
-        console.log("Movies displayed");
-        $('#loading-container').hide();
-        $('#content').show();
-    }
-
-    function handleSearchInput() {
-        const query = searchInput.val();
-        if (query.length > 2) {
-            axios.get(`${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`)
-                .then(response => {
-                    const suggestions = response.data.results;
-                    displaySearchSuggestions(suggestions);
-                })
-                .catch(error => {
-                    console.error('Error fetching search suggestions:', error);
-                });
-        }
-    }
-
-    function displaySearchSuggestions(suggestions) {
-        const suggestionBox = $('#suggestions');
-        suggestionBox.empty();
-        suggestions.forEach(movie => {
-            const suggestionItem = `<div class="suggestion-item" data-id="${movie.id}">${movie.title}</div>`;
-            suggestionBox.append(suggestionItem);
+            movieGrid.append(movieElement);
         });
 
-        $('.suggestion-item').on('click', function() {
-            const movieId = $(this).data('id');
-            window.location.href = `movie.html?id=${movieId}`;
-        });
+        console.log('Movies displayed');
     }
-
-    let currentPage = 1;
-
-    $('#prevPage').on('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchMovies(currentPage);
-        }
-    });
-
-    $('#nextPage').on('click', function() {
-        currentPage++;
-        fetchMovies(currentPage);
-    });
 
     fetchMovies();
-    searchInput.on('input', handleSearchInput);
-
-    $(document).on('click', '.details-btn', function() {
-        const movieId = $(this).data('id');
-        window.location.href = `movie.html?id=${movieId}`;
-    });
 });
