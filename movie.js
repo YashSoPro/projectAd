@@ -4,7 +4,9 @@ $(document).ready(function() {
 
     function getMovieIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('id');
+        const movieId = urlParams.get('id');
+        console.log("Movie ID from URL:", movieId);
+        return movieId;
     }
 
     function fetchMovieDetails(movieId) {
@@ -60,6 +62,7 @@ $(document).ready(function() {
     if (movieId) {
         fetchMovieDetails(movieId);
     } else {
+        console.log("No movie ID found in URL.");
         $('#loading-container').hide();
         $('#content').show().html('<p>Movie ID not found. Please try again later.</p>');
     }
