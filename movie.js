@@ -5,11 +5,13 @@ $(document).ready(function() {
     function getMovieIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         const movieId = urlParams.get('id');
-        console.log("Movie ID from URL:", movieId);
+        console.log(`Movie ID from URL: ${movieId}`);
+        $('#debug').append(`<p>Movie ID from URL: ${movieId}</p>`); // Debugging output
         return movieId;
     }
 
     function fetchMovieDetails(movieId) {
+        $('#debug').append(`<p>Fetching details for Movie ID: ${movieId}</p>`); // Debugging output
         axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`)
             .then(response => {
                 const movie = response.data;
@@ -63,6 +65,7 @@ $(document).ready(function() {
         fetchMovieDetails(movieId);
     } else {
         console.log("No movie ID found in URL.");
+        $('#debug').append('<p>No movie ID found in URL.</p>'); // Debugging output
         $('#loading-container').hide();
         $('#content').show().html('<p>Movie ID not found. Please try again later.</p>');
     }
