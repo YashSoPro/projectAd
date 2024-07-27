@@ -1,4 +1,4 @@
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const suggestions = document.getElementById('suggestions');
     const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
@@ -34,10 +34,10 @@ window.onload = function() {
             suggestionItem.addEventListener('click', () => {
                 searchInput.value = movie.title;
                 suggestions.innerHTML = '';
-                // You can add additional functionality to fetch and display the selected movie details
+                // Fetch and display the selected movie details
+                fetchMovies(movie.title); // Added to fetch movies based on suggestion click
             });
             suggestions.appendChild(suggestionItem);
         });
     };
-};
-v
+});
