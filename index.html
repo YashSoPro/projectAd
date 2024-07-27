@@ -3,37 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProjectAd</title>
+    <title>CoreLab</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="main/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="main/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="main/favicon-16x16.png">
+    <link rel="manifest" href="main/site.webmanifest">
 </head>
 <body>
-    <header>
-        <h1>ProjectAd</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-        </nav>
-    </header>
-    <div id="loading-container">
-        <div class="spinner"></div>
-    </div>
-    <div id="content">
-        <div id="search-bar">
-            <input type="text" placeholder="Search for movies...">
-            <div id="suggestions"></div>
-        </div>
-        <div class="movie-grid"></div>
-        <div id="pagination">
-            <button id="prevPage" class="button">Previous Page</button>
-            <button id="nextPage" class="button">Next Page</button>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <nav>
+        <!-- Your navbar content -->
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <div id="movies-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="script.js"></script>
-    <script src="search.js"></script>
-    <script src="loading.js"></script>
-    <script src="movie.js"></script>
-    <script src="backButton.js"></script>
+    <script>
+        const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd'; // Replace with your actual TMDB API key
+
+        async function fetchMovies() {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
+                const movies = response.data.results;
+                console.log('Movies fetched successfully');
+                console.log('Movies:', movies);
+                displayMovies(movies);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+            }
+        }
+
+        function displayMovies(movies) {
+            const moviesContainer = document.getElementById('movies-container');
+            if (!moviesContainer) {
+                console.error('Movies container not found');
+                return;
+            }
+
+            moviesContainer.innerHTML = '';
+            movies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.className = 'movie';
+                movieElement.innerHTML = `
+                    <a href="movie.html?id=${movie.id}">
+                        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                        <h2>${movie.title}</h2>
+                    </a>
+                `;
+                moviesContainer.appendChild(movieElement);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Document is ready');
+            fetchMovies();
+        });
+    </script>
 </body>
 </html>
