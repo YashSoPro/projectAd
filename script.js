@@ -1,43 +1,54 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search-input');
-    const suggestions = document.getElementById('suggestions');
+    const movieGrid = document.getElementById('movie-grid');
     const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
+    let currentPage = 1;
 
-    searchInput.addEventListener('input', function () {
-        const query = searchInput.value.trim();
-        if (query.length > 2) {
-            fetchSuggestions(query);
-        } else {
-            suggestions.innerHTML = '';
-        }
-    });
-
-    const fetchSuggestions = (query) => {
-        const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`;
+    const fetchMovies = (query = '') => {
+        const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage}&query=${query}`;
 
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                displaySuggestions(data.results);
+                console.log('Movies:', data.results);
+                displayMovies(data.results);
             })
             .catch(error => {
-                console.error('Error fetching suggestions:', error);
+                console.error('Error fetching movies:', error);
             });
     };
 
-    const displaySuggestions = (movies) => {
-        suggestions.innerHTML = '';
+    const displayMovies = (movies) => {
+        if (!movieGrid) {
+            console.error('Movie grid element not found');
+            return;
+        }
+
+        movieGrid.innerHTML = '';
         movies.forEach(movie => {
-            const suggestionItem = document.createElement('div');
-            suggestionItem.className = 'suggestion-item';
-            suggestionItem.textContent = movie.title;
-            suggestionItem.addEventListener('click', () => {
-                searchInput.value = movie.title;
-                suggestions.innerHTML = '';
-                // Fetch and display the selected movie details
-                fetchMovies(movie.title); // Added to fetch movies based on suggestion click
-            });
-            suggestions.appendChild(suggestionItem);
+            const movieItem = document.createElement('div');
+            movieItem.className = 'movie-item';
+            movieItem.innerHTML = `
+                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
+                <div class="details">
+                    <h2>${movie.title}</h2>
+                    <p>${movie.overview}</p>
+                </div>
+            `;
+            movieGrid.appendChild(movieItem);
         });
     };
+
+    document.getElementById('previousPage').addEventListener('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchMovies();
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', function() {
+        currentPage++;
+        fetchMovies();
+    });
+
+    fetchMovies();
 });
