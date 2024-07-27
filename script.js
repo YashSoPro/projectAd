@@ -7,10 +7,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage}&query=${query}`;
 
         fetch(apiUrl)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                console.log('Movies:', data.results);
-                displayMovies(data.results);
+                console.log('Full API Response:', data); // Log the entire response
+                if (data.results && Array.isArray(data.results)) {
+                    displayMovies(data.results);
+                } else {
+                    console.error('Unexpected data structure:', data.results);
+                }
             })
             .catch(error => {
                 console.error('Error fetching movies:', error);
