@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+window.onload = function() {
     const searchInput = document.getElementById('search-input');
     const suggestions = document.getElementById('suggestions');
     const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
@@ -39,4 +39,5 @@ document.addEventListener('DOMContentLoaded', function () {
             suggestions.appendChild(suggestionItem);
         });
     };
-});
+};
+v
