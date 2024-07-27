@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
+    const apiKey = 'b9777c51aea4a211a9c6f0e839934890';
     const apiUrl = 'https://api.themoviedb.org/3';
 
     function fetchMovieDetails(movieId) {
