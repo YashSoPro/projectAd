@@ -5,32 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Details</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="main/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="main/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="main/favicon-16x16.png">
+    <link rel="manifest" href="main/site.webmanifest">
 </head>
 <body>
-    <header>
-        <h1>Movie Details</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-        </nav>
-    </header>
-    <div id="loading-container">
-        <div class="spinner"></div>
-    </div>
-    <div id="content" style="display: none;">
-        <div id="movie-details"></div>
-        <div id="trailer-container" style="display: none;">
-            <h3>Trailer</h3>
-            <iframe id="movie-trailer" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div id="stream-container" style="display: none;">
-            <h3>Stream</h3>
-            <iframe id="movie-stream" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-    <div id="debug" style="color: red;"></div> <!-- Debugging output container -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <nav>
+        <!-- Your navbar content -->
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <div id="movie-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="movie.js"></script>
+    <script>
+        const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd'; // Replace with your actual TMDB API key
+
+        function getMovieIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        async function fetchMovieDetails(movieId) {
+            try {
+                const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`);
+                const movie = response.data;
+                displayMovieDetails(movie);
+            } catch (error) {
+                console.error('Error fetching movie details:', error);
+                document.getElementById('movie-container').innerText = 'Movie details not found. Please try again later.';
+            }
+        }
+
+        function displayMovieDetails(movie) {
+            const movieContainer = document.getElementById('movie-container');
+            if (!movieContainer) {
+                console.error('Movie container not found');
+                return;
+            }
+
+            movieContainer.innerHTML = `
+                <h1>${movie.title}</h1>
+                <p>${movie.overview}</p>
+                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const movieId = getMovieIdFromUrl();
+            if (movieId) {
+                console.log(`Movie ID from URL: ${movieId}`);
+                fetchMovieDetails(movieId);
+            } else {
+                console.log('No movie ID found in URL.');
+                document.getElementById('movie-container').innerText = 'Movie ID not found. Please try again later.';
+            }
+        });
+    </script>
 </body>
 </html>
