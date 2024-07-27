@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const movieGrid = document.getElementById('movie-grid');
-    const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
+    const apiKey = 'b9777c51aea4a211a9c6f0e839934890'; // Replace with your new API key
     let currentPage = 1;
 
     const fetchMovies = (query = '') => {
@@ -9,20 +9,21 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Full API Response:', data); // Log the entire response
-                if (data.results && Array.isArray(data.results)) {
+                console.log('Movies:', data.results);
+                if (data.results && data.results.length > 0) {
                     displayMovies(data.results);
                 } else {
-                    console.error('Unexpected data structure:', data.results);
+                    movieGrid.innerHTML = '<p>No movies found.</p>';
                 }
             })
             .catch(error => {
                 console.error('Error fetching movies:', error);
+                movieGrid.innerHTML = '<p>Error fetching movies. Please try again later.</p>';
             });
     };
 
