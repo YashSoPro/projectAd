@@ -1,70 +1,43 @@
-window.onload = function() {
-    const loadingContainer = document.getElementById('loading-container');
-    const content = document.getElementById('content');
-    const movieGrid = document.getElementById('movie-grid');
-    const previousPage = document.getElementById('previousPage');
-    const nextPage = document.getElementById('nextPage');
-    let currentPage = 1;
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const suggestions = document.getElementById('suggestions');
     const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
 
-    const fetchMovies = (page = 1) => {
-        const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}`;
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.trim();
+        if (query.length > 2) {
+            fetchSuggestions(query);
+        } else {
+            suggestions.innerHTML = '';
+        }
+    });
 
-        loadingContainer.style.display = 'flex';
-        content.style.display = 'none';
+    const fetchSuggestions = (query) => {
+        const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`;
 
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                console.log('Movies:', data.results);  // Ensure movies are fetched
-                displayMovies(data.results);
-                loadingContainer.style.display = 'none';
-                content.style.display = 'block';
+                displaySuggestions(data.results);
             })
             .catch(error => {
-                console.error('Error fetching movies:', error);
-                loadingContainer.style.display = 'none';
-                content.style.display = 'block';
+                console.error('Error fetching suggestions:', error);
             });
     };
 
-    const displayMovies = (movies) => {
-        if (!movieGrid) {
-            console.error('Movie grid element not found');
-            return;
-        }
-        
-        movieGrid.innerHTML = '';
+    const displaySuggestions = (movies) => {
+        suggestions.innerHTML = '';
         movies.forEach(movie => {
-            const movieItem = document.createElement('div');
-            movieItem.className = 'movie-item';
-            movieItem.innerHTML = `
-                <img src="https://image.tmdb.org/t/p/w200${movie.poster_path}" alt="${movie.title}">
-                <div class="details">
-                    <h2>${movie.title}</h2>
-                    <p>${movie.overview}</p>
-                    <button class="button" onclick="showDetails(${movie.id})">Details</button>
-                </div>
-            `;
-            movieGrid.appendChild(movieItem);
+            const suggestionItem = document.createElement('div');
+            suggestionItem.className = 'suggestion-item';
+            suggestionItem.textContent = movie.title;
+            suggestionItem.addEventListener('click', () => {
+                searchInput.value = movie.title;
+                suggestions.innerHTML = '';
+                // Fetch and display the selected movie details
+                fetchMovies(movie.title); // Added to fetch movies based on suggestion click
+            });
+            suggestions.appendChild(suggestionItem);
         });
     };
-
-    const showDetails = (movieId) => {
-        // Function to show movie details
-    };
-
-    previousPage.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchMovies(currentPage);
-        }
-    });
-
-    nextPage.addEventListener('click', () => {
-        currentPage++;
-        fetchMovies(currentPage);
-    });
-
-    fetchMovies(currentPage);
-};
+});
