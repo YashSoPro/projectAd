@@ -1,4 +1,4 @@
-const apiKey = 'b9777c51aea4a211a9c6f0e839934890'; // Replace with your new TMDB API key
+const apiKey = 'b9777c51aea4a211a9c6f0e839934890'; // Updated TMDB API key
 
 async function fetchMovies() {
     try {
@@ -14,11 +14,6 @@ async function fetchMovies() {
 
 function displayMovies(movies) {
     const moviesContainer = document.getElementById('movies-container');
-    if (!moviesContainer) {
-        console.error('Movies container not found');
-        return;
-    }
-
     moviesContainer.innerHTML = '';
     movies.forEach(movie => {
         const movieElement = document.createElement('div');
@@ -33,7 +28,4 @@ function displayMovies(movies) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Document is ready');
-    fetchMovies();
-});
+fetchMovies();
