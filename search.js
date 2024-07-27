@@ -1,35 +1,42 @@
-$(document).ready(function() {
-    const apiKey = 'b9777c51aea4a211a9c6f0e839934890';
-    const apiUrl = 'https://api.themoviedb.org/3';
-    const searchInput = $('#search-bar input');
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('search-input');
+    const suggestions = document.getElementById('suggestions');
+    const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
 
-    function handleSearchInput() {
-        const query = searchInput.val();
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.trim();
         if (query.length > 2) {
-            axios.get(`${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`)
-                .then(response => {
-                    const suggestions = response.data.results;
-                    displaySearchSuggestions(suggestions);
-                })
-                .catch(error => {
-                    console.error('Error fetching search suggestions:', error);
-                });
+            fetchSuggestions(query);
+        } else {
+            suggestions.innerHTML = '';
         }
-    }
+    });
 
-    function displaySearchSuggestions(suggestions) {
-        const suggestionBox = $('#suggestions');
-        suggestionBox.empty();
-        suggestions.forEach(movie => {
-            const suggestionItem = `<div class="suggestion-item" data-id="${movie.id}">${movie.title}</div>`;
-            suggestionBox.append(suggestionItem);
+    const fetchSuggestions = (query) => {
+        const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                displaySuggestions(data.results);
+            })
+            .catch(error => {
+                console.error('Error fetching suggestions:', error);
+            });
+    };
+
+    const displaySuggestions = (movies) => {
+        suggestions.innerHTML = '';
+        movies.forEach(movie => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.className = 'suggestion-item';
+            suggestionItem.textContent = movie.title;
+            suggestionItem.addEventListener('click', () => {
+                searchInput.value = movie.title;
+                suggestions.innerHTML = '';
+                // You can add additional functionality to fetch and display the selected movie details
+            });
+            suggestions.appendChild(suggestionItem);
         });
-
-        $('.suggestion-item').on('click', function() {
-            const movieId = $(this).data('id');
-            window.location.href = `movie.html?id=${movieId}`;
-        });
-    }
-
-    searchInput.on('input', handleSearchInput);
+    };
 });
