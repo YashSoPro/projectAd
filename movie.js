@@ -1,72 +1,42 @@
-$(document).ready(function() {
-    const apiKey = 'b9777c51aea4a211a9c6f0e839934890';
-    const apiUrl = 'https://api.themoviedb.org/3';
+const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd'; // Replace with your new TMDB API key
 
-    function getMovieIdFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get('id');
-        console.log(`Movie ID from URL: ${movieId}`);
-        $('#debug').append(`<p>Movie ID from URL: ${movieId}</p>`); // Debugging output
-        return movieId;
+function getMovieIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+}
+
+async function fetchMovieDetails(movieId) {
+    try {
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`);
+        const movie = response.data;
+        displayMovieDetails(movie);
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
+        document.getElementById('movie-container').innerText = 'Movie details not found. Please try again later.';
+    }
+}
+
+function displayMovieDetails(movie) {
+    const movieContainer = document.getElementById('movie-container');
+    if (!movieContainer) {
+        console.error('Movie container not found');
+        return;
     }
 
-    function fetchMovieDetails(movieId) {
-        $('#debug').append(`<p>Fetching details for Movie ID: ${movieId}</p>`); // Debugging output
-        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`)
-            .then(response => {
-                const movie = response.data;
-                displayMovieDetails(movie);
-                fetchMovieTrailer(movieId);
-                fetchMovieStream(movieId);
-            })
-            .catch(error => {
-                console.error('Error fetching movie details:', error);
-                $('#loading-container').hide();
-                $('#content').show().html('<p>Error loading movie details. Please try again later.</p>');
-            });
-    }
+    movieContainer.innerHTML = `
+        <h1>${movie.title}</h1>
+        <p>${movie.overview}</p>
+        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+    `;
+}
 
-    function displayMovieDetails(movie) {
-        const movieDetails = `
-            <h2>${movie.title}</h2>
-            <p>${movie.overview}</p>
-            <p>Release Date: ${movie.release_date}</p>
-            <p>Rating: ${movie.vote_average}</p>
-            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-        `;
-        $('#movie-details').html(movieDetails);
-        $('#loading-container').hide();
-        $('#content').show();
-    }
-
-    function fetchMovieTrailer(movieId) {
-        axios.get(`${apiUrl}/movie/${movieId}/videos?api_key=${apiKey}&language=en-US`)
-            .then(response => {
-                const trailers = response.data.results;
-                if (trailers.length > 0) {
-                    const trailer = trailers[0];
-                    $('#movie-trailer').attr('src', `https://www.youtube.com/embed/${trailer.key}`);
-                    $('#trailer-container').show();
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching movie trailer:', error);
-            });
-    }
-
-    function fetchMovieStream(movieId) {
-        const streamUrl = `https://vidsrc.to/embed/movie/${movieId}`;
-        $('#movie-stream').attr('src', streamUrl);
-        $('#stream-container').show();
-    }
-
+document.addEventListener('DOMContentLoaded', () => {
     const movieId = getMovieIdFromUrl();
     if (movieId) {
+        console.log(`Movie ID from URL: ${movieId}`);
         fetchMovieDetails(movieId);
     } else {
-        console.log("No movie ID found in URL.");
-        $('#debug').append('<p>No movie ID found in URL.</p>'); // Debugging output
-        $('#loading-container').hide();
-        $('#content').show().html('<p>Movie ID not found. Please try again later.</p>');
+        console.log('No movie ID found in URL.');
+        document.getElementById('movie-container').innerText = 'Movie ID not found. Please try again later.';
     }
 });
