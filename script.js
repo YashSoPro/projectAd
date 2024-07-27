@@ -50,30 +50,31 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchMovies();
     });
 
-    const playMovie = (movieId) => {
-        // Use a CORS proxy for testing
-        const apiUrl = `https://cors-anywhere.herokuapp.com/https://vidsrc.me/api/v1/watch/${movieId}`;
+   const playMovie = (movieId) => {
+    // Use the CORS proxy for testing
+    const apiUrl = `https://cors-anywhere.herokuapp.com/https://vidsrc.me/api/v1/watch/${movieId}`;
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                const videoUrl = data.url; // Adjust according to vidsrc API response structure
-                if (videoUrl) {
-                    const videoHtml = `
-                        <div id="playerContainer">
-                            <iframe src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    `;
-                    movieGrid.innerHTML = videoHtml;
-                } else {
-                    movieGrid.innerHTML = '<p>Video not available.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error playing movie:', error);
-                movieGrid.innerHTML = '<p>Error playing movie. Please try again later.</p>';
-            });
-    };
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const videoUrl = data.url; // Adjust according to vidsrc API response structure
+            if (videoUrl) {
+                const videoHtml = `
+                    <div id="playerContainer">
+                        <iframe src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `;
+                document.getElementById('movie-grid').innerHTML = videoHtml;
+            } else {
+                document.getElementById('movie-grid').innerHTML = '<p>Video not available.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error playing movie:', error);
+            document.getElementById('movie-grid').innerHTML = '<p>Error playing movie. Please try again later.</p>';
+        });
+};
+
 
     window.showDetails = (movieId) => {
         const apiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
