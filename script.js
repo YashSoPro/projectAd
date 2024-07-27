@@ -1,31 +1,64 @@
-const apiKey = 'b9777c51aea4a211a9c6f0e839934890'; // Updated TMDB API key
+document.addEventListener('DOMContentLoaded', function () {
+    const loadingContainer = document.getElementById('loading-container');
+    const content = document.getElementById('content');
+    const movieGrid = document.getElementById('movie-grid');
+    const previousPage = document.getElementById('previousPage');
+    const nextPage = document.getElementById('nextPage');
+    let currentPage = 1;
+    const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
 
-async function fetchMovies() {
-    try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`);
-        const movies = response.data.results;
-        console.log('Movies fetched successfully');
-        console.log('Movies:', movies);
-        displayMovies(movies);
-    } catch (error) {
-        console.error('Error fetching movies:', error);
-    }
-}
+    const fetchMovies = (page = 1) => {
+        const apiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}`;
 
-function displayMovies(movies) {
-    const moviesContainer = document.getElementById('movies-container');
-    moviesContainer.innerHTML = '';
-    movies.forEach(movie => {
-        const movieElement = document.createElement('div');
-        movieElement.className = 'movie';
-        movieElement.innerHTML = `
-            <a href="movie.html?id=${movie.id}">
-                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-                <h2>${movie.title}</h2>
-            </a>
-        `;
-        moviesContainer.appendChild(movieElement);
+        loadingContainer.style.display = 'flex';
+        content.style.display = 'none';
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                displayMovies(data.results);
+                loadingContainer.style.display = 'none';
+                content.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching movies:', error);
+                loadingContainer.style.display = 'none';
+                content.style.display = 'block';
+            });
+    };
+
+    const displayMovies = (movies) => {
+        movieGrid.innerHTML = '';
+        movies.forEach(movie => {
+            const movieItem = document.createElement('div');
+            movieItem.className = 'movie-item';
+            movieItem.innerHTML = `
+                <img src="https://image.tmdb.org/t/p/w200${movie.poster_path}" alt="${movie.title}">
+                <div class="details">
+                    <h2>${movie.title}</h2>
+                    <p>${movie.overview}</p>
+                    <button class="button" onclick="showDetails(${movie.id})">Details</button>
+                </div>
+            `;
+            movieGrid.appendChild(movieItem);
+        });
+    };
+
+    const showDetails = (movieId) => {
+        // Function to show movie details
+    };
+
+    previousPage.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchMovies(currentPage);
+        }
     });
-}
 
-fetchMovies();
+    nextPage.addEventListener('click', () => {
+        currentPage++;
+        fetchMovies(currentPage);
+    });
+
+    fetchMovies(currentPage);
+});
