@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+window.onload = function() {
     const loadingContainer = document.getElementById('loading-container');
     const content = document.getElementById('content');
     const movieGrid = document.getElementById('movie-grid');
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
+                console.log('Movies:', data.results);  // Ensure movies are fetched
                 displayMovies(data.results);
                 loadingContainer.style.display = 'none';
                 content.style.display = 'block';
@@ -28,6 +29,11 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const displayMovies = (movies) => {
+        if (!movieGrid) {
+            console.error('Movie grid element not found');
+            return;
+        }
+        
         movieGrid.innerHTML = '';
         movies.forEach(movie => {
             const movieItem = document.createElement('div');
@@ -61,4 +67,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     fetchMovies(currentPage);
-});
+};
