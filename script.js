@@ -1,102 +1,94 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const movieGrid = document.getElementById('movie-grid');
-    const apiKey = 'b777c51aea4a211a9c6f0e839934890';
-    let currentPage = 1;
+$(document).ready(function() {
+    const apiKey = 'cc8c9b7e031be2183ce68b254b39ddfd';
+    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYzhjOWI3ZTAzMWJlMjE4M2NlNjhiMjU0YjM5ZGRmZCIsIm5iZiI6MTcyMDg2MDAzNi45NzIxMzQsInN1YiI6IjY2OTIzYzIyNGVlNGFiYzcyNzVlODg0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fohroZiX7Enow_34GHF6jGkYvR5zRFULCc-6Oh9_tXQ';
+    const apiUrl = 'https://api.themoviedb.org/3';
+    const vidsrcProxy = 'https://cors-anywhere.herokuapp.com/'; // Proxy for CORS issues
 
-    const fetchMovies = (query = '') => {
-        const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${currentPage}&query=${query}`;
+    // Fetch featured movies
+    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        const featuredMovies = response.data.results.slice(0, 10);
+        displayMovies(featuredMovies, '#featuredMovies');
+    })
+    .catch(error => {
+        console.error('Error fetching featured movies:', error);
+    });
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Movies:', data.results);
-                displayMovies(data.results);
-            })
-            .catch(error => {
-                console.error('Error fetching movies:', error);
-            });
-    };
+    // Fetch more movies for the "Popular Movies" section
+    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        const popularMovies = response.data.results;
+        displayMovies(popularMovies, '#popularMovies');
+    })
+    .catch(error => {
+        console.error('Error fetching popular movies:', error);
+    });
 
-    const displayMovies = (movies) => {
-        if (!movieGrid) {
-            console.error('Movie grid element not found');
-            return;
-        }
-
-        movieGrid.innerHTML = '';
+    // Function to display movies
+    function displayMovies(movies, containerSelector) {
+        const container = $(containerSelector);
+        container.empty();
         movies.forEach(movie => {
-            const movieItem = document.createElement('div');
-            movieItem.className = 'movie-item';
-            movieItem.innerHTML = `
-                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
-                <div class="details">
-                    <h2>${movie.title}</h2>
-                    <button class="button" onclick="showDetails('${movie.id}')">Details</button>
-                </div>
-            `;
-            movieGrid.appendChild(movieItem);
-        });
-    };
+            const imageUrl = movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                : 'https://via.placeholder.com/200x300';
+            const title = movie.title;
+            const overview = movie.overview ? movie.overview.substring(0, 150) + '...' : 'No overview available';
+            const rating = movie.vote_average;
 
-    document.getElementById('previousPage').addEventListener('click', function() {
-        if (currentPage > 1) {
-            currentPage--;
-            fetchMovies();
-        }
-    });
-
-    document.getElementById('nextPage').addEventListener('click', function() {
-        currentPage++;
-        fetchMovies();
-    });
-
-   const playMovie = (movieId) => {
-    // Use the CORS proxy for testing
-    const apiUrl = `https://cors-anywhere.herokuapp.com/https://vidsrc.me/api/v1/watch/${movieId}`;
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const videoUrl = data.url; // Adjust according to vidsrc API response structure
-            if (videoUrl) {
-                const videoHtml = `
-                    <div id="playerContainer">
-                        <iframe src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
+            const movieElement = $(`
+                <div class="movie">
+                    <img src="${imageUrl}" alt="${title}">
+                    <div class="details">
+                        <h3>${title}</h3>
+                        <p>${overview}</p>
+                        <p>Rating: ${rating}/10</p>
+                        <a href="movie.html?id=${movie.id}" class="plyr-trigger">View Details</a>
                     </div>
-                `;
-                document.getElementById('movie-grid').innerHTML = videoHtml;
-            } else {
-                document.getElementById('movie-grid').innerHTML = '<p>Video not available.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error playing movie:', error);
-            document.getElementById('movie-grid').innerHTML = '<p>Error playing movie. Please try again later.</p>';
+                </div>
+            `);
+            container.append(movieElement);
         });
-};
+    }
 
-
-    window.showDetails = (movieId) => {
-        const apiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+    // Play movie function
+    function playMovie(movieId) {
+        const apiUrl = `${vidsrcProxy}https://vidsrc.me/api/v1/watch/${movieId}`;
 
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                const movieHtml = `
-                    <div class="movie-details">
-                        <h1>${data.title}</h1>
-                        <img src="https://image.tmdb.org/t/p/w500/${data.poster_path}" alt="${data.title}">
-                        <p>${data.overview}</p>
-                        <button class="button" onclick="playMovie('${data.id}')">Watch</button>
-                    </div>
-                `;
-                movieGrid.innerHTML = movieHtml;
+                const videoUrl = data.url; // Adjust according to vidsrc API response structure
+                if (videoUrl) {
+                    const videoHtml = `
+                        <div id="playerContainer">
+                            <iframe src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    `;
+                    $('#movie-grid').html(videoHtml);
+                } else {
+                    $('#movie-grid').html('<p>Video not available.</p>');
+                }
             })
             .catch(error => {
-                console.error('Error fetching movie details:', error);
-                movieGrid.innerHTML = '<p>Error fetching movie details. Please try again later.</p>';
+                console.error('Error playing movie:', error);
+                $('#movie-grid').html('<p>Error playing movie. Please try again later.</p>');
             });
-    };
+    }
 
-    fetchMovies();
+    // Event listener for the 'Watch' button
+    $(document).on('click', '.watch-btn', function() {
+        const movieId = $(this).data('id');
+        playMovie(movieId);
+    });
 });
