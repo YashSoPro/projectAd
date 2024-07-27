@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const suggestions = document.getElementById('suggestions');
-    const apiKey = 'b777b72240cf94459403b7bcf3cbb5a8';
+    const apiKey = 'b9777c51aea4a211a9c6f0e839934890';
 
     searchInput.addEventListener('input', function () {
         const query = searchInput.value.trim();
