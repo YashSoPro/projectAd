@@ -106,19 +106,16 @@ nav ul li a:hover {
     text-align: center;
     position: relative;
     overflow: hidden;
-    border: 1px solid #333; /* Optional: Adds border around movie items */
-    border-radius: 10px;   /* Ensures rounded corners for movie items */
 }
 
 .movie-item img {
     width: 100%;
     border-radius: 10px;
-    transition: transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s;
 }
 
 .movie-item:hover img {
     transform: scale(1.05);
-    opacity: 0.8;
 }
 
 .details {
@@ -188,7 +185,6 @@ nav ul li a:hover {
     color: red;
     text-align: center;
     margin: 20px;
-    font-size: 1.2rem; /* Adjust size as needed */
 }
 
 /* About Page Styles */
