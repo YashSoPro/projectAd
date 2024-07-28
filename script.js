@@ -1,18 +1,21 @@
-$(document).ready(function() {
+$(document).ready(function () {
     const apiKey = 'b9777c51aea4a211a9c6f0e839934890';
     const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOTc3N2M1MWFlYTRhMjExYTljNmYwZTgzOTkzNDg5MCIsIm5iZiI6MTcyMjEwMzM3Mi41OTY2NzksInN1YiI6IjY2OTIzYzIyNGVlNGFiYzcyNzVlODg0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.i2AWKgJL01w3QB0-sop6hg0ImVmQbk6SVVnPlc-XBco';
     const apiUrl = 'https://api.themoviedb.org/3';
 
     // Fetch featured movies
-    axios.get(`${apiUrl}/movie/popular?api_key=${apiKey}`, {
+    axios.get(`${apiUrl}/movie/popular`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
         },
+        params: {
+            api_key: apiKey
+        }
     })
     .then(response => {
         const featuredMovies = response.data.results.slice(0, 10);
-        displayMovies(featuredMovies, '#featuredMovies');
+        displayMovies(featuredMovies, '#movie-grid');
     })
     .catch(error => {
         console.error('Error fetching featured movies:', error);
