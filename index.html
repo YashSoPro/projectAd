@@ -5,20 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoreLab</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- Include Axios -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Link to the Favicon -->
-    <link rel="icon" href="main/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header>
         <h1>CoreLab</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">About</a></li>
             </ul>
         </nav>
     </header>
@@ -29,7 +26,7 @@
             <div id="suggestions"></div>
         </div>
 
-        <div id="movie-grid" class="movie-grid"></div>
+        <div id="movie-grid" class="movie-grid"></div> <!-- Correct class added -->
 
         <div id="pagination">
             <button class="button" id="previousPage">Previous</button>
@@ -37,8 +34,6 @@
         </div>
     </div>
 
-    <!-- Include your custom scripts -->
     <script src="script.js"></script>
-    <script src="search.js"></script>
 </body>
 </html>
