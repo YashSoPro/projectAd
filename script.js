@@ -12,7 +12,7 @@ $(document).ready(function() {
     })
     .then(response => {
         const featuredMovies = response.data.results.slice(0, 10);
-        displayMovies(featuredMovies, '#movie-grid'); // Updated container selector
+        displayMovies(featuredMovies, '#movie-grid');
     })
     .catch(error => {
         console.error('Error fetching featured movies:', error);
@@ -31,13 +31,13 @@ $(document).ready(function() {
             const rating = movie.vote_average;
 
             const movieElement = $(`
-                <div class="movie">
+                <div class="movie-item"> <!-- Changed class -->
                     <img src="${imageUrl}" alt="${title}">
                     <div class="details">
                         <h3>${title}</h3>
                         <p>${overview}</p>
                         <p>Rating: ${rating}/10</p>
-                        <a href="movie.html?id=${movie.id}" class="plyr-trigger">View Details</a>
+                        <a href="movie.html?id=${movie.id}" class="button">View Details</a> <!-- Added button -->
                     </div>
                 </div>
             `);
