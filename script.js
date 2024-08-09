@@ -12,7 +12,7 @@ $(document).ready(function() {
     })
     .then(response => {
         const featuredMovies = response.data.results.slice(0, 10);
-        displayMovies(featuredMovies, '#featuredMovies');
+        displayMovies(featuredMovies, '#movie-grid'); // Updated container selector
     })
     .catch(error => {
         console.error('Error fetching featured movies:', error);
