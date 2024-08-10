@@ -1,20 +1,20 @@
-
 $(document).ready(function() {
     const apiKey = 'b9777c51aea4a211a9c6f0e839934890';
     const apiUrl = 'https://api.themoviedb.org/3';
 
     function fetchMovieDetails(movieId) {
         $('#loading-container').fadeIn(); // Show loading screen
-        axios.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
-            .then(response => {
-                const movie = response.data;
+        $.get(`${apiUrl}/movie/${movieId}?api_key=${apiKey}`)
+            .done(response => {
+                const movie = response;
                 displayMovie(movie, movieId);
+                saveToRecentlyViewed(movie); // Save the movie to recently viewed
             })
-            .catch(error => {
+            .fail(error => {
                 console.error('Error fetching movie details:', error);
                 $('#playerContainer').html('<p class="error-message">Failed to load movie details. Please try again later.</p>');
             })
-            .finally(() => {
+            .always(() => {
                 $('#loading-container').fadeOut(); // Hide loading screen
             });
     }
@@ -27,7 +27,7 @@ $(document).ready(function() {
             <div class="movie-details">
                 <h2>${movie.title}</h2>
                 <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" width="100%" height="615" src="https://www.dailymotion.com/embed/video/${movieId}" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="moviePlayerFrame" src="https://vidsrc.xyz/embed/movie/${movieId}" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
@@ -54,6 +54,23 @@ $(document).ready(function() {
                 }
             }
         }
+    }
+
+    function saveToRecentlyViewed(movie) {
+        let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+        
+        // Remove any existing entry for this movie
+        recentlyViewed = recentlyViewed.filter(item => item.id !== movie.id);
+        
+        // Add the new movie to the top
+        recentlyViewed.unshift(movie);
+
+        // Limit to the latest 10 viewed movies
+        if (recentlyViewed.length > 10) {
+            recentlyViewed.pop();
+        }
+
+        localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
     }
 
     const urlParams = new URLSearchParams(window.location.search);
