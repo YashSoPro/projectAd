@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Details</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="movie.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-    </nav>
-    <div id="movie-container"></div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <div class="navbar">
+        <div class="brand">
+            <h1>Zeus Streaming</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <div class="suggestion-box"></div>
+        </div>
+    </div>
+    <div id="loading-container">Loading...</div>
+    <div id="movieDetails" style="display: none;"></div>
+    <script src="search.js"></script>
     <script src="movie.js"></script>
 </body>
 </html>

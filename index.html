@@ -3,37 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoreLab</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Zeus Streaming</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <header>
-        <h1>CoreLab</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Movies</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <div id="content">
-        <div id="search-bar">
-            <input type="text" id="search-input" placeholder="Search for movies...">
-            <div id="suggestions"></div>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="brand">
+            <h1>Zeus Streaming</h1>
         </div>
-
-        <div id="movie-grid" class="movie-grid"></div> <!-- Correct class added -->
-
-        <div id="pagination">
-            <button class="button" id="previousPage">Previous</button>
-            <button class="button" id="nextPage">Next</button>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <div class="suggestion-box"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Recently Viewed Section -->
+        <section id="recent-viewed">
+            <h2 class="section-title">Recently Viewed</h2>
+            <div id="recent-viewed-grid" class="movie-grid">
+                <!-- Recently viewed movies will be dynamically inserted here -->
+                <div class="no-movies-message">No Movies watched recently</div>
+            </div>
+        </section>
+
+        <!-- Now Playing Section -->
+        <section id="now-playing">
+            <h2 class="section-title">Latest Movies</h2>
+            <div id="movie-grid" class="movie-grid">
+                <!-- Now playing movies will be dynamically inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Link to your JavaScript file -->
+    <script src="display-movies.js"></script>
+    <script src="search.js"></script>
 </body>
 </html>

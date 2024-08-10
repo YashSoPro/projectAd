@@ -1,0 +1,179 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Navbar Styles */
+.navbar {
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Space between items */
+    align-items: center;
+    padding: 10px 20px; /* Adjusted padding */
+    background-color: #1a1a2e; /* Dark blue background */
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Ensure navbar is on top */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Branding */
+.navbar .brand {
+    flex: 1; /* Allows the brand to take up available space */
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #00aaff; /* Light blue color for the brand name */
+}
+
+/* Search Bar */
+.navbar .search-container {
+    flex: 0 0 auto; /* Prevent flex item from shrinking */
+}
+
+.navbar input[type="text"] {
+    padding: 8px; /* Adjusted padding */
+    font-size: 16px;
+    width: 300px; /* Fixed width */
+    border-radius: 5px;
+    border: none;
+    background-color: #333; /* Dark background for the input */
+    color: #fff; /* White text color */
+}
+
+/* Suggestion Box */
+.suggestion-box {
+    position: absolute;
+    top: 100%; /* Position below the search input */
+    right: 0; /* Align with the right edge of the search input */
+    width: 100%;
+    max-width: 300px;
+    background-color: #1a1a2e;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    margin-top: 5px;
+    display: none; /* Hidden by default */
+}
+
+.navbar input[type="text"]:focus + .suggestion-box,
+.navbar input[type="text"]:active + .suggestion-box {
+    display: block; /* Show suggestion box when input is focused or active */
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #2e2e4e;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background-color: #00aaff;
+    color: #fff;
+}
+
+/* Movie Details Container */
+.movie-details {
+    background-color: #1a1a2e; /* Dark background for movie details */
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 800px; /* Maximum width for the container */
+    width: 100%; /* Full width on smaller screens */
+    box-sizing: border-box;
+    margin-top: 80px; /* Space from the top (below the navbar) */
+    text-align: center;
+    position: relative; /* Ensure proper positioning */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust vertical centering */
+}
+
+/* Trailer Container */
+.trailer-container iframe {
+    width: 100%;
+    height: 450px; /* Adjust height for better aspect ratio */
+    border: none;
+    border-radius: 10px; /* Rounded corners for iframe */
+}
+
+/* Movie Info Section */
+.movie-info p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Buttons */
+.button, .back-button {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 15px;
+    background-color: #00aaff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button:hover, .back-button:hover {
+    background-color: #008ecc;
+}
+
+/* Back Button Styles */
+.back-button {
+    background-color: #ff5555; /* Different color for back button */
+}
+
+.back-button:hover {
+    background-color: #cc4444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar .search-container {
+        margin-left: 0; /* Remove margin on smaller screens */
+        width: 100%; /* Full width for search container */
+        margin-top: 10px; /* Add space on top */
+    }
+
+    .navbar input[type="text"] {
+        width: 100%; /* Full width for search input */
+    }
+
+    .movie-details {
+        margin-top: 60px; /* Adjusted for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .movie-details {
+        padding: 15px;
+    }
+
+    .trailer-container iframe {
+        height: 315px; /* Adjust height for very small screens */
+    }
+}
