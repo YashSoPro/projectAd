@@ -10,12 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function displayMovieDetails(movie) {
-        document.title = movie.title; // Set page title to movie title
+        const movieContainer = document.getElementById('movieContainer');
+        if (!movieContainer) {
+            console.error('movieContainer element not found');
+            return;
+        }
 
         const trailerKey = movie.videos.results.length > 0 ? movie.videos.results[0].key : null;
         const trailerUrl = trailerKey ? `https://www.youtube.com/embed/${trailerKey}` : '';
 
-        const movieContainer = document.getElementById('movieContainer');
         const movieHtml = `
             <div class="movie-details">
                 <h2>${movie.title}</h2>
@@ -51,14 +54,48 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('movieDetails').style.display = 'block';
     }
 
-    // Extract movie ID from URL parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get('id');
-
-    // Fetch and display movie details
-    if (movieId) {
-        fetchMovieDetails(movieId);
-    } else {
-        console.error('No movie ID found in URL parameter');
+    function setupDetailsButton(movieId) {
+        const detailsButton = document.querySelector('.details-button');
+        if (detailsButton) {
+            detailsButton.addEventListener('click', function() {
+                fetchMovieDetails(movieId);
+            });
+        }
     }
+
+    function createMovieItem(movie) {
+        return `
+            <div class="movie-item">
+                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                <button class="button details-button">View Details</button>
+            </div>
+        `;
+    }
+
+    function displayMovies(movies) {
+        const movieGrid = document.querySelector('.movie-grid');
+        if (!movieGrid) {
+            console.error('movieGrid element not found');
+            return;
+        }
+
+        movieGrid.innerHTML = movies.map(movie => createMovieItem(movie)).join('');
+
+        // Setup details button event listeners
+        movies.forEach(movie => setupDetailsButton(movie.id));
+    }
+
+    // Example function to fetch popular movies (you can change the endpoint as needed)
+    function fetchPopularMovies() {
+        fetch(`${apiUrl}/movie/popular?api_key=${apiKey}`)
+            .then(response => response.json())
+            .then(data => {
+                const movies = data.results;
+                displayMovies(movies);
+            })
+            .catch(error => console.error('Error fetching popular movies:', error));
+    }
+
+    // Fetch and display popular movies on page load
+    fetchPopularMovies();
 });
