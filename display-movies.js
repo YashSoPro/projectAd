@@ -3,9 +3,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOTc3N2M1MWFlYTRhMjExYTljNmYwZTgzOTkzNDg5MCIsIm5iZiI6MTcyMjEwMzM3Mi41OTY2NzksInN1YiI6IjY2OTIzYzIyNGVlNGFiYzcyNzVlODg0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.i2AWKgJL01w3QB0-sop6hg0ImVmQbk6SVVnPlc-XBco';
     const apiUrl = 'https://api.themoviedb.org/3';
 
+    // Function to fetch the config
+    function fetchConfig() {
+        return fetch('config.yml')
+            .then(response => response.text())
+            .then(text => jsyaml.load(text))
+            .catch(error => {
+                console.error('Error fetching config:', error);
+                return {}; // Return empty object in case of error
+            });
+    }
+
     // Fetch and display recently viewed movies
-    function displayRecentlyViewedMovies() {
-        const recentViewedMovies = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+    function displayRecentlyViewedMovies(buttons) {
+        const recentViewedMovies = JSON.parse(localStorage.getItem('recentlyViewedMovies')) || [];
         const container = document.querySelector('#recent-viewed-grid');
 
         if (!container) return;
@@ -27,6 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const movieElement = document.createElement('div');
             movieElement.classList.add('movie-item');
 
+            let buttonHtml = '';
+            if (buttons) {
+                buttonHtml = `<a href="play.html?id=${movie.id}" class="button">Play Now</a>`;
+            }
+
             movieElement.innerHTML = `
                 <div class="movie-card">
                     <div class="movie-card-inner">
@@ -37,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <h3>${title}</h3>
                             <p>${overview}</p>
                             <p>Rating: ${rating}/10</p>
-                            <a href="play.html?id=${movie.id}" class="button">Play Now</a>
+                            ${buttonHtml}
                         </div>
                     </div>
                 </div>
@@ -100,7 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Call functions
-    displayRecentlyViewedMovies();
-    fetchMovies();
+    // Initialize the page
+    fetchConfig().then(config => {
+        const buttons = config.buttons !== undefined ? config.buttons : true; // Default to true if not specified
+
+        // Call functions
+        displayRecentlyViewedMovies(buttons);
+        fetchMovies();
+    });
 });
