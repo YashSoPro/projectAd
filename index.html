@@ -10,7 +10,7 @@
     <!-- Navbar -->
     <div class="navbar">
         <div class="brand">
-            <h1>Zeus Streaming</h1>
+            <a href="index.html"><h1>Zeus Streaming</h1></a> <!-- Added link here -->
         </div>
         <div class="search-container">
             <input type="text" placeholder="Search...">
@@ -36,12 +36,18 @@
                 <!-- Now playing movies will be dynamically inserted here -->
             </div>
         </section>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation">
+            <button id="prev-page">Previous</button>
+            <span id="page-number">Page 1</span>
+            <button id="next-page">Next</button>
+        </div>
     </div>
 
     <!-- Link to your JavaScript file -->
     <script src="display-movies.js"></script>
     <script src="search.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-
 </body>
 </html>
