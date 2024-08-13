@@ -195,6 +195,35 @@ body {
     background-color: #0077cc;
 }
 
+/* Navigation Buttons */
+.navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.navigation button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #00aaff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.navigation button:hover {
+    background-color: #0077cc;
+}
+
+#page-number {
+    font-size: 16px;
+    color: #fff;
+    margin: 0 10px;
+}
+
 /* Player Styles */
 #playerContainer {
     width: 100%;
