@@ -23,6 +23,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Function to fetch and display filtered movies based on search
+    function fetchFilteredMovies(query, genre, rating, year) {
+        let url = `${apiUrl}/search/movie?api_key=${apiKey}&query=${query}`;
+        if (genre) url += `&with_genres=${genre}`;
+        if (rating) url += `&vote_average.gte=${rating}`;
+        if (year) url += `&primary_release_year=${year}`;
+
+        fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            const movies = data.results;
+            displayMovies(movies, '#movie-grid');
+        })
+        .catch(error => {
+            console.error('Error fetching filtered movies:', error);
+        });
+    }
+
     // Function to display movies in a grid
     function displayMovies(movies, containerSelector) {
         const container = document.querySelector(containerSelector);
@@ -75,6 +98,37 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('next-page').addEventListener('click', function () {
         currentPage++;
         fetchMovies(currentPage);
+    });
+
+    // Search input functionality
+    const searchInput = document.getElementById('search-input');
+    const genreFilter = document.getElementById('genre-filter');
+    const ratingFilter = document.getElementById('rating-filter');
+    const yearFilter = document.getElementById('year-filter');
+
+    // Trigger search on Enter key press
+    searchInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            const query = searchInput.value.trim();
+            const genre = genreFilter.value;
+            const rating = ratingFilter.value;
+            const year = yearFilter.value;
+            fetchFilteredMovies(query, genre, rating, year);
+        }
+    });
+
+    // Trigger search on input change (useful for suggestion selection)
+    searchInput.addEventListener('input', function () {
+        const query = searchInput.value.trim();
+        const genre = genreFilter.value;
+        const rating = ratingFilter.value;
+        const year = yearFilter.value;
+        fetchFilteredMovies(query, genre, rating, year);
+    });
+
+    // Hide suggestion box on blur
+    searchInput.addEventListener('blur', function () {
+        document.querySelector('.suggestion-box').style.display = 'none';
     });
 
     // Initialize the page
