@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <h1 class="settings-title">Settings</h1>
+
+        <!-- Toggle for Background Image URL -->
+        <div class="toggle-container">
+            <label for="backgroundImageURL">Background Image URL:</label>
+            <input type="text" id="backgroundImageURL" placeholder="Enter background image URL">
+        </div>
+
+        <!-- Dropdown for Site Colour Theme -->
+        <div class="dropdown-container">
+            <label for="themeSelector">Site Colour Theme:</label>
+            <div class="dropdown">
+                <select id="themeSelector">
+                    <option value="theme-dark">Dark Theme</option>
+                    <option value="theme-light">Light Theme</option>
+                    <option value="theme-blue">Blue Theme</option>
+                    <option value="custom">Custom Theme</option> <!-- Custom theme option -->
+                </select>
+            </div>
+        </div>
+
+        <!-- Toggle for Auto Play from Where Left Off -->
+        <div class="toggle-container">
+            <div class="toggle-switch">
+                <input type="checkbox" id="autoPlayToggle">
+                <label for="autoPlayToggle">Auto Play from Where Left Off</label>
+            </div>
+        </div>
+
+        <!-- Toggle for View Details Button -->
+        <div class="toggle-container">
+            <div class="toggle-switch">
+                <input type="checkbox" id="viewDetailsToggle">
+                <label for="viewDetailsToggle">Show View Details Button</label>
+            </div>
+        </div>
+
+        <!-- Toggle for Stats Page -->
+        <div class="toggle-container">
+            <div class="toggle-switch">
+                <input type="checkbox" id="statsPageToggle">
+                <label for="statsPageToggle">Enable Stats Page</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Theme Overlay -->
+    <div id="customThemeOverlay" class="custom-theme-overlay">
+        <div class="custom-theme-content">
+            <h2>Customize Theme</h2>
+            <label for="navbar-color">Navbar Color:</label>
+            <input type="color" id="navbar-color" value="#1a1a2e">
+
+            <label for="background-color">Background Color:</label>
+            <input type="color" id="background-color" value="#000000">
+
+            <label for="text-color">Text Color:</label>
+            <input type="color" id="text-color" value="#ffffff">
+
+            <label for="brightness">Brightness:</label>
+            <input type="range" id="brightness" min="50" max="150" value="100">
+
+            <button id="apply-theme">Apply Theme</button>
+            <button id="close-overlay">Close</button>
+        </div>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+</html>

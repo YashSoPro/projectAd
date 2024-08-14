@@ -2,8 +2,78 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
+    background-color: var(--background-color); /* Use CSS variable */
+    color: var(--text-color); /* Use CSS variable */
+    background-image: var(--background-image); /* Use CSS variable */
+    background-size: cover; /* Cover the entire screen */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme changes */
+}
+
+/* Theme Classes */
+.theme-dark {
+    --background-color: #000;
+    --text-color: #fff;
+    --navbar-background: #1a1a2e;
+    --navbar-brand-color: #00aaff;
+    --input-background: #333;
+    --suggestion-background: #1a1a2e;
+    --suggestion-hover-background: #00aaff;
+    --border-color: #2e2e4e;
+    --button-background: #00aaff;
+    --button-hover-background: #008ecc;
+    --back-button-background: #ff5555;
+    --back-button-hover-background: #cc4444;
+    --background-image: none; /* Default for dark theme */
+}
+
+.theme-light {
+    --background-color: #f5f5f5;
+    --text-color: #000;
+    --navbar-background: #fff;
+    --navbar-brand-color: #0077cc;
+    --input-background: #e0e0e0;
+    --suggestion-background: #fff;
+    --suggestion-hover-background: #0077cc;
+    --border-color: #ccc;
+    --button-background: #0077cc;
+    --button-hover-background: #005f99;
+    --back-button-background: #ff5555;
+    --back-button-hover-background: #cc4444;
+    --background-image: none; /* Default for light theme */
+}
+
+.theme-blue {
+    --background-color: #f5f5f5;
+    --text-color: #000;
+    --navbar-background: #0077cc; /* Blue background for navbar */
+    --navbar-brand-color: #fff; /* White color for the brand text */
+    --input-background: #e0e0e0;
+    --suggestion-background: #fff;
+    --suggestion-hover-background: #0077cc;
+    --border-color: #ccc;
+    --button-background: #0077cc;
+    --button-hover-background: #005f99;
+    --back-button-background: #ff5555;
+    --back-button-hover-background: #cc4444;
+    --background-image: none; /* Default for blue theme */
+}
+
+/* Apply theme variables */
+body.theme-dark {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.theme-light {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+body.theme-blue {
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 /* Navbar Styles */
@@ -16,8 +86,8 @@ body {
     justify-content: space-between; /* Space between items */
     align-items: center;
     padding: 10px 20px; /* Adjusted padding */
-    background-color: #1a1a2e; /* Dark blue background */
-    color: #fff;
+    background-color: var(--navbar-background); /* Use theme variable for navbar background */
+    color: var(--text-color); /* Use theme variable for text color */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000; /* Ensure navbar is on top */
     box-sizing: border-box; /* Include padding in element's total width and height */
@@ -31,7 +101,7 @@ body {
 .navbar h1 {
     font-size: 24px;
     margin: 0;
-    color: #00aaff; /* Light blue color for the brand name */
+    color: var(--navbar-brand-color); /* Use theme variable for brand color */
 }
 
 /* Search Bar */
@@ -44,9 +114,9 @@ body {
     font-size: 16px;
     width: 300px; /* Fixed width */
     border-radius: 5px;
-    border: none;
-    background-color: #333; /* Dark background for the input */
-    color: #fff; /* White text color */
+    border: 1px solid var(--border-color); /* Use theme variable for border */
+    background-color: var(--input-background); /* Use theme variable for input background */
+    color: var(--text-color); /* Use theme variable for text color */
 }
 
 /* Suggestion Box */
@@ -56,8 +126,8 @@ body {
     right: 0; /* Align with the right edge of the search input */
     width: 100%;
     max-width: 300px;
-    background-color: #1a1a2e;
-    color: #fff;
+    background-color: var(--suggestion-background); /* Use theme variable for suggestion background */
+    color: var(--text-color); /* Use theme variable for text color */
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -73,7 +143,7 @@ body {
 .suggestion-item {
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #2e2e4e;
+    border-bottom: 1px solid var(--border-color); /* Use theme variable for border */
 }
 
 .suggestion-item:last-child {
@@ -81,8 +151,8 @@ body {
 }
 
 .suggestion-item:hover {
-    background-color: #00aaff;
-    color: #fff;
+    background-color: var(--button-background); /* Use theme variable for hover background */
+    color: var(--text-color); /* Use theme variable for text color */
 }
 
 /* Layout Adjustments */
@@ -93,8 +163,9 @@ body {
 /* Section Title */
 .section-title {
     font-size: 24px;
-    color: #00aaff;
+    color: var(--button-background); /* Use theme variable for section title color */
     margin-bottom: 20px;
+    text-align: center;
 }
 
 /* Movie Grid */
@@ -112,6 +183,7 @@ body {
     height: 300px; /* Fixed height for consistency */
     perspective: 1000px;
     box-sizing: border-box;
+    cursor: pointer; /* Make the whole card clickable */
 }
 
 /* Movie Card */
@@ -122,6 +194,9 @@ body {
     border-radius: 8px; /* Round the outer corners */
     overflow: hidden; /* Ensure rounded corners are visible */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--card-background); /* Use theme variable for card background */
+    color: var(--text-color); /* Use theme variable for card text color */
+    border: 1px solid var(--border-color); /* Use theme variable for border */
 }
 
 .movie-card-inner {
@@ -144,12 +219,12 @@ body {
 }
 
 .movie-card-front {
-    background: #1a1a2e;
+    background: var(--card-background); /* Use theme variable for front card background */
 }
 
 .movie-card-back {
-    background: #1a1a2e;
-    color: #fff;
+    background: var(--card-background); /* Use theme variable for back card background */
+    color: var(--text-color); /* Use theme variable for text color */
     transform: rotateY(180deg);
     padding: 15px;
     box-sizing: border-box;
@@ -172,7 +247,7 @@ body {
 
 /* No Movies Message */
 .no-movies-message {
-    color: #fff;
+    color: var(--text-color); /* Use theme variable for text color */
     text-align: center;
     padding: 20px;
 }
@@ -182,17 +257,18 @@ body {
     display: inline-block;
     padding: 10px 20px;
     font-size: 16px;
-    color: #fff;
-    background-color: #00aaff;
+    color: var(--text-color); /* Use theme variable for text color */
+    background-color: var(--button-background); /* Use theme variable for button background */
     border: none;
     border-radius: 5px;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    border: 1px solid var(--border-color); /* Use theme variable for border */
 }
 
 .button:hover {
-    background-color: #0077cc;
+    background-color: var(--button-hover-background); /* Use theme variable for hover background */
 }
 
 /* Navigation Buttons */
@@ -237,6 +313,7 @@ body {
     width: 100%;
     height: 600px;
     border-radius: 10px; /* Rounded corners */
+    border: 1px solid var(--border-color); /* Use theme variable for border */
 }
 
 /* Responsive Design */

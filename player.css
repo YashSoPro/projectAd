@@ -2,8 +2,22 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
+    background-color: var(--background-color, #000); /* Default black background */
+    color: var(--text-color, #fff); /* Default white text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-image: var(--background-image); /* Use CSS variable */
+    background-size: cover; /* Cover the entire screen */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat;
+}
+
+/* Theme Classes */
+.theme-dark, .theme-light, .theme-blue {
+    --background-image: none; /* Default for all themes */
 }
 
 /* Navbar Styles */
@@ -16,12 +30,11 @@ body {
     justify-content: space-between; /* Space between items */
     align-items: center;
     padding: 10px 20px; /* Adjusted padding */
-    background-color: #1a1a2e; /* Dark blue background */
-    color: #fff;
+    background-color: var(--navbar-background); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000; /* Ensure navbar is on top */
     box-sizing: border-box; /* Include padding in element's total width and height */
-    height: 60px; /* Fixed height for navbar */
 }
 
 /* Branding */
@@ -32,7 +45,7 @@ body {
 .navbar h1 {
     font-size: 24px;
     margin: 0;
-    color: #00aaff; /* Light blue color for the brand name */
+    color: var(--navbar-brand-color); /* Themed brand name color */
 }
 
 /* Search Bar */
@@ -46,8 +59,8 @@ body {
     width: 300px; /* Fixed width */
     border-radius: 5px;
     border: none;
-    background-color: #333; /* Dark background for the input */
-    color: #fff; /* White text color */
+    background-color: var(--input-background); /* Themed background for the input */
+    color: var(--text-color); /* Themed text color */
 }
 
 /* Suggestion Box */
@@ -57,8 +70,8 @@ body {
     right: 0; /* Align with the right edge of the search input */
     width: 100%;
     max-width: 300px;
-    background-color: #1a1a2e;
-    color: #fff;
+    background-color: var(--suggestion-background); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -74,7 +87,7 @@ body {
 .suggestion-item {
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #2e2e4e;
+    border-bottom: 1px solid var(--border-color); /* Themed border */
 }
 
 .suggestion-item:last-child {
@@ -82,60 +95,67 @@ body {
 }
 
 .suggestion-item:hover {
-    background-color: #00aaff;
-    color: #fff;
+    background-color: var(--suggestion-hover-background); /* Themed hover background */
+    color: var(--text-color); /* Themed text color */
 }
 
-/* Player Container */
-#playerContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 60px); /* Full viewport height minus navbar height */
-    padding: 10px;
-    box-sizing: border-box;
-    margin-top: 60px; /* Margin to push content below the navbar */
-}
-
+/* Movie Details Container */
 .movie-details {
-    background-color: #1a1a2e;
-    padding: 20px;
+    background-color: var(--navbar-background); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     border-radius: 10px;
-    width: 100%;
-    max-width: 1200px; /* Maximum width for larger screens */
+    padding: 40px; /* Increased padding */
+    max-width: 1200px; /* Increased maximum width */
+    width: 90vw; /* Use viewport width to make it wider */
+    box-sizing: border-box;
+    margin-top: 100px; /* Increased space from the top (below the navbar) */
     text-align: center;
 }
 
-.movie-details h2 {
-    margin: 0 0 20px;
-    font-size: 28px;
-}
-
+/* Trailer Container */
 .trailer-container {
-    margin: 0 auto 20px;
+    width: 100%; /* Ensure full width of the container */
+    max-width: 1200px; /* Match maximum width with movie details */
+    margin-top: 20px; /* Space from the top (or below other content) */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-#moviePlayerFrame {
-    width: 100%;
-    height: 720px; /* Larger height for better display */
+.trailer-container iframe {
+    width: 100%; /* Full width of the container */
+    height: 500px; /* Increased height for better aspect ratio */
     border: none;
-    border-radius: 10px; /* Rounded corners for the iframe */
+    border-radius: 10px; /* Rounded corners for iframe */
 }
 
-.button {
+/* Movie Info Section */
+.movie-info p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Buttons */
+.button, .back-button {
     display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #00aaff;
-    color: #fff;
+    margin: 10px 5px;
+    padding: 10px 15px;
+    background-color: var(--button-background); /* Themed button background */
+    color: var(--text-color); /* Themed text color */
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
+    cursor: pointer;
 }
 
 .button:hover {
-    background-color: #008ecc;
+    background-color: var(--button-hover-background); /* Themed hover background */
+}
+
+.back-button {
+    background-color: var(--back-button-background); /* Themed back button background */
+}
+
+.back-button:hover {
+    background-color: var(--back-button-hover-background); /* Themed hover background */
 }
 
 /* Responsive Design */
@@ -156,28 +176,19 @@ body {
     }
 
     .movie-details {
-        margin-top: 60px; /* Adjusted for smaller screens */
-    }
-}
-
-@media (max-width: 768px) {
-    #moviePlayerFrame {
-        height: 500px; /* Adjust height for smaller screens */
-    }
-
-    .button {
-        font-size: 14px;
-        padding: 8px 15px;
+        margin-top: 80px; /* Adjusted for smaller screens */
+        padding: 20px; /* Adjust padding for smaller screens */
+        width: 95vw; /* Increase width on smaller screens */
     }
 }
 
 @media (max-width: 480px) {
-    #moviePlayerFrame {
-        height: 400px; /* Further adjust height for very small screens */
+    .movie-details {
+        padding: 15px; /* Further adjusted padding for very small screens */
+        width: 100vw; /* Ensure full width on very small screens */
     }
 
-    .button {
-        font-size: 12px;
-        padding: 6px 10px;
+    .trailer-container iframe {
+        height: 315px; /* Adjust height for very small screens */
     }
 }
