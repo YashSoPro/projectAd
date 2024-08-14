@@ -38,10 +38,31 @@
         </section>
     </div>
 
+<!-- Overlay HTML -->
+<div id="custom-overlay" class="overlay hidden">
+    <div class="overlay-content">
+        <h2>System Stats</h2>
+        <div id="cpu-counter" class="cpu-counter">CPU Usage: 0%</div>
+        <div id="graph-container" class="graph-container">
+            <canvas id="intensity-graph"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+
     <!-- Link to your JavaScript file -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="resources.js"></script>
+    <script src="loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings(); // Call the settings loader function
+        });
+    </script>
     <script src="display-movies.js"></script>
     <script src="search.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-
+    <script src="auto-play.js"></script>
 </body>
 </html>

@@ -34,6 +34,14 @@ $(document).ready(function() {
         `;
         playerContainer.html(playerHtml).fadeIn(500); // Show player container
 
+        const iframe = document.getElementById('moviePlayerFrame');
+        const urlParams = new URLSearchParams(window.location.search);
+        const savedPosition = parseFloat(urlParams.get('position')) || 0;
+
+        iframe.onload = () => {
+            iframe.contentWindow.postMessage({ type: 'seek', position: savedPosition }, '*');
+        };
+
         $('#backToDetailsBtn').click(function() {
             window.history.back(); // Go back to previous page
         });
@@ -45,7 +53,6 @@ $(document).ready(function() {
         });
 
         function toggleFullScreen() {
-            const iframe = document.getElementById('moviePlayerFrame');
             if (iframe.requestFullscreen) {
                 if (document.fullscreenElement) {
                     document.exitFullscreen();
@@ -72,6 +79,30 @@ $(document).ready(function() {
 
         localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
     }
+
+    function saveLastViewedMovie(url, videoElement) {
+        if (videoElement) {
+            localStorage.setItem('lastViewedMovieURL', url);
+            localStorage.setItem('playbackPosition', videoElement.currentTime);
+        }
+    }
+
+    function handleAutoplay() {
+        const autoplayEnabled = JSON.parse(localStorage.getItem('autoPlayEnabled'));
+
+        if (autoplayEnabled) {
+            const lastViewedMovieURL = localStorage.getItem('lastViewedMovieURL');
+            const savedPosition = parseFloat(localStorage.getItem('playbackPosition')) || 0;
+
+            if (lastViewedMovieURL) {
+                // Redirect to the last viewed movie's URL with position
+                window.location.href = `${lastViewedMovieURL}?position=${savedPosition}`;
+            }
+        }
+    }
+
+    // Retrieve the last viewed movie URL and position only if autoplay is enabled
+    handleAutoplay();
 
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');

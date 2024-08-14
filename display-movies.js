@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const apiUrl = 'https://api.themoviedb.org/3';
 
     // Fetch and display recently viewed movies
-    function displayRecentlyViewedMovies() {
-        const recentViewedMovies = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+    function displayRecentlyViewedMovies(buttons) {
+        const recentViewedMovies = JSON.parse(localStorage.getItem('recentlyViewedMovies')) || [];
         const container = document.querySelector('#recent-viewed-grid');
 
         if (!container) return;
@@ -27,9 +27,26 @@ document.addEventListener('DOMContentLoaded', function () {
             const movieElement = document.createElement('div');
             movieElement.classList.add('movie-item');
 
-            movieElement.innerHTML = `
-                <a href="play.html?id=${movie.id}" class="movie-link">
+            let clickAction = '';
+            if (buttons) {
+                movieElement.innerHTML = `
                     <div class="movie-card">
+                        <div class="movie-card-inner">
+                            <div class="movie-card-front">
+                                <img src="${imageUrl}" alt="${title}">
+                            </div>
+                            <div class="movie-card-back">
+                                <h3>${title}</h3>
+                                <p>${overview}</p>
+                                <p>Rating: ${rating}/10</p>
+                                <a href="play.html?id=${movie.id}" class="button">Play Now</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                movieElement.innerHTML = `
+                    <div class="movie-card" onclick="location.href='play.html?id=${movie.id}'">
                         <div class="movie-card-inner">
                             <div class="movie-card-front">
                                 <img src="${imageUrl}" alt="${title}">
@@ -41,8 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             </div>
                         </div>
                     </div>
-                </a>
-            `;
+                `;
+            }
+
             container.appendChild(movieElement);
         });
     }
@@ -71,6 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!container) return;
 
         container.innerHTML = '';
+        const showDetailsButton = localStorage.getItem('viewDetails') === 'true';
+
         movies.forEach(movie => {
             const imageUrl = movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
@@ -82,9 +102,25 @@ document.addEventListener('DOMContentLoaded', function () {
             const movieElement = document.createElement('div');
             movieElement.classList.add('movie-item');
 
-            movieElement.innerHTML = `
-                <a href="movie.html?id=${movie.id}" class="movie-link">
+            if (showDetailsButton) {
+                movieElement.innerHTML = `
                     <div class="movie-card">
+                        <div class="movie-card-inner">
+                            <div class="movie-card-front">
+                                <img src="${imageUrl}" alt="${title}">
+                            </div>
+                            <div class="movie-card-back">
+                                <h3>${title}</h3>
+                                <p>${overview}</p>
+                                <p>Rating: ${rating}/10</p>
+                                <a href="movie.html?id=${movie.id}" class="button">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                movieElement.innerHTML = `
+                    <div class="movie-card" onclick="location.href='movie.html?id=${movie.id}'">
                         <div class="movie-card-inner">
                             <div class="movie-card-front">
                                 <img src="${imageUrl}" alt="${title}">
@@ -96,13 +132,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             </div>
                         </div>
                     </div>
-                </a>
-            `;
+                `;
+            }
+
             container.appendChild(movieElement);
         });
     }
 
     // Call functions
-    displayRecentlyViewedMovies();
+    const buttons = localStorage.getItem('buttonVisibility') === 'true'; // Check button visibility setting
+    displayRecentlyViewedMovies(buttons);
     fetchMovies();
 });

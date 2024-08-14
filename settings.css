@@ -1,0 +1,187 @@
+/* General Styles for Settings Page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e; /* Grey-blue background */
+    color: #f5f5f5; /* Light text color for contrast */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Hide scrollbars on the body */
+}
+
+/* Settings Container */
+.settings-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 40px auto; /* Centering with margin */
+    background-color: #2e2e4e; /* Darker grey-blue background for the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Title */
+.settings-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #00aaff; /* Highlighted color for the title */
+    text-align: center;
+}
+
+/* Toggle Switches */
+.toggle-container {
+    margin-bottom: 20px;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.toggle-switch input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.toggle-switch label {
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+/* Background Image URL Input */
+#backgroundImageURL {
+    width: calc(100% - 22px); /* Ensure the input fits within the container */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #00aaff; /* Themed border color */
+    border-radius: 5px;
+    background-color: #2e2e4e; /* Dark grey-blue background for input */
+    color: #f5f5f5; /* Light text color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Space below the input */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Dropdown Menu */
+.dropdown-container {
+    margin-bottom: 20px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #00aaff; /* Themed border color */
+    border-radius: 5px;
+    background-color: #2e2e4e; /* Dark grey-blue background for dropdown */
+    color: #f5f5f5; /* Light text color */
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown Options */
+.dropdown select option {
+    padding: 10px;
+    background-color: #2e2e4e; /* Dark grey-blue background for options */
+    color: #f5f5f5; /* Light text color */
+}
+
+/* Highlighted Option */
+.dropdown select option:checked {
+    background-color: #00aaff; /* Highlighted option color */
+    color: #fff; /* Light text color */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 15px;
+        margin: 20px auto; /* Adjusted margin for smaller screens */
+    }
+}
+
+/* Custom Theme Overlay Styles */
+.custom-theme-overlay {
+    position: fixed;
+    top: -40px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    overflow: hidden; /* Prevents any potential scrolling */
+    /* Adding extra coverage */
+    margin: 0; /* Reset any margin */
+    padding: 0; /* Reset any padding */
+}
+
+/* Custom Theme Editor */
+.custom-theme-content {
+    background-color: #2e2e4e; /* Matching the container background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.custom-theme-content h2 {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: #00aaff; /* Matching title color */
+}
+
+.custom-theme-content label {
+    display: block;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: #f5f5f5; /* Light text color */
+}
+
+.custom-theme-content input[type="color"] {
+    width: 100%; /* Full width of its container */
+    height: 40px; /* Define height for visibility */
+    border: none; /* Remove border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+    background-color: transparent; /* Transparent background to match button color */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.custom-theme-content button {
+    position: relative; /* Ensure child elements are positioned relative to the button */
+    width: 100%; /* Make the button fill the width of the container */
+    height: 50px; /* Define height for the button */
+    margin: 10px 0; /* Adjusted margin for spacing */
+    padding: 0; /* Remove default padding */
+    background-color: #0077cc; /* Button background color */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer;
+    overflow: hidden; /* Hide any overflow */
+    box-sizing: border-box; /* Ensure padding and border are included in width */
+    display: flex; /* Use flex to center content */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+}
+
+.custom-theme-content button#close-overlay {
+    background-color: #ff5555; /* Different background color for close button */
+}
+
+.custom-theme-content button:hover {
+    opacity: 0.9; /* Slightly decrease opacity on hover */
+}

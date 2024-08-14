@@ -18,7 +18,15 @@
     </div>
     <div id="loading-container">Loading...</div>
     <div id="movieDetails" style="display: none;"></div>
+    
+    <script src="loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings(); // Call the settings loader function
+        });
+    </script>
     <script src="search.js"></script>
     <script src="movie.js"></script>
+    <script src="auto-play.js"></script>
 </body>
 </html>

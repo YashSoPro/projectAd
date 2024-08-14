@@ -2,13 +2,67 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
+    background-color: var(--background-color, #000); /* Default black background */
+    color: var(--text-color, #fff); /* Default white text */
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh; /* Full viewport height */
     overflow-x: hidden; /* Prevent horizontal scroll */
+    background-image: var(--background-image); /* Use CSS variable */
+background-size: cover; /* Cover the entire screen */
+background-position: center; /* Center the background image */
+background-repeat: no-repeat;
+}
+
+
+/* Theme Classes */
+.theme-dark {
+    --background-color: #000;
+    --text-color: #fff;
+    --navbar-background: #1a1a2e;
+    --navbar-brand-color: #00aaff;
+    --input-background: #333;
+    --suggestion-background: #1a1a2e;
+    --suggestion-hover-background: #00aaff;
+    --border-color: #2e2e4e;
+    --button-background: #00aaff;
+    --button-hover-background: #008ecc;
+    --back-button-background: #ff5555;
+    --back-button-hover-background: #cc4444;
+    --background-image: none; /* Default for dark theme */
+}
+
+.theme-light {
+    --background-color: #f5f5f5;
+    --text-color: #000;
+    --navbar-background: #fff;
+    --navbar-brand-color: #0077cc;
+    --input-background: #e0e0e0;
+    --suggestion-background: #fff;
+    --suggestion-hover-background: #0077cc;
+    --border-color: #ccc;
+    --button-background: #0077cc;
+    --button-hover-background: #005f99;
+    --back-button-background: #ff5555;
+    --back-button-hover-background: #cc4444;
+    --background-image: none; /* Default for light theme */
+}
+
+.theme-blue {
+    --background-color: #f5f5f5;
+    --text-color: #000;
+    --navbar-background: #0077cc; /* Blue background for navbar */
+    --navbar-brand-color: #fff; /* White color for the brand text */
+    --input-background: #e0e0e0;
+    --suggestion-background: #fff;
+    --suggestion-hover-background: #0077cc;
+    --border-color: #ccc;
+    --button-background: #0077cc;
+    --button-hover-background: #005f99;
+    --back-button-background: #ff5555;
+    --back-button-hover-background: #cc4444;
+    --background-image: none;
 }
 
 /* Navbar Styles */
@@ -21,8 +75,8 @@ body {
     justify-content: space-between; /* Space between items */
     align-items: center;
     padding: 10px 20px; /* Adjusted padding */
-    background-color: #1a1a2e; /* Dark blue background */
-    color: #fff;
+    background-color: var(--navbar-background); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000; /* Ensure navbar is on top */
     box-sizing: border-box; /* Include padding in element's total width and height */
@@ -36,7 +90,7 @@ body {
 .navbar h1 {
     font-size: 24px;
     margin: 0;
-    color: #00aaff; /* Light blue color for the brand name */
+    color: var(--navbar-brand-color); /* Themed brand name color */
 }
 
 /* Search Bar */
@@ -50,8 +104,8 @@ body {
     width: 300px; /* Fixed width */
     border-radius: 5px;
     border: none;
-    background-color: #333; /* Dark background for the input */
-    color: #fff; /* White text color */
+    background-color: var(--input-background); /* Themed background for the input */
+    color: var(--text-color); /* Themed text color */
 }
 
 /* Suggestion Box */
@@ -61,8 +115,8 @@ body {
     right: 0; /* Align with the right edge of the search input */
     width: 100%;
     max-width: 300px;
-    background-color: #1a1a2e;
-    color: #fff;
+    background-color: var(--suggestion-background); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -78,7 +132,7 @@ body {
 .suggestion-item {
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #2e2e4e;
+    border-bottom: 1px solid var(--border-color); /* Themed border */
 }
 
 .suggestion-item:last-child {
@@ -86,14 +140,14 @@ body {
 }
 
 .suggestion-item:hover {
-    background-color: #00aaff;
-    color: #fff;
+    background-color: var(--suggestion-hover-background); /* Themed hover background */
+    color: var(--text-color); /* Themed text color */
 }
 
 /* Movie Details Container */
 .movie-details {
-    background-color: #1a1a2e; /* Dark background for movie details */
-    color: #fff;
+    background-color: var(--navbar-background); /* Themed background color */
+    color: var(--text-color); /* Themed text color */
     border-radius: 10px;
     padding: 20px;
     max-width: 800px; /* Maximum width for the container */
@@ -125,25 +179,24 @@ body {
     display: inline-block;
     margin: 10px 5px;
     padding: 10px 15px;
-    background-color: #00aaff;
-    color: #fff;
+    background-color: var(--button-background); /* Themed button background */
+    color: var(--text-color); /* Themed text color */
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
 }
 
-.button:hover, .back-button:hover {
-    background-color: #008ecc;
+.button:hover {
+    background-color: var(--button-hover-background); /* Themed hover background */
 }
 
-/* Back Button Styles */
 .back-button {
-    background-color: #ff5555; /* Different color for back button */
+    background-color: var(--back-button-background); /* Themed back button background */
 }
 
 .back-button:hover {
-    background-color: #cc4444;
+    background-color: var(--back-button-hover-background); /* Themed hover background */
 }
 
 /* Responsive Design */
