@@ -3,7 +3,6 @@ Welcome to **ProjectAd**, your gateway to an immersive multimedia experience. Di
 ![GitHub stars](https://img.shields.io/github/stars/YashSoPro/projectAd?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/YashSoPro/projectAd?style=social)
 ![GitHub contributors](https://img.shields.io/github/contributors/YashSoPro/projectAd)
-
 ![Main Contribution](https://img.shields.io/badge/Main_Contributor-Project_Econome-purple)
 ## Features
 
