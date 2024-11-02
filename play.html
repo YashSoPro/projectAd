@@ -1,21 +1,52 @@
-function displayMovie(movie, movieId) {
-    document.title = movie.title; // Set page title
-
-    const playerContainer = $('#playerContainer');
-    const playerHtml = `
-        <div class="movie-details">
-            <h2>${movie.title}</h2>
-            <div id="trailerContainer" class="trailer-container">
-                <iframe id="moviePlayerFrame" 
-                        src="https://vidsrc.xyz/embed/movie/${movieId}" 
-                        frameborder="0" 
-                        allowfullscreen 
-                        sandbox="allow-same-origin allow-scripts allow-presentation">
-                </iframe>
-            </div>
-            <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Movie</title>
+    <link rel="stylesheet" href="player.css"> <!-- Link to existing CSS -->
+    <style>
+        /* Additional styles for loading container */
+        #loading-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 1000; /* Ensure it appears on top */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="brand">
+            <h1>ProjectAd</h1>
         </div>
-    `;
-    playerContainer.html(playerHtml).fadeIn(500); // Show player container
-    ...
-}
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <div class="suggestion-box"></div>
+        </div>
+    </div>
+
+    <div id="loading-container" style="display: none;">
+        <p>Loading...</p>
+    </div>
+
+    <div id="playerContainer"></div>
+
+    <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings(); // Call the settings loader function
+        });
+    </script>
+    <script src="search.js" defer></script>
+    <script src="player.js" defer></script> <!-- Ensure this has the updated sandbox logic -->
+    <script src="auto-play.js"></script>
+</body>
+</html>
