@@ -27,12 +27,15 @@ $(document).ready(function() {
             <div class="movie-details">
                 <h2>${movie.title}</h2>
                 <div id="trailerContainer" class="trailer-container">
-                    <iframe id="moviePlayerFrame" src="https://vidsrc.xyz/embed/movie/${movieId}" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="moviePlayerFrame" src="https://vidsrc.xyz/embed/movie/${movieId}" frameborder="0" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>
                 </div>
                 <button id="backToDetailsBtn" class="button">Back to Movie Details</button>
             </div>
         `;
         playerContainer.html(playerHtml).fadeIn(500); // Show player container
+
+        // Prevent unwanted redirects
+        overrideWindowOpen();
 
         const iframe = document.getElementById('moviePlayerFrame');
         const urlParams = new URLSearchParams(window.location.search);
@@ -99,6 +102,14 @@ $(document).ready(function() {
                 window.location.href = `${lastViewedMovieURL}?position=${savedPosition}`;
             }
         }
+    }
+
+    function overrideWindowOpen() {
+        const originalOpen = window.open;
+        window.open = function(url, ...args) {
+            console.warn('Blocked an attempt to open a new window:', url);
+            return null; // Block all attempts to open a new window
+        };
     }
 
     // Retrieve the last viewed movie URL and position only if autoplay is enabled
