@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fetch and display now playing movies
     function fetchMovies() {
-        fetch(`${apiUrl}/movie/latest?api_key=${apiKey}`, {
+        fetch(`${apiUrl}/movie/popular?api_key=${apiKey}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
