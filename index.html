@@ -1,142 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ProjectAD</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MovieStream</title>
   <style>
     body {
-      background-color: #121212;
-      color: white;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #1f1f1f;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .search-bar {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .search-bar input {
-      padding: 10px;
-      width: 80%;
-      max-width: 400px;
-      border: none;
-      border-radius: 5px;
-    }
-    h2 {
-      text-align: center;
-    }
-    #movies {
+      background-color: #111;
+      color: #eee;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
     }
-    .movie-card {
-      background-color: #1f1f1f;
+    input, button {
       padding: 10px;
-      border-radius: 10px;
-      text-align: center;
-      width: 150px;
+      margin: 10px;
+      width: 90%;
+      max-width: 500px;
     }
-    .movie-card img {
-      width: 100%;
-      border-radius: 5px;
-    }
-    .movie-card h3 {
-      font-size: 16px;
-      margin-top: 10px;
-    }
-    .pagination {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .pagination button {
-      padding: 8px 16px;
-      margin: 5px;
-      background-color: #1f1f1f;
-      color: white;
+    iframe {
+      margin-top: 20px;
+      width: 90%;
+      height: 500px;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .pagination button:disabled {
-      background-color: #555;
-      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
-  <header>ProjectAD</header>
+  <h1>🎬 MovieStream</h1>
+  <input type="text" id="movieUrl" placeholder="Enter direct movie URL (mp4/mkv/...)" />
+  <button onclick="loadMovie()">Play Movie</button>
+  <iframe id="player" allowfullscreen></iframe>
 
-  <div class="search-bar">
-    <input type="text" placeholder="Search...">
-  </div>
-
-  <h2>Latest Movies</h2>
-
-  <div id="movies">
-    <!-- Movies will load here -->
-  </div>
-
-  <div class="pagination">
-    <button id="prevPage" disabled>Previous</button>
-    <button id="nextPage">Next</button>
-  </div>
-
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <!-- Script to Load Movies -->
   <script>
-    let currentPage = 1;
-
-    function loadMovies(page) {
-      $('#movies').html('<p>Loading...</p>');
-
-      $.getJSON('https://vidsrc.to/vapi/movie/popular?page=' + page)
-        .done(function (data) {
-          $('#movies').html('');
-          data.result.forEach(movie => {
-            $('#movies').append(`
-              <div class="movie-card">
-                <a href="play.html?imdb_id=${movie.imdb_id}">
-                  <img src="${movie.poster}" alt="${movie.title}">
-                  <h3>${movie.title}</h3>
-                </a>
-              </div>
-            `);
-          });
-
-          $('#prevPage').prop('disabled', page === 1);
-        })
-        .fail(function () {
-          $('#movies').html('<p>Failed to load movies.</p>');
-        });
+    function atob64(encoded) {
+      return atob(encoded);
     }
 
-    $('#nextPage').click(function () {
-      currentPage++;
-      loadMovies(currentPage);
-    });
+    function loadMovie() {
+      const rawUrl = document.getElementById("movieUrl").value.trim();
+      if (!rawUrl) return alert("Please enter a valid movie URL.");
 
-    $('#prevPage').click(function () {
-      if (currentPage > 1) {
-        currentPage--;
-        loadMovies(currentPage);
-      }
-    });
+      const proxyBase = atob64("aHR0cHM6Ly9kcnktYnJvb2stZjVkOC5kaGlyYWpiaGF3YW5hLTc0LndvcmtlcnMuZGV2Lz91cmw9");
+      const finalUrl = proxyBase + encodeURIComponent(rawUrl);
 
-    $(document).ready(function () {
-      loadMovies(currentPage);
-    });
+      const iframe = document.getElementById("player");
+      iframe.src = finalUrl;
+    }
   </script>
 </body>
 </html>
