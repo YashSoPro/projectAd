@@ -1,166 +1,69 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ProjectAd – Watch</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: white;
-    }
-
-    /* Navbar */
-    .navbar {
-      background-color: #1f1f1f;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .search-container {
-      position: relative;
-      width: 50%;
-    }
-
-    .search-container input {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      background-color: #333;
-      color: white;
-    }
-
-    .suggestion-box {
-      position: absolute;
-      top: 105%;
-      left: 0;
-      right: 0;
-      background: #222;
-      border-radius: 5px;
-      display: none;
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 999;
-    }
-
-    .suggestion {
-      padding: 10px;
-      cursor: pointer;
-    }
-
-    .suggestion:hover {
-      background-color: #333;
-    }
-
-    /* Loading Spinner */
-    #loading-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 6px solid rgba(255, 255, 255, 0.3);
-      border-top-color: #0f0;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Video Player */
-    #player {
-      width: 100%;
-      height: 90vh;
-      border: none;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeus Streaming</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 </head>
-
 <body>
-  <!-- Loading Spinner -->
-  <div id="loading-container">
-    <div class="spinner"></div>
-  </div>
-
-  <!-- Navbar -->
-  <div class="navbar">
-    <a href="#" class="logo">ProjectAd</a>
-    <div class="search-container">
-      <input type="text" placeholder="Search movies...">
-      <div class="suggestion-box"></div>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="brand">
+            <h1>Zeus Streaming</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <div class="suggestion-box"></div>
+        </div>
     </div>
-  </div>
 
-  <!-- Movie Player -->
-  <iframe id="player" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Recently Viewed Section -->
+        <section id="recent-viewed">
+            <h2 class="section-title">Recently Viewed</h2>
+            <div id="recent-viewed-grid" class="movie-grid">
+                <!-- Recently viewed movies will be dynamically inserted here -->
+                <div class="no-movies-message">No Movies watched recently</div>
+            </div>
+        </section>
 
-  <script>
-    // Loading Spinner
-    $(window).on("load", () => {
-      setTimeout(() => {
-        $("#loading-container").fadeOut();
-      }, 800);
-    });
+        <!-- Now Playing Section -->
+        <section id="now-playing">
+            <h2 class="section-title">Latest Movies</h2>
+            <div id="movie-grid" class="movie-grid">
+                <!-- Now playing movies will be dynamically inserted here -->
+            </div>
+        </section>
+    </div>
 
-    // Load movie by URL param
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const title = urlParams.get("title") || "Watch";
+<!-- Overlay HTML -->
+<div id="custom-overlay" class="overlay hidden">
+    <div class="overlay-content">
+        <h2>System Stats</h2>
+        <div id="cpu-counter" class="cpu-counter">CPU Usage: 0%</div>
+        <div id="graph-container" class="graph-container">
+            <canvas id="intensity-graph"></canvas>
+        </div>
+    </div>
+</div>
 
-    if (id) {
-      document.getElementById("player").src = `https://vidsrc.to/embed/movie/${id}`;
-      document.title = `${title} – ProjectAd`;
-    } else {
-      document.getElementById("player").outerHTML = `<h2 style="text-align:center;margin-top:40px;">❌ No movie ID provided.</h2>`;
-    }
 
-    // Search Autocomplete
-    const mockData = ["Oppenheimer", "John Wick", "Barbie", "Spider-Man", "Inception", "Interstellar", "Avengers"];
 
-    $(".search-container input").on("input", function () {
-      const query = $(this).val().toLowerCase();
-      const suggestions = mockData.filter(m => m.toLowerCase().includes(query));
-      if (!query || suggestions.length === 0) {
-        $(".suggestion-box").hide();
-        return;
-      }
-      $(".suggestion-box").html(suggestions.map(s => `<div class="suggestion">${s}</div>`).join(""));
-      $(".suggestion-box").show();
-    });
 
-    // Click suggestion
-    $(document).on("click", ".suggestion", function () {
-      const movie = $(this).text();
-      // Replace below with actual ID lookup logic
-      const fakeId = Math.floor(Math.random() * 9999); // Replace with real movie ID logic
-      window.location.href = `?id=${fakeId}&title=${encodeURIComponent(movie)}`;
-    });
-  </script>
+    <!-- Link to your JavaScript file -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="resources.js"></script>
+    <script src="loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings(); // Call the settings loader function
+        });
+    </script>
+    <script src="display-movies.js"></script>
+    <script src="search.js"></script>
+    <script src="auto-play.js"></script>
 </body>
 </html>
