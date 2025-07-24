@@ -3,127 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ProjectAd – Watch</title>
-  <link rel="stylesheet" href="player.css" />
-
-  <style>
-    body {
-      margin: 0;
-      background-color: #111;
-      color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem;
-      background: #222;
-      align-items: center;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: #0f0;
-    }
-
-    .search-container {
-      position: relative;
-    }
-
-    .search-container input {
-      padding: 0.5rem;
-      border-radius: 4px;
-      border: none;
-      outline: none;
-    }
-
-    .suggestion-box {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: #333;
-      border-radius: 4px;
-      max-height: 200px;
-      overflow-y: auto;
-      display: none;
-      z-index: 100;
-    }
-
-    #loading-container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      border-radius: 10px;
-      z-index: 1000;
-      display: none;
-    }
-
-    #playerContainer {
-      width: 100%;
-      height: 90vh;
-      margin-top: 1rem;
-    }
-
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-    }
-  </style>
+  <title>VoidFlix - Home</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="navbar">
-    <div class="brand">
-      <h1>ProjectAd</h1>
-    </div>
-    <div class="search-container">
-      <input type="text" placeholder="Search...">
-      <div class="suggestion-box"></div>
-    </div>
-  </div>
+  <header>
+    <h1>VoidFlix</h1>
+    <input type="text" id="searchInput" placeholder="Search for movies..." />
+  </header>
 
-  <div id="loading-container">
-    <p>Loading...</p>
-  </div>
+  <main id="movieList"></main>
 
-  <div id="playerContainer">
-    <!-- Movie player will be injected here -->
-  </div>
-
-  <!-- jQuery and local JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <script src="loader.js" defer></script>
-  <script src="search.js" defer></script>
-  <script src="auto-play.js" defer></script>
-
-  <!-- Actual player logic -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-
-      if (!id) {
-        document.getElementById("playerContainer").innerHTML = "<p style='text-align:center;'>No movie ID provided</p>";
-        return;
+    const movies = [
+      {
+        title: "Attack on Titan Episode 1",
+        thumbnail: "https://i3.wp.com/anitrendz.net/news/wp-content/uploads/2023/10/aotfinalseasonpart4poster.jpg?resize=696%2C978&ssl=1",
+        url: "https://ik.imagekit.io/voidcraft/aot/1.mp4"
+      },
+      {
+        title: "Naruto Movie",
+        thumbnail: "https://m.media-amazon.com/images/I/81dq2zJ1UeL._AC_UF1000,1000_QL80_.jpg",
+        url: "https://ik.imagekit.io/voidcraft/naruto/movie1.mp4"
+      },
+      {
+        title: "Random Anime Clip",
+        thumbnail: "https://m.media-amazon.com/images/I/71zBt7SdnvL.jpg",
+        url: "https://ik.imagekit.io/voidcraft/demo/test.mp4"
       }
+    ];
 
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://vidsrc.to/embed/movie/${id}`;
-      iframe.allowFullscreen = true;
+    const movieList = document.getElementById('movieList');
+    const searchInput = document.getElementById('searchInput');
 
-      // Optional sandbox restrictions for extra safety
-      iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
+    function renderMovies(filter = '') {
+      movieList.innerHTML = '';
 
-      document.getElementById("playerContainer").appendChild(iframe);
+      const filtered = movies.filter(movie =>
+        movie.title.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      filtered.forEach(movie => {
+        const div = document.createElement('div');
+        div.classList.add('movie-card');
+        div.innerHTML = `
+          <img src="${movie.thumbnail}" alt="${movie.title}" />
+          <h3>${movie.title}</h3>
+        `;
+        div.onclick = () => {
+          const encodedUrl = encodeURIComponent(movie.url);
+          window.location.href = `play.html?url=${encodedUrl}`;
+        };
+        movieList.appendChild(div);
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      renderMovies(searchInput.value);
     });
+
+    // Initial render
+    renderMovies();
   </script>
 </body>
 </html>
