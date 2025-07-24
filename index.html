@@ -1,63 +1,97 @@
-<!-- Add inside <body> just below movie container -->
-<div class="pagination">
-  <button id="prevPage" disabled>Previous</button>
-  <button id="nextPage">Next</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-let currentPage = 1;
-const moviesPerPage = 20; // Adjust if needed
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectAD Movies</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
 
-function loadMovies(page) {
-    $('#movies').html('<p>Loading...</p>');
-    $.getJSON('https://vidsrc.to/vapi/movie/popular?page=' + page, function(data) {
-        $('#movies').html('');
-        data.result.forEach(movie => {
-            $('#movies').append(`
-                <div class="movie-card">
-                    <a href="play.html?imdb_id=${movie.imdb_id}">
-                        <img src="${movie.poster}" alt="${movie.title}">
-                        <h3>${movie.title}</h3>
-                    </a>
-                </div>
-            `);
+        .pagination button {
+            margin: 0 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="brand">
+            <h1>ProjectAD</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <div class="suggestion-box"></div>
+        </div>
+    </div>
+
+    <div id="movies"></div>
+    <div class="pagination">
+        <button id="prevPage">Previous</button>
+        <button id="nextPage">Next</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let currentPage = 1;
+        const itemsPerPage = 12;
+
+        function fetchMovies(page = 1) {
+            $.getJSON("data.json", function (data) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedItems = data.slice(start, end);
+
+                $("#movies").empty();
+                paginatedItems.forEach(function (movie) {
+                    $("#movies").append(`
+                        <div class="movie-card">
+                            <img src="${movie.image}" alt="${movie.name}">
+                            <h2>${movie.name}</h2>
+                            <a href="player.html?url=${encodeURIComponent(movie.url)}">Watch Now</a>
+                        </div>
+                    `);
+                });
+
+                // Handle button states
+                $("#prevPage").prop("disabled", page === 1);
+                $("#nextPage").prop("disabled", end >= data.length);
+            });
+        }
+
+        $("#prevPage").click(() => {
+            if (currentPage > 1) {
+                currentPage--;
+                fetchMovies(currentPage);
+            }
         });
 
-        $('#prevPage').prop('disabled', page === 1);
-    });
-}
+        $("#nextPage").click(() => {
+            currentPage++;
+            fetchMovies(currentPage);
+        });
 
-$('#nextPage').click(function() {
-    currentPage++;
-    loadMovies(currentPage);
-});
-$('#prevPage').click(function() {
-    if (currentPage > 1) {
-        currentPage--;
-        loadMovies(currentPage);
-    }
-});
+        $(document).ready(() => {
+            fetchMovies(currentPage);
+        });
+    </script>
+</body>
 
-// Initial load
-$(document).ready(() => loadMovies(currentPage));
-</script>
-
-<style>
-.pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-.pagination button {
-  padding: 8px 16px;
-  margin: 5px;
-  background-color: #1f1f1f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.pagination button:disabled {
-  background-color: #555;
-  cursor: not-allowed;
-}
-</style>
+</html>
