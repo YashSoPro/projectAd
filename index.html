@@ -1,97 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProjectAD Movies</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProjectAD</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
 
-        .pagination button {
-            margin: 0 5px;
-            padding: 8px 16px;
-            font-size: 16px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+    .navbar {
+      background: #222;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .pagination button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-    </style>
+    .navbar .brand h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .search-container input {
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+    }
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .movie-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .movie-card h3 {
+      font-size: 16px;
+      padding: 10px;
+      color: #eee;
+    }
+
+    .pagination {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .pagination button {
+      padding: 8px 16px;
+      margin: 5px;
+      background-color: #1f1f1f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .pagination button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="navbar">
-        <div class="brand">
-            <h1>ProjectAD</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <div class="suggestion-box"></div>
-        </div>
+  <div class="navbar">
+    <div class="brand">
+      <h1>ProjectAD</h1>
     </div>
-
-    <div id="movies"></div>
-    <div class="pagination">
-        <button id="prevPage">Previous</button>
-        <button id="nextPage">Next</button>
+    <div class="search-container">
+      <input type="text" placeholder="Search...">
     </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        let currentPage = 1;
-        const itemsPerPage = 12;
+  <!-- Movie Container -->
+  <div id="movies" class="movie-grid"></div>
 
-        function fetchMovies(page = 1) {
-            $.getJSON("data.json", function (data) {
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                const paginatedItems = data.slice(start, end);
+  <!-- Pagination -->
+  <div class="pagination">
+    <button id="prevPage" disabled>Previous</button>
+    <button id="nextPage">Next</button>
+  </div>
 
-                $("#movies").empty();
-                paginatedItems.forEach(function (movie) {
-                    $("#movies").append(`
-                        <div class="movie-card">
-                            <img src="${movie.image}" alt="${movie.name}">
-                            <h2>${movie.name}</h2>
-                            <a href="player.html?url=${encodeURIComponent(movie.url)}">Watch Now</a>
-                        </div>
-                    `);
-                });
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    let currentPage = 1;
 
-                // Handle button states
-                $("#prevPage").prop("disabled", page === 1);
-                $("#nextPage").prop("disabled", end >= data.length);
-            });
-        }
-
-        $("#prevPage").click(() => {
-            if (currentPage > 1) {
-                currentPage--;
-                fetchMovies(currentPage);
-            }
+    function loadMovies(page) {
+      $('#movies').html('<p>Loading...</p>');
+      $.getJSON('https://vidsrc.to/vapi/movie/popular?page=' + page, function(data) {
+        $('#movies').html('');
+        data.result.forEach(movie => {
+          $('#movies').append(`
+            <div class="movie-card">
+              <a href="play.html?imdb_id=${movie.imdb_id}">
+                <img src="${movie.poster}" alt="${movie.title}">
+                <h3>${movie.title}</h3>
+              </a>
+            </div>
+          `);
         });
 
-        $("#nextPage").click(() => {
-            currentPage++;
-            fetchMovies(currentPage);
-        });
+        $('#prevPage').prop('disabled', page === 1);
+      });
+    }
 
-        $(document).ready(() => {
-            fetchMovies(currentPage);
-        });
-    </script>
+    $('#nextPage').click(function() {
+      currentPage++;
+      loadMovies(currentPage);
+    });
+
+    $('#prevPage').click(function() {
+      if (currentPage > 1) {
+        currentPage--;
+        loadMovies(currentPage);
+      }
+    });
+
+    $(document).ready(() => loadMovies(currentPage));
+  </script>
 </body>
-
 </html>
