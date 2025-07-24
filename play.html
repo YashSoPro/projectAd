@@ -1,69 +1,52 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VoidFlix - Home</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Movie Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
+    }
+    .movie-details {
+      max-width: 800px;
+      margin: auto;
+    }
+    .trailer-container {
+      margin: 20px 0;
+    }
+    iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+    }
+    .movie-info p {
+      margin: 10px 0;
+    }
+    .button {
+      margin: 10px 10px 0 0;
+      padding: 10px 15px;
+      border: none;
+      background: #e50914;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #loading-container {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.5em;
+      color: gray;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>VoidFlix</h1>
-    <input type="text" id="searchInput" placeholder="Search for movies..." />
-  </header>
-
-  <main id="movieList"></main>
-
-  <script>
-    const movies = [
-      {
-        title: "Attack on Titan Episode 1",
-        thumbnail: "https://i3.wp.com/anitrendz.net/news/wp-content/uploads/2023/10/aotfinalseasonpart4poster.jpg?resize=696%2C978&ssl=1",
-        url: "https://ik.imagekit.io/voidcraft/aot/1.mp4"
-      },
-      {
-        title: "Naruto Movie",
-        thumbnail: "https://m.media-amazon.com/images/I/81dq2zJ1UeL._AC_UF1000,1000_QL80_.jpg",
-        url: "https://ik.imagekit.io/voidcraft/naruto/movie1.mp4"
-      },
-      {
-        title: "Random Anime Clip",
-        thumbnail: "https://m.media-amazon.com/images/I/71zBt7SdnvL.jpg",
-        url: "https://ik.imagekit.io/voidcraft/demo/test.mp4"
-      }
-    ];
-
-    const movieList = document.getElementById('movieList');
-    const searchInput = document.getElementById('searchInput');
-
-    function renderMovies(filter = '') {
-      movieList.innerHTML = '';
-
-      const filtered = movies.filter(movie =>
-        movie.title.toLowerCase().includes(filter.toLowerCase())
-      );
-
-      filtered.forEach(movie => {
-        const div = document.createElement('div');
-        div.classList.add('movie-card');
-        div.innerHTML = `
-          <img src="${movie.thumbnail}" alt="${movie.title}" />
-          <h3>${movie.title}</h3>
-        `;
-        div.onclick = () => {
-          const encodedUrl = encodeURIComponent(movie.url);
-          window.location.href = `play.html?url=${encodedUrl}`;
-        };
-        movieList.appendChild(div);
-      });
-    }
-
-    searchInput.addEventListener('input', () => {
-      renderMovies(searchInput.value);
-    });
-
-    // Initial render
-    renderMovies();
-  </script>
+  <div id="loading-container">Loading movie details...</div>
+  <div id="movieDetails" style="display: none;"></div>
+  <script src="movie.js"></script>
 </body>
 </html>
