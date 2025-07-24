@@ -3,52 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MovieStream</title>
+  <title>ProjectAd – Watch</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #111;
-      color: #eee;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #1f1f1f;
+      padding: 10px 20px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 20px;
+      justify-content: space-between;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      width: 90%;
-      max-width: 500px;
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
     }
-    iframe {
-      margin-top: 20px;
-      width: 90%;
-      height: 500px;
+
+    .search-container {
+      position: relative;
+      width: 50%;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 5px;
       border: none;
+      outline: none;
+      background-color: #333;
+      color: white;
+    }
+
+    .suggestion-box {
+      position: absolute;
+      top: 105%;
+      left: 0;
+      right: 0;
+      background: #222;
+      border-radius: 5px;
+      display: none;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    .suggestion {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .suggestion:hover {
+      background-color: #333;
+    }
+
+    /* Loading Spinner */
+    #loading-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #0f0;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Video Player */
+    #player {
+      width: 100%;
+      height: 90vh;
+      border: none;
+      margin-top: 10px;
     }
   </style>
 </head>
+
 <body>
-  <h1>🎬 MovieStream</h1>
-  <input type="text" id="movieUrl" placeholder="Enter direct movie URL (mp4/mkv/...)" />
-  <button onclick="loadMovie()">Play Movie</button>
-  <iframe id="player" allowfullscreen></iframe>
+  <!-- Loading Spinner -->
+  <div id="loading-container">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="#" class="logo">ProjectAd</a>
+    <div class="search-container">
+      <input type="text" placeholder="Search movies...">
+      <div class="suggestion-box"></div>
+    </div>
+  </div>
+
+  <!-- Movie Player -->
+  <iframe id="player" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>
 
   <script>
-    function atob64(encoded) {
-      return atob(encoded);
+    // Loading Spinner
+    $(window).on("load", () => {
+      setTimeout(() => {
+        $("#loading-container").fadeOut();
+      }, 800);
+    });
+
+    // Load movie by URL param
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const title = urlParams.get("title") || "Watch";
+
+    if (id) {
+      document.getElementById("player").src = `https://vidsrc.to/embed/movie/${id}`;
+      document.title = `${title} – ProjectAd`;
+    } else {
+      document.getElementById("player").outerHTML = `<h2 style="text-align:center;margin-top:40px;">❌ No movie ID provided.</h2>`;
     }
 
-    function loadMovie() {
-      const rawUrl = document.getElementById("movieUrl").value.trim();
-      if (!rawUrl) return alert("Please enter a valid movie URL.");
+    // Search Autocomplete
+    const mockData = ["Oppenheimer", "John Wick", "Barbie", "Spider-Man", "Inception", "Interstellar", "Avengers"];
 
-      const proxyBase = atob64("aHR0cHM6Ly9kcnktYnJvb2stZjVkOC5kaGlyYWpiaGF3YW5hLTc0LndvcmtlcnMuZGV2Lz91cmw9");
-      const finalUrl = proxyBase + encodeURIComponent(rawUrl);
+    $(".search-container input").on("input", function () {
+      const query = $(this).val().toLowerCase();
+      const suggestions = mockData.filter(m => m.toLowerCase().includes(query));
+      if (!query || suggestions.length === 0) {
+        $(".suggestion-box").hide();
+        return;
+      }
+      $(".suggestion-box").html(suggestions.map(s => `<div class="suggestion">${s}</div>`).join(""));
+      $(".suggestion-box").show();
+    });
 
-      const iframe = document.getElementById("player");
-      iframe.src = finalUrl;
-    }
+    // Click suggestion
+    $(document).on("click", ".suggestion", function () {
+      const movie = $(this).text();
+      // Replace below with actual ID lookup logic
+      const fakeId = Math.floor(Math.random() * 9999); // Replace with real movie ID logic
+      window.location.href = `?id=${fakeId}&title=${encodeURIComponent(movie)}`;
+    });
   </script>
 </body>
 </html>
