@@ -1,68 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeus Streaming</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-</head>
-<body>
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="brand">
-            <h1>Zeus Streaming</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <div class="suggestion-box"></div>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Recently Viewed Section -->
-        <section id="recent-viewed">
-            <h2 class="section-title">Recently Viewed</h2>
-            <div id="recent-viewed-grid" class="movie-grid">
-                <!-- Recently viewed movies will be dynamically inserted here -->
-                <div class="no-movies-message">No Movies watched recently</div>
-            </div>
-        </section>
-
-        <!-- Now Playing Section -->
-        <section id="now-playing">
-            <h2 class="section-title">Latest Movies</h2>
-            <div id="movie-grid" class="movie-grid">
-                <!-- Now playing movies will be dynamically inserted here -->
-            </div>
-        </section>
-    </div>
-
-<!-- Overlay HTML -->
-<div id="custom-overlay" class="overlay hidden">
-    <div class="overlay-content">
-        <h2>System Stats</h2>
-        <div id="cpu-counter" class="cpu-counter">CPU Usage: 0%</div>
-        <div id="graph-container" class="graph-container">
-            <canvas id="intensity-graph"></canvas>
-        </div>
-    </div>
+<!-- Add inside <body> just below movie container -->
+<div class="pagination">
+  <button id="prevPage" disabled>Previous</button>
+  <button id="nextPage">Next</button>
 </div>
 
+<script>
+let currentPage = 1;
+const moviesPerPage = 20; // Adjust if needed
 
-
-
-    <!-- Link to your JavaScript file -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="resources.js"></script>
-    <script src="loader.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSettings(); // Call the settings loader function
+function loadMovies(page) {
+    $('#movies').html('<p>Loading...</p>');
+    $.getJSON('https://vidsrc.to/vapi/movie/popular?page=' + page, function(data) {
+        $('#movies').html('');
+        data.result.forEach(movie => {
+            $('#movies').append(`
+                <div class="movie-card">
+                    <a href="play.html?imdb_id=${movie.imdb_id}">
+                        <img src="${movie.poster}" alt="${movie.title}">
+                        <h3>${movie.title}</h3>
+                    </a>
+                </div>
+            `);
         });
-    </script>
-    <script src="display-movies.js"></script>
-    <script src="search.js"></script>
-    <script src="auto-play.js"></script>
-</body>
-</html>
+
+        $('#prevPage').prop('disabled', page === 1);
+    });
+}
+
+$('#nextPage').click(function() {
+    currentPage++;
+    loadMovies(currentPage);
+});
+$('#prevPage').click(function() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadMovies(currentPage);
+    }
+});
+
+// Initial load
+$(document).ready(() => loadMovies(currentPage));
+</script>
+
+<style>
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+.pagination button {
+  padding: 8px 16px;
+  margin: 5px;
+  background-color: #1f1f1f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.pagination button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+</style>
