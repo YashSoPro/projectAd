@@ -39,7 +39,43 @@ $(document).ready(function() {
         const savedPosition = parseFloat(urlParams.get('position')) || 0;
 
         iframe.onload = () => {
+            // Try to send seek position
             iframe.contentWindow.postMessage({ type: 'seek', position: savedPosition }, '*');
+
+            // Auto-mute fallback (may not always work due to sandboxing)
+            try {
+                iframe.muted = true;
+                iframe.setAttribute('muted', 'true');
+            } catch (e) {
+                console.warn('Iframe mute attempt failed:', e);
+            }
+
+            // Add black overlay for ad blocking simulation
+            const overlay = document.createElement("div");
+            overlay.id = "ad-block-overlay";
+            overlay.style.position = "absolute";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.backgroundColor = "black";
+            overlay.style.opacity = "0.85";
+            overlay.style.zIndex = "9999";
+            overlay.style.display = "none";
+            overlay.innerHTML = "<p style='color: white; text-align:center; padding-top: 30px;'>Ad Blocked</p>";
+            document.querySelector("#trailerContainer").appendChild(overlay);
+
+            // Simulated Ad Detection
+            setInterval(() => {
+                const currentTime = new Date().getSeconds();
+                if (currentTime % 30 < 5) {
+                    overlay.style.display = "block";
+                    iframe.style.filter = "brightness(0)";
+                } else {
+                    overlay.style.display = "none";
+                    iframe.style.filter = "brightness(1)";
+                }
+            }, 3000);
         };
 
         $('#backToDetailsBtn').click(function() {
@@ -65,18 +101,9 @@ $(document).ready(function() {
 
     function saveToRecentlyViewed(movie) {
         let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
-        
-        // Remove any existing entry for this movie
         recentlyViewed = recentlyViewed.filter(item => item.id !== movie.id);
-        
-        // Add the new movie to the top
         recentlyViewed.unshift(movie);
-
-        // Limit to the latest 10 viewed movies
-        if (recentlyViewed.length > 10) {
-            recentlyViewed.pop();
-        }
-
+        if (recentlyViewed.length > 10) recentlyViewed.pop();
         localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
     }
 
@@ -89,24 +116,19 @@ $(document).ready(function() {
 
     function handleAutoplay() {
         const autoplayEnabled = JSON.parse(localStorage.getItem('autoPlayEnabled'));
-
         if (autoplayEnabled) {
             const lastViewedMovieURL = localStorage.getItem('lastViewedMovieURL');
             const savedPosition = parseFloat(localStorage.getItem('playbackPosition')) || 0;
-
             if (lastViewedMovieURL) {
-                // Redirect to the last viewed movie's URL with position
                 window.location.href = `${lastViewedMovieURL}?position=${savedPosition}`;
             }
         }
     }
 
-    // Retrieve the last viewed movie URL and position only if autoplay is enabled
     handleAutoplay();
 
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
-
     if (movieId) {
         fetchMovieDetails(movieId);
     } else {
