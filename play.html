@@ -1,28 +1,129 @@
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const params = new URLSearchParams(window.location.search);
-    const imdbId = params.get("imdb_id");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProjectAd – Watch</title>
+  <link rel="stylesheet" href="player.css" />
 
-    if (!imdbId) {
-        document.getElementById('playerContainer').innerHTML = "<p>Invalid IMDb ID</p>";
-        return;
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    document.getElementById("loading-container").style.display = "block";
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #222;
+      align-items: center;
+    }
 
-    const iframe = document.createElement("iframe");
-    iframe.src = `https://vidsrc.to/embed/movie/${imdbId}`;
-    iframe.width = "100%";
-    iframe.height = "600px";
-    iframe.allowFullscreen = true;
-    iframe.frameBorder = "0";
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-    iframe.style.borderRadius = "8px";
-    iframe.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
-    iframe.onload = () => {
-        document.getElementById("loading-container").style.display = "none";
-    };
+    .brand h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #0f0;
+    }
 
-    document.getElementById("playerContainer").appendChild(iframe);
-});
-</script>
+    .search-container {
+      position: relative;
+    }
+
+    .search-container input {
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+    }
+
+    .suggestion-box {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #333;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      z-index: 100;
+    }
+
+    #loading-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1000;
+      display: none;
+    }
+
+    #playerContainer {
+      width: 100%;
+      height: 90vh;
+      margin-top: 1rem;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="brand">
+      <h1>ProjectAd</h1>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search...">
+      <div class="suggestion-box"></div>
+    </div>
+  </div>
+
+  <div id="loading-container">
+    <p>Loading...</p>
+  </div>
+
+  <div id="playerContainer">
+    <!-- Movie player will be injected here -->
+  </div>
+
+  <!-- jQuery and local JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="loader.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="auto-play.js" defer></script>
+
+  <!-- Actual player logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+
+      if (!id) {
+        document.getElementById("playerContainer").innerHTML = "<p style='text-align:center;'>No movie ID provided</p>";
+        return;
+      }
+
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://vidsrc.to/embed/movie/${id}`;
+      iframe.allowFullscreen = true;
+
+      // Optional sandbox restrictions for extra safety
+      iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
+
+      document.getElementById("playerContainer").appendChild(iframe);
+    });
+  </script>
+</body>
+</html>
