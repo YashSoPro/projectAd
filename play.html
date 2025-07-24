@@ -1,52 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Play Movie</title>
-    <link rel="stylesheet" href="player.css"> <!-- Link to existing CSS -->
-    <style>
-        /* Additional styles for loading container */
-        #loading-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 5px;
-            z-index: 1000; /* Ensure it appears on top */
-        }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        <div class="brand">
-            <h1>ProjectAd</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <div class="suggestion-box"></div>
-        </div>
-    </div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const imdbId = params.get("imdb_id");
 
-    <div id="loading-container" style="display: none;">
-        <p>Loading...</p>
-    </div>
+    if (!imdbId) {
+        document.getElementById('playerContainer').innerHTML = "<p>Invalid IMDb ID</p>";
+        return;
+    }
 
-    <div id="playerContainer"></div>
+    document.getElementById("loading-container").style.display = "block";
 
-    <!-- Load jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="loader.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSettings(); // Call the settings loader function
-        });
-    </script>
-    <script src="search.js" defer></script>
-    <script src="player.js" defer></script> <!-- Ensure this has the updated sandbox logic -->
-    <script src="auto-play.js"></script>
-</body>
-</html>
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://vidsrc.to/embed/movie/${imdbId}`;
+    iframe.width = "100%";
+    iframe.height = "600px";
+    iframe.allowFullscreen = true;
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.style.borderRadius = "8px";
+    iframe.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
+    iframe.onload = () => {
+        document.getElementById("loading-container").style.display = "none";
+    };
+
+    document.getElementById("playerContainer").appendChild(iframe);
+});
+</script>
