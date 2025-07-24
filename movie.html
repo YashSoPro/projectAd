@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Details</title>
-    <link rel="stylesheet" href="movie.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
+    }
+    .movie-details {
+      max-width: 800px;
+      margin: auto;
+    }
+    .trailer-container {
+      margin: 20px 0;
+    }
+    iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+    }
+    .movie-info p {
+      margin: 10px 0;
+    }
+    .button {
+      margin: 10px 10px 0 0;
+      padding: 10px 15px;
+      border: none;
+      background: #e50914;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #loading-container {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.5em;
+      color: gray;
+    }
+  </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="brand">
-            <h1>ProjectAd</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <div class="suggestion-box"></div>
-        </div>
-    </div>
-    <div id="loading-container">Loading...</div>
-    <div id="movieDetails" style="display: none;"></div>
-    
-    <script src="loader.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadSettings(); // Call the settings loader function
-        });
-    </script>
-    <script src="search.js"></script>
-    <script src="movie.js"></script>
-    <script src="auto-play.js"></script>
+  <div id="loading-container">Loading movie details...</div>
+  <div id="movieDetails" style="display: none;"></div>
+  <script src="movie.js"></script>
 </body>
 </html>
