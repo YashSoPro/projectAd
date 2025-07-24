@@ -6,46 +6,51 @@
   <title>ProjectAD</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
       margin: 0;
-      padding: 0;
+      background: #111;
+      font-family: Arial, sans-serif;
+      color: white;
     }
 
     .navbar {
-      background: #222;
+      background-color: #222;
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .navbar .brand h1 {
+    .brand h1 {
       margin: 0;
       font-size: 24px;
     }
 
     .search-container input {
-      padding: 6px 10px;
+      padding: 8px 10px;
       border-radius: 4px;
       border: none;
-      outline: none;
+    }
+
+    .main-container {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 10px;
     }
 
     .movie-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 20px;
-      padding: 20px;
     }
 
     .movie-card {
-      background: #1a1a1a;
-      border-radius: 10px;
+      background-color: #1c1c1c;
+      border-radius: 8px;
       overflow: hidden;
-      text-align: center;
-      transition: 0.3s;
+      transition: transform 0.2s ease-in-out;
     }
 
     .movie-card:hover {
@@ -54,27 +59,28 @@
 
     .movie-card img {
       width: 100%;
-      height: auto;
+      display: block;
     }
 
     .movie-card h3 {
       font-size: 16px;
       padding: 10px;
+      text-align: center;
       color: #eee;
     }
 
     .pagination {
+      margin-top: 20px;
       text-align: center;
-      margin: 20px 0;
     }
 
     .pagination button {
-      padding: 8px 16px;
-      margin: 5px;
-      background-color: #1f1f1f;
+      padding: 8px 12px;
+      margin: 0 5px;
+      background-color: #333;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
     }
 
@@ -85,22 +91,26 @@
   </style>
 </head>
 <body>
+  <!-- Navbar -->
   <div class="navbar">
-    <div class="brand">
-      <h1>ProjectAD</h1>
-    </div>
+    <div class="brand"><h1>ProjectAD</h1></div>
     <div class="search-container">
       <input type="text" placeholder="Search...">
     </div>
   </div>
 
-  <!-- Movie Container -->
-  <div id="movies" class="movie-grid"></div>
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Latest Movies -->
+    <section id="now-playing">
+      <h2 class="section-title">Latest Movies</h2>
+      <div id="movie-grid" class="movie-grid"></div>
+    </section>
 
-  <!-- Pagination -->
-  <div class="pagination">
-    <button id="prevPage" disabled>Previous</button>
-    <button id="nextPage">Next</button>
+    <div class="pagination">
+      <button id="prevPage" disabled>Previous</button>
+      <button id="nextPage">Next</button>
+    </div>
   </div>
 
   <!-- Scripts -->
@@ -109,30 +119,41 @@
     let currentPage = 1;
 
     function loadMovies(page) {
-      $('#movies').html('<p>Loading...</p>');
-      $.getJSON('https://vidsrc.to/vapi/movie/popular?page=' + page, function(data) {
-        $('#movies').html('');
-        data.result.forEach(movie => {
-          $('#movies').append(`
-            <div class="movie-card">
-              <a href="play.html?imdb_id=${movie.imdb_id}">
-                <img src="${movie.poster}" alt="${movie.title}">
-                <h3>${movie.title}</h3>
-              </a>
-            </div>
-          `);
-        });
+      $('#movie-grid').html('<p>Loading...</p>');
+      fetch(`https://vidsrc.to/vapi/movie/popular?page=${page}`)
+        .then(res => res.json())
+        .then(data => {
+          $('#movie-grid').html('');
+          if (!data.result || data.result.length === 0) {
+            $('#movie-grid').html('<p>No movies found.</p>');
+            return;
+          }
 
-        $('#prevPage').prop('disabled', page === 1);
-      });
+          data.result.forEach(movie => {
+            $('#movie-grid').append(`
+              <div class="movie-card">
+                <a href="play.html?imdb_id=${movie.imdb_id}">
+                  <img src="${movie.poster}" alt="${movie.title}">
+                  <h3>${movie.title}</h3>
+                </a>
+              </div>
+            `);
+          });
+
+          $('#prevPage').prop('disabled', page === 1);
+        })
+        .catch(err => {
+          console.error(err);
+          $('#movie-grid').html('<p>Failed to load movies.</p>');
+        });
     }
 
-    $('#nextPage').click(function() {
+    $('#nextPage').click(() => {
       currentPage++;
       loadMovies(currentPage);
     });
 
-    $('#prevPage').click(function() {
+    $('#prevPage').click(() => {
       if (currentPage > 1) {
         currentPage--;
         loadMovies(currentPage);
