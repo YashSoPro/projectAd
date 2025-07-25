@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  const API_KEY = 'f94e26113cf7e6e9f2a5c52b4c6b10fd';
+  const API_KEY = 'b9777c51aea4a211a9c6f0e839934890';
   const BASE_URL = 'https://api.themoviedb.org/3/movie/';
   const IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
