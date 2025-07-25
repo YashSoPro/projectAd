@@ -1,60 +1,47 @@
-adocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', function () {
   const params = new URLSearchParams(window.location.search);
-  const movieId = params.get("id");
+  const movieId = params.get('id');
 
-  const movieDetailsContainer = document.getElementById("movieDetails");
-  const loadingContainer = document.getElementById("loading-container");
+  const movieDetails = document.getElementById('movieDetails');
+  const loadingContainer = document.getElementById('loading-container');
 
   if (!movieId) {
-    loadingContainer.textContent = "❌ No movie ID provided.";
+    loadingContainer.textContent = '❌ No movie ID provided.';
     return;
   }
 
-  fetch("movies.json")
+  const API_KEY = 'f94e26113cf7e6e9f2a5c52b4c6b10fd';
+  const BASE_URL = 'https://api.themoviedb.org/3/movie/';
+  const IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
+
+  fetch(`${BASE_URL}${movieId}?api_key=${API_KEY}&language=en-US`)
     .then(response => {
-      if (!response.ok) {
-        throw new Error("❌ Failed to load movies.json");
-      }
+      if (!response.ok) throw new Error('❌ Movie not found.');
       return response.json();
     })
-    .then(movies => {
-      const movie = movies.find(m => m.id == movieId);
-      if (!movie) {
-        loadingContainer.textContent = "❌ Movie not found.";
-        return;
-      }
+    .then(movie => {
+      loadingContainer.style.display = 'none';
+      movieDetails.style.display = 'block';
 
-      const html = `
+      movieDetails.innerHTML = `
         <div class="movie-details">
           <h1>${movie.title}</h1>
-          <div class="trailer-container">
-            <iframe src="${movie.trailer}" allowfullscreen></iframe>
-          </div>
+          <img src="${IMAGE_BASE + movie.poster_path}" alt="${movie.title}" style="width:100%; max-width:300px;" />
           <div class="movie-info">
-            <p><strong>Genre:</strong> ${movie.genre}</p>
-            <p><strong>Year:</strong> ${movie.year}</p>
-            <p><strong>Description:</strong> ${movie.description}</p>
-            <button id="watchNowBtn" class="button">Watch Now!</button>
+            <p><strong>Release Date:</strong> ${movie.release_date}</p>
+            <p><strong>Rating:</strong> ${movie.vote_average}</p>
+            <p><strong>Overview:</strong> ${movie.overview}</p>
           </div>
+          <button id="watchNowBtn" class="button">Watch Now!</button>
         </div>
       `;
 
-      movieDetailsContainer.innerHTML = html;
-      movieDetailsContainer.style.display = "block";
-      loadingContainer.style.display = "none";
-
-      // ✅ Button handler
-      const watchNowBtn = document.getElementById("watchNowBtn");
-      if (watchNowBtn) {
-        watchNowBtn.addEventListener("click", () => {
-          window.location.href = `play.html?id=${movie.id}`;
-        });
-      } else {
-        console.warn("Watch Now button not found!");
-      }
+      document.getElementById('watchNowBtn').addEventListener('click', function () {
+        alert(`🎬 Watch link for "${movie.title}" (ID: ${movie.id}) will be here.`);
+        // window.location.href = `https://your-player-url.com/play/${movie.id}`;  <- Replace this with your player link
+      });
     })
     .catch(error => {
-      console.error(error);
-      loadingContainer.textContent = "❌ An error occurred while loading movie details.";
+      loadingContainer.textContent = error.message;
     });
 });
